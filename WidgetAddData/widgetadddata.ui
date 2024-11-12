@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WidgetAddData</class>
+ <widget class="QWidget" name="WidgetAddData">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>426</width>
+    <height>402</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="gBoxDirectory">
+     <property name="title">
+      <string>directory</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelDataInput">
+        <property name="text">
+         <string>data input</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="hLayDataInput">
+        <item>
+         <widget class="QLineEdit" name="lEditDataInput"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tBtnInput">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelDataOutput">
+        <property name="text">
+         <string>data output</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="hLayDataOutput">
+        <item>
+         <widget class="QLineEdit" name="lEditDataOutput"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tBtnOutput">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="gBoxDataDivide">
+     <property name="title">
+      <string>data divide</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gLayDataDivide">
+        <property name="horizontalSpacing">
+         <number>6</number>
+        </property>
+        <item row="0" column="2">
+         <widget class="QLabel" name="labelTest">
+          <property name="text">
+           <string>test</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelTrain">
+          <property name="text">
+           <string>train</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="labelValid">
+          <property name="text">
+           <string>valid</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QSpinBox" name="sBoxTrain"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="sBoxValid"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QSpinBox" name="sBoxTest"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QTextEdit" name="txtEditLog"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="btnStartAddData">
+     <property name="text">
+      <string>Start Add Data</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

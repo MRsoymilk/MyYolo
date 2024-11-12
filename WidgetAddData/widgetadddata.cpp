@@ -99,12 +99,12 @@ void WidgetAddData::on_btnStartAddData_clicked()
     }
 
     // process file
-    // int total = ;
-    // int to_train = ;
-    // int to_valid = ;
-    // int to_test = ;
     QDir dir(m_data.data_input);
     QFileInfoList entries = dir.entryInfoList(QStringList() << "*.jpg", QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+    int total = entries.count();
+    int to_train = total * (m_data.train / 10);
+    int to_valid = total * (m_data.valid / 10);
+    int to_test = total - to_train - to_valid;
     foreach (const QFileInfo &entry, entries) {
         if(!entry.isFile()) {
             SHOW_MSGBOX_WARNING(QString("we dont handle: %1").arg(entry.absoluteFilePath()));
@@ -119,16 +119,17 @@ void WidgetAddData::on_btnStartAddData_clicked()
         QString txtFilePath = dir.filePath(baseName + ".txt");
 
         if(QFile::exists(xmlFilePath)) {
-
+            TXT_INFO("exist xml " + xmlFilePath);
         }
         else {
-
+            // mov jpg to dir todo
         }
 
         if(QFile::exists(txtFilePath)) {
-
+            TXT_INFO("exist txt " + txtFilePath);
         }
         else {
+            // generate txt
 
         }
     }

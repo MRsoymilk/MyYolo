@@ -1,6 +1,7 @@
 #include "widgettrain.h"
 #include "ui_widgettrain.h"
 
+#include "../include/keydef.h"
 #include "../util/mysetting.h"
 
 #include <QFileDialog>
@@ -10,9 +11,7 @@ WidgetTrain::WidgetTrain(QWidget *parent)
     , ui(new Ui::WidgetTrain)
 {
     ui->setupUi(this);
-    connect(ui->tBtnWeights, &QPushButton::clicked, this, [this](){ openFile(ui->lEditWeights); });
-    connect(ui->tBtnData, &QPushButton::clicked, this, [this](){ openFile(ui->lEditData); });
-    connect(ui->tBtnOutput, &QPushButton::clicked, this, [this](){ openFolder(ui->lEditData); });
+    initTrain();
 }
 
 WidgetTrain::~WidgetTrain()
@@ -22,7 +21,9 @@ WidgetTrain::~WidgetTrain()
 
 void WidgetTrain::initTrain()
 {
-
+    OPEN_FILE_BTN(ui->tBtnWeights, ui->lEditWeights);
+    OPEN_FILE_BTN(ui->tBtnData, ui->lEditData);
+    OPEN_FOLDER_BTN(ui->tBtnOutput, ui->lEditOutput);
 }
 
 void WidgetTrain::on_tBtnWeights_triggered(QAction *arg1)
@@ -75,21 +76,4 @@ void WidgetTrain::show2Ui() {
 
 void WidgetTrain::save2Cfg() {
 
-}
-
-void WidgetTrain::openFolder(QLineEdit *edit) {
-    QString folderPath = QFileDialog::getExistingDirectory(this, "select dir", QString(),
-                                                           QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    if (!folderPath.isEmpty()) {
-        edit->setText(folderPath);
-    }
-}
-
-void WidgetTrain::openFile(QLineEdit *edit)
-{
-    QString filePath = QFileDialog::getOpenFileName(this, "Open File", QString(),
-                                                    "All Files (*);;Text Files (*.txt);;Image Files (*.png *.jpg);;");
-    if (!filePath.isEmpty()) {
-        edit->setText(filePath);
-    }
 }

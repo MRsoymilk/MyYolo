@@ -24,9 +24,6 @@ private slots:
     void on_tBtnOutput_triggered(QAction *arg1);
 
     void on_btnStartTrain_clicked();
-
-    void openFolder(QLineEdit *edit);
-    void openFile(QLineEdit *edit);
 private:
     Ui::WidgetTrain *ui;
     void initTrain();

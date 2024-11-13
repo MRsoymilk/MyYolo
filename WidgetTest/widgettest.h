@@ -18,10 +18,7 @@ public:
 
 private slots:
     void on_tBtnModel_triggered(QAction *arg1);
-
     void on_btnStartTest_clicked();
-    void openFile(QLineEdit *edit);
-    void openFolder(QLineEdit *edit);
 
 private:
     Ui::WidgetTest *ui;

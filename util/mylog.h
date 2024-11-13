@@ -1,6 +1,8 @@
 #ifndef MYLOG_H
 #define MYLOG_H
 
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QString>
 
 #include "spdlog/spdlog.h"
@@ -23,5 +25,12 @@ private:
 #define MY_LOG_WARN(...)     MyLog::getInstance().getLogger()->warn(__VA_ARGS__)
 #define MY_LOG_ERROR(...)    MyLog::getInstance().getLogger()->error(__VA_ARGS__)
 #define MY_LOG_CRITICAL(...) MyLog::getInstance().getLogger()->critical(__VA_ARGS__)
+
+template <> struct fmt::formatter<QString>: formatter<std::string> {
+    template <typename FormatContext>
+    auto format(QString s, FormatContext& ctx) const {
+        return formatter<std::string>::format(s.toStdString(), ctx);
+    }
+};
 
 #endif // MYLOG_H

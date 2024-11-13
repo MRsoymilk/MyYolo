@@ -3,8 +3,11 @@
 
 // config file
 #define CFG_GROUP_ADD_DATA          "ADD_DATA"
-#define CFG_ADD_DATA_DATA_INPUT     "data_input"
-#define CFG_ADD_DATA_DATA_OUTPUT    "data_output"
+#define CFG_ADD_DATA_DIR_INPUT      "dir_input"
+#define CFG_ADD_DATA_DIR_OUTPUT     "dir_output"
+#define CFG_ADD_DATA_TAG            "tag"
+#define CFG_ADD_DATA_SCRIPT         "script"
+#define CFG_ADD_DATA_DIR_TODO       "dir_todo"
 #define CFG_ADD_DATA_TRAIN          "train"
 #define CFG_ADD_DATA_VALID          "valid"
 #define CFG_ADD_DATA_TEST           "test"
@@ -51,5 +54,33 @@
     QMessageBox::warning(this, "Warning", msg);
 #define SHOW_MSGBOX_CRITICAL(msg) \
     QMessageBox::critical(this, "Critical", msg);
+
+#include <QFileDialog>
+// open folder
+#define OPEN_FOLDER(edit) \
+{ \
+    QString folderPath = QFileDialog::getExistingDirectory(this, "Open Folder", QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks); \
+    if (!folderPath.isEmpty()) { \
+        edit->setText(folderPath); \
+    } \
+}
+
+// open file
+#define OPEN_FILE(edit) \
+{ \
+    QString filePath = QFileDialog::getOpenFileName(this, "Open File", QString(), "All Files (*);;Text Files (*.txt);;Image Files (*.png *.jpg);;"); \
+    if (!filePath.isEmpty()) { \
+        edit->setText(filePath); \
+    } \
+}
+
+#include <QPushButton>
+// btn open folder
+#define OPEN_FOLDER_BTN(btn, edit) \
+connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FOLDER(edit); })
+
+// btn open file
+#define OPEN_FILE_BTN(btn, edit) \
+    connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FILE(edit); })
 // FUNCTION ===================================================================
 #endif

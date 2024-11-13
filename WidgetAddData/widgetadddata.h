@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QProcess>
 
 namespace Ui {
 class WidgetAddData;
@@ -17,12 +18,13 @@ public:
     ~WidgetAddData();
 
 private slots:
-    void on_tBtnInput_triggered(QAction *arg1);
-    void on_tBtnOutput_triggered(QAction *arg1);
     void on_btnStartAddData_clicked();
-    void openFolder(QLineEdit *edit);
-    void openFile(QLineEdit *edit);
 
+    void on_btnHandleNoGap_clicked();
+
+    void onProcessOutput();
+    void onProcessError();
+    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 private:
     Ui::WidgetAddData *ui;
     void initAddData();
@@ -31,8 +33,11 @@ private:
 
 private:
     struct ini_add_data {
-        QString data_input = "";
-        QString data_output = "";
+        QString dir_input = "";
+        QString dir_output = "";
+        QString script = "";
+        QString tag = "";
+        QString dir_todo = "";
         int train = 0;
         int valid = 0;
         int test = 0;
@@ -40,6 +45,7 @@ private:
     ini_add_data m_data;
     void getUiData();
     void show2Ui();
+    void runScript(const QString &script_path, const QString &class_name, const QString &input_folder, const QString &output_folder);
 };
 
 #endif // WIDGETADDDATA_H

@@ -47,7 +47,9 @@ void WidgetAddData::getUiData()
 void WidgetAddData::show2Ui()
 {
     ui->lEditDirInput->setText(m_data.dir_input);
-    ui->lEditDirInput->setText(m_data.dir_output);
+    ui->lEditTag->setText(m_data.tag);
+    ui->lEditScript->setText(m_data.script);
+    ui->lEditDirOutput->setText(m_data.dir_output);
     ui->sBoxTrain->setValue(m_data.train);
     ui->sBoxValid->setValue(m_data.valid);
     ui->sBoxTest->setValue(m_data.test);
@@ -173,7 +175,7 @@ void WidgetAddData::onProcessOutput()
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         QByteArray output = process->readAllStandardOutput();
-        ui->txtEditLog->append(QString::fromUtf8(output));
+        TXT_INFO(QString::fromUtf8(output));
     }
 }
 
@@ -182,7 +184,7 @@ void WidgetAddData::onProcessError()
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         QByteArray errorOutput = process->readAllStandardError();
-        ui->txtEditLog->append(QString::fromUtf8(errorOutput));
+        TXT_WARN(QString::fromUtf8(errorOutput));
     }
 }
 
@@ -191,11 +193,11 @@ void WidgetAddData::onProcessFinished(int exitCode, QProcess::ExitStatus exitSta
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         if (exitStatus == QProcess::CrashExit) {
-            ui->txtEditLog->append("Script crashed!");
+            TXT_WARN("Script crashed!");
         } else if (exitCode != 0) {
-            ui->txtEditLog->append(QString("Script finished with error code: %1").arg(exitCode));
+            TXT_WARN(QString("Script finished with error code: %1").arg(exitCode));
         } else {
-            ui->txtEditLog->append("Script finished successfully!");
+            TXT_INFO("Script finished successfully!");
         }
         process->deleteLater();
     }
@@ -242,7 +244,7 @@ void WidgetAddData::on_btnHandleNoGap_clicked()
             }
         }
         else {
-            TXT_WARN(QString("Missing jpg or xml for %1").arg( entry.absoluteFilePath()));
+            TXT_WARN(QString("Missing jpg or xml for %1").arg(entry.absoluteFilePath()));
         }
     }
 }

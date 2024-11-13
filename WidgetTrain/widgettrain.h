@@ -17,13 +17,8 @@ public:
     ~WidgetTrain();
 
 private slots:
-    void on_tBtnWeights_triggered(QAction *arg1);
-
-    void on_tBtnEditData_triggered(QAction *arg1);
-
-    void on_tBtnOutput_triggered(QAction *arg1);
-
     void on_btnStartTrain_clicked();
+
 private:
     Ui::WidgetTrain *ui;
     void initTrain();

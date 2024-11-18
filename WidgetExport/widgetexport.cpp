@@ -108,11 +108,11 @@ void WidgetExport::onProcessError()
     }
 }
 
-void WidgetExport::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+void WidgetExport::onProcessFinished(int exitCode)
 {
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
-        if (exitStatus == QProcess::CrashExit) {
+        if (exitCode == QProcess::CrashExit) {
             TXT_WARN("Script crashed!");
         } else if (exitCode != 0) {
             TXT_WARN(QString("Script finished with error code: %1").arg(exitCode));

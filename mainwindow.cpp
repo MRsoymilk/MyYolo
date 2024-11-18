@@ -23,10 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::addBasicWidget() {
-    WidgetAddData *widgetAddData = new WidgetAddData;
-    WidgetTrain *widgetTrain = new WidgetTrain;
-    WidgetTest *widgetTest = new WidgetTest;
-    WidgetExport *widgetExport = new WidgetExport;
+    WidgetAddData *widgetAddData = new WidgetAddData();
+    WidgetTrain *widgetTrain = new WidgetTrain();
+    WidgetTest *widgetTest = new WidgetTest();
+    WidgetExport *widgetExport = new WidgetExport();
     ui->gLayoutAddData->addWidget(widgetAddData);
     ui->gLayoutTrain->addWidget(widgetTrain);
     ui->gLayoutTest->addWidget(widgetTest);

@@ -20,12 +20,12 @@ public:
         QString path = "";
     };
 private:
-    Ui::MainWindow *ui;
     void addBasicWidget();
     void checkBasicDir();
 private slots:
     void on_btnBasicCheck_clicked();
 private:
+    Ui::MainWindow *ui;
     ini_main m_data;
 };
 #endif // MAINWINDOW_H

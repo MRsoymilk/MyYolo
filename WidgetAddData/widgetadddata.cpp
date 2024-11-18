@@ -241,4 +241,3 @@ void WidgetAddData::on_btnHandleNoGap_clicked()
         }
     }
 }
-

@@ -31,7 +31,8 @@ private slots:
     void on_btnStartExport_clicked();
     void onProcessOutput();
     void onProcessError();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onProcessFinished(int exitCode);
+
 private:
     Ui::WidgetExport *ui;
     ini_export m_data;

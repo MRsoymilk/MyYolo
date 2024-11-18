@@ -12,17 +12,26 @@
 #define CFG_ADD_DATA_VALID          "valid"
 #define CFG_ADD_DATA_TEST           "test"
 #define CFG_GROUP_TRAIN             "TRAIN"
+#define CFG_TRAIN_MODEL             "model"
 #define CFG_TRAIN_WEIGHTS           "weights"
 #define CFG_TRAIN_DATA              "data"
 #define CFG_TRAIN_OUTPUT            "output"
+#define CFG_TRAIN_HYP               "hyp"
 #define CFG_TRAIN_EPOCH             "epoch"
 #define CFG_TRAIN_BATCH_SIZE        "batch_size"
-#define CFG_TRAIN_L_RATE            "l_rate"
 #define CFG_TRAIN_IMG_SIZE          "img_size"
 #define CFG_GROUP_TEST              "TEST"
 #define CFG_TEST_MODEL              "model"
+#define CFG_TEST_MODEL_HEIGHT       "model_height"
+#define CFG_TEST_MODEL_WIDTH        "model_width"
+#define CFG_TEST_DIR_INPUT          "dir_input"
+#define CFG_TEST_DIR_OUTPUT         "dir_output"
 #define CFG_GROUP_MAIN              "MAIN"
 #define CFG_MAIN_PROJECT_DIR        "project_dir"
+#define CFG_GROUP_EXPORT            "EXPORT"
+#define CFG_EXPORT_TYPE             "type"
+#define CFG_EXPORT_PT_MODEL         "pt_model"
+#define CFG_EXPORT_DIR_OUTPUT       "dir_output"
 // dir
 #define DIR_TEST                    "test"
 #define DIR_MODEL                   "model"
@@ -30,6 +39,14 @@
 #define DIR_SCRIPT                  "script"
 #define DIR_YOLOV5                  "yolov5"
 #define DIR_DATA                    "data"
+
+// DATA =======================================================================
+#include <QString>
+struct MSG_RETURN {
+    int code;
+    QString msg;
+};
+// DATA =======================================================================
 
 // FUNCTION ===================================================================
 #include <QString>

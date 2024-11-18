@@ -33,4 +33,11 @@ template <> struct fmt::formatter<QString>: formatter<std::string> {
     }
 };
 
+template <> struct fmt::formatter<QStringList>: formatter<std::string> {
+    template <typename FormatContext>
+    auto format(QStringList s, FormatContext& ctx) const {
+        return formatter<std::string>::format(s.join(',').toStdString(), ctx);
+    }
+};
+
 #endif // MYLOG_H

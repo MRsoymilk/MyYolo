@@ -3,6 +3,7 @@
 #include "WidgetTest/widgettest.h"
 #include "WidgetTrain/widgettrain.h"
 #include "WidgetAddData/widgetadddata.h"
+#include "WidgetExport/widgetexport.h"
 
 #include <QFileDialog>
 
@@ -18,16 +19,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     addBasicWidget();
-    connect(ui->tBtnProjectRoot, &QPushButton::clicked, this, &MainWindow::openFileDialog);
+    OPEN_FOLDER_BTN(ui->tBtnProjectRoot, ui->lEditProjectRoot);
 }
 
 void MainWindow::addBasicWidget() {
     WidgetAddData *widgetAddData = new WidgetAddData;
     WidgetTrain *widgetTrain = new WidgetTrain;
     WidgetTest *widgetTest = new WidgetTest;
+    WidgetExport *widgetExport = new WidgetExport;
     ui->gLayoutAddData->addWidget(widgetAddData);
     ui->gLayoutTrain->addWidget(widgetTrain);
     ui->gLayoutTest->addWidget(widgetTest);
+    ui->gLayoutExport->addWidget(widgetExport);
 }
 
 void MainWindow::checkBasicDir() {
@@ -54,13 +57,4 @@ MainWindow::~MainWindow()
 void MainWindow::on_btnBasicCheck_clicked()
 {
     checkBasicDir();
-}
-
-void MainWindow::openFileDialog() {
-    QString folderPath = QFileDialog::getExistingDirectory(this, "select dir", QString(),
-                                                           QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    if (!folderPath.isEmpty()) {
-        ui->lEditProjectRoot->setText(folderPath);
-        m_data.path = folderPath;
-    }
 }

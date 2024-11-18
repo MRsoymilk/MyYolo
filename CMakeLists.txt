@@ -30,6 +30,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         util/mylog.h util/mylog.cpp
         include/keydef.h
         util/mydir.h util/mydir.cpp
+        WidgetExport/widgetexport.h WidgetExport/widgetexport.cpp WidgetExport/widgetexport.ui
+        WidgetTest/onnxcheck.h WidgetTest/onnxcheck.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET myYolo APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -78,3 +80,8 @@ endif()
 
 add_subdirectory(vendor/spdlog-1.15.0/)
 target_link_libraries(myYolo PRIVATE spdlog::spdlog)
+
+set(OpenCV_DIR "D:/opencv409/build/x64/vc16/lib")
+find_package(OpenCV REQUIRED)
+target_link_libraries(myYolo PRIVATE ${OpenCV_LIBS})
+target_include_directories(myYolo PRIVATE ${OpenCV_INCLUDE_DIRS})

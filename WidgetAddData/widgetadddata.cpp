@@ -16,13 +16,11 @@ WidgetAddData::WidgetAddData(QWidget *parent)
     initAddData();
 }
 
-WidgetAddData::~WidgetAddData()
-{
+WidgetAddData::~WidgetAddData() {
     delete ui;
 }
 
-void WidgetAddData::getCfgData()
-{
+void WidgetAddData::getCfgData() {
     m_data.dir_input = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT);
     m_data.tag = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TAG);
     m_data.script = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_SCRIPT);
@@ -32,8 +30,7 @@ void WidgetAddData::getCfgData()
     m_data.test = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TEST).toInt();
 }
 
-void WidgetAddData::getUiData()
-{
+void WidgetAddData::getUiData() {
     m_data.dir_input = ui->lEditDirInput->text();
     m_data.dir_output = ui->lEditDirOutput->text();
     m_data.script = ui->lEditScript->text();
@@ -44,8 +41,7 @@ void WidgetAddData::getUiData()
     m_data.test = ui->sBoxTest->value();
 }
 
-void WidgetAddData::show2Ui()
-{
+void WidgetAddData::show2Ui() {
     ui->lEditDirInput->setText(m_data.dir_input);
     ui->lEditTag->setText(m_data.tag);
     ui->lEditScript->setText(m_data.script);
@@ -55,8 +51,7 @@ void WidgetAddData::show2Ui()
     ui->sBoxTest->setValue(m_data.test);
 }
 
-void WidgetAddData::save2Cfg()
-{
+void WidgetAddData::save2Cfg() {
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT, m_data.dir_input);
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TAG, m_data.tag);
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_SCRIPT, m_data.script);
@@ -74,8 +69,7 @@ void WidgetAddData::save2Cfg()
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_TEST, m_data.test);
 }
 
-void WidgetAddData::initAddData()
-{
+void WidgetAddData::initAddData() {
     getCfgData();
     show2Ui();
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
@@ -85,8 +79,7 @@ void WidgetAddData::initAddData()
 }
 
 
-void WidgetAddData::on_btnStartAddData_clicked()
-{
+void WidgetAddData::on_btnStartAddData_clicked() {
     getUiData();
     save2Cfg();
     TXT_INFO("dir input: " + m_data.dir_input);

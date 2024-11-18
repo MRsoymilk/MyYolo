@@ -16,21 +16,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-private slots:
-    void on_btnBasicCheck_clicked();
-
-    void openFileDialog();
+    struct ini_main {
+        QString path = "";
+    };
 private:
     Ui::MainWindow *ui;
     void addBasicWidget();
     void checkBasicDir();
-
+private slots:
+    void on_btnBasicCheck_clicked();
 private:
-    struct ini_main {
-        QString path = "";
-    };
-
     ini_main m_data;
 };
 #endif // MAINWINDOW_H

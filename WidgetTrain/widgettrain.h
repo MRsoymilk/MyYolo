@@ -24,12 +24,13 @@ private:
     void initTrain();
 
     struct ini_train {
+        QStringList list_model = {};
         QString weights = "";
         QString data = "";
         QString output = "";
+        QString hyp = "";
         int epoch = 0;
         int batch_size = 0;
-        double l_rate = 0.0;
         int img_size = 0;
     };
     ini_train m_data;
@@ -37,6 +38,7 @@ private:
     void getUiData();
     void show2Ui();
     void save2Cfg();
+    void runScript(const QString &base_dir, const QString &script);
 };
 
 #endif // WIDGETTRAIN_H

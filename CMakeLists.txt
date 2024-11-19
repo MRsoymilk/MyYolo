@@ -10,23 +10,36 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/mainwindow.ui
 )
 
 add_executable(myYolo
     ${PROJECT_SOURCES}
-    WidgetTest/widgettest.h WidgetTest/widgettest.cpp WidgetTest/widgettest.ui
-    WidgetAddData/widgetadddata.h WidgetAddData/widgetadddata.cpp WidgetAddData/widgetadddata.ui
-    WidgetTrain/widgettrain.h WidgetTrain/widgettrain.cpp WidgetTrain/widgettrain.ui
-    util/mysetting.h util/mysetting.cpp
-    util/mylog.h util/mylog.cpp
-    include/keydef.h
-    util/mydir.h util/mydir.cpp
-    WidgetExport/widgetexport.h WidgetExport/widgetexport.cpp WidgetExport/widgetexport.ui
-    WidgetTest/onnxcheck.h WidgetTest/onnxcheck.cpp
+    src/include/keydef.h
+    src/common/confighandler.h
+    src/util/mysetting.h
+    src/util/mysetting.cpp
+    src/util/mylog.h
+    src/util/mylog.cpp
+    src/util/mydir.h
+    src/util/mydir.cpp
+    src/WidgetAddData/widgetadddata.h
+    src/WidgetAddData/widgetadddata.cpp
+    src/WidgetAddData/widgetadddata.ui
+    src/WidgetTrain/widgettrain.h
+    src/WidgetTrain/widgettrain.cpp
+    src/WidgetTrain/widgettrain.ui
+    src/WidgetExport/widgetexport.h
+    src/WidgetExport/widgetexport.cpp
+    src/WidgetExport/widgetexport.ui
+    src/WidgetTest/widgettest.h
+    src/WidgetTest/widgettest.cpp
+    src/WidgetTest/widgettest.ui
+    src/WidgetTest/onnxcheck.h
+    src/WidgetTest/onnxcheck.cpp
 )
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)

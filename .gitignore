@@ -1,3 +1,9 @@
+# qt .user
 CMakeLists.txt.user
+# cmake build
 myYolo
 build
+# vendor
+vendor/opencv
+# project
+project/yolov5-master/venv

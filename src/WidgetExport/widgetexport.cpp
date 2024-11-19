@@ -1,9 +1,10 @@
 #include "widgetexport.h"
 #include "ui_widgetexport.h"
 
+#include "../include/funcdef.h"
 #include "../include/keydef.h"
-#include "../util/mysetting.h"
 #include "../util/mylog.h"
+#include "../util/mysetting.h"
 
 #include <QProcess>
 
@@ -28,6 +29,7 @@ void WidgetExport::initExport() {
 
 void WidgetExport::getCfgData() {
     m_data.list_type = MY_SETTING.getValue(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
+    m_data.type = m_data.list_type.first();
     m_data.pt_model = MY_SETTING.getValue(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL);
     m_data.dir_output = MY_SETTING.getValue(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT);
 }
@@ -58,8 +60,8 @@ void WidgetExport::show2Ui() {
 }
 
 void WidgetExport::getUiData() {
-    // m_data.list_type = getTypeList(ui->comboBoxType);
-    m_data.list_type << "onnx";
+    m_data.list_type = getTypeList(ui->comboBoxType);
+    m_data.type = ui->comboBoxType->currentText();
     m_data.pt_model = ui->lEditPtModel->text();
     m_data.dir_output = ui->lEditDirOutput->text();
 }
@@ -124,4 +126,24 @@ void WidgetExport::onProcessFinished(int exitCode)
         }
         process->deleteLater();
     }
+}
+
+void WidgetExport::on_btnAddType_clicked()
+{
+    QString type = ui->lEditAddType->text().trimmed();
+    if (type.isEmpty()) {
+        SHOW_MSGBOX_WARNING("type cannot be empty!");
+        return;
+    }
+    if (ui->comboBoxType->findText(type) != -1) {
+        SHOW_MSGBOX_WARNING("type is already added!");
+        return;
+    }
+    ui->comboBoxType->addItem(type);
+    m_data.list_type = getTypeList(ui->comboBoxType);
+}
+
+void WidgetExport::on_comboBoxType_currentTextChanged(const QString &type)
+{
+    m_data.type = type;
 }

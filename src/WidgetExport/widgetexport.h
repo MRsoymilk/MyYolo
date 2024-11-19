@@ -18,6 +18,7 @@ public:
     ~WidgetExport();
     struct ini_export {
         QStringList list_type = {};
+        QString type = "";
         QString pt_model = "";
         QString dir_output = "";
     };
@@ -33,6 +34,10 @@ private slots:
     void onProcessOutput();
     void onProcessError();
     void onProcessFinished(int exitCode);
+
+    void on_btnAddType_clicked();
+
+    void on_comboBoxType_currentTextChanged(const QString &type);
 
 private:
     Ui::WidgetExport *ui;

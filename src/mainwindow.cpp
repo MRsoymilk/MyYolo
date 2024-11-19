@@ -7,6 +7,7 @@
 
 #include <QFileDialog>
 
+#include "include/funcdef.h"
 #include "include/keydef.h"
 #include "util/mysetting.h"
 

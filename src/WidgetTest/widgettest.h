@@ -21,6 +21,8 @@ public:
     struct ini_test {
         int model_height = 0;
         int model_width = 0;
+        double threshold_nms = 0.0;
+        double threshold_cfd = 0.0;
         QString model = "";
         QString dir_input = "";
         QString dir_output = "";
@@ -38,8 +40,9 @@ private slots:
     void on_sBoxModelHeight_editingFinished();
     void on_btnAddItem_clicked();
     void on_btnRemoveItem_clicked();
-
     void on_tableWidgetClassEdit_cellDoubleClicked(int row, int column);
+    void on_doubleSpinBoxThresholdCfd_editingFinished();
+    void on_doubleSpinBoxThresholdNMS_editingFinished();
 
 private:
     Ui::WidgetTest *ui;

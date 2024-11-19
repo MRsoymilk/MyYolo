@@ -1,9 +1,10 @@
 #include "widgetadddata.h"
 #include "ui_widgetadddata.h"
 
+#include "../include/funcdef.h"
 #include "../include/keydef.h"
-#include "../util/mysetting.h"
 #include "../util/mylog.h"
+#include "../util/mysetting.h"
 
 #include <QFileDialog>
 #include <QProcess>

@@ -18,7 +18,10 @@ set(PROJECT_SOURCES
 
 add_executable(myYolo
     ${PROJECT_SOURCES}
+    src/include/global.h
     src/include/keydef.h
+    src/include/datadef.h
+    src/include/funcdef.h
     src/common/confighandler.h
     src/util/mysetting.h
     src/util/mysetting.cpp

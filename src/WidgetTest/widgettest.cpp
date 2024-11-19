@@ -4,10 +4,10 @@
 #include <QFileDialog>
 #include <QDir>
 
+#include "../include/funcdef.h"
 #include "../include/keydef.h"
 #include "../util/mylog.h"
 #include "../util/mysetting.h"
-
 
 WidgetTest::WidgetTest(QWidget *parent)
     : QWidget(parent)
@@ -34,6 +34,8 @@ void WidgetTest::getUiData() {
     m_data.model_height = ui->sBoxModelHeight->value();
     m_data.model_width = ui->sBoxModelWidth->value();
     m_data.model = ui->lEditModel->text();
+    m_data.threshold_cfd = ui->doubleSpinBoxThresholdCfd->value();
+    m_data.threshold_nms = ui->doubleSpinBoxThresholdNMS->value();
     m_data.dir_input = ui->lEditDirInput->text();
     m_data.dir_output = ui->lEditDirOutput->text();
 }
@@ -42,6 +44,8 @@ void WidgetTest::getCfgData() {
     m_data.model_height = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT).toInt();
     m_data.model_width = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH).toInt();
     m_data.model = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL);
+    m_data.threshold_cfd = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_CFD).toDouble();
+    m_data.threshold_nms = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_NMS).toDouble();
     m_data.dir_input = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT);
     m_data.dir_output = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_DIR_OUTPUT);
 }
@@ -50,11 +54,19 @@ void WidgetTest::save2Cfg() {
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT, QString::number(m_data.model_height));
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH, QString::number(m_data.model_width));
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL, m_data.model);
+    MY_SETTING.setValue(CFG_GROUP_TEST,
+                        CFG_TEST_THRESHOLD_CFD,
+                        QString::number(m_data.threshold_cfd));
+    MY_SETTING.setValue(CFG_GROUP_TEST,
+                        CFG_TEST_THRESHOLD_NMS,
+                        QString::number(m_data.threshold_nms));
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT, m_data.dir_input);
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_DIR_OUTPUT, m_data.dir_output);
     MY_LOG_INFO("config save: Group[{}]", CFG_GROUP_TEST);
     MY_LOG_INFO("{}: {}", CFG_TEST_MODEL_HEIGHT, m_data.model_height);
     MY_LOG_INFO("{}: {}", CFG_TEST_MODEL_WIDTH, m_data.model_width);
+    MY_LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_CFD, m_data.threshold_cfd);
+    MY_LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_NMS, m_data.threshold_nms);
     MY_LOG_INFO("{}: {}", CFG_TEST_MODEL, m_data.model);
     MY_LOG_INFO("{}: {}", CFG_TEST_DIR_INPUT, m_data.dir_input);
     MY_LOG_INFO("{}: {}", CFG_TEST_DIR_OUTPUT, m_data.dir_output);
@@ -63,6 +75,8 @@ void WidgetTest::save2Cfg() {
 void WidgetTest::show2Ui() {
     ui->sBoxModelHeight->setValue(m_data.model_height);
     ui->sBoxModelWidth->setValue(m_data.model_width);
+    ui->doubleSpinBoxThresholdCfd->setValue(m_data.threshold_cfd);
+    ui->doubleSpinBoxThresholdNMS->setValue(m_data.threshold_nms);
     ui->lEditModel->setText(m_data.model);
     ui->lEditDirInput->setText(m_data.dir_input);
     ui->lEditDirOutput->setText(m_data.dir_output);
@@ -123,6 +137,15 @@ void WidgetTest::on_sBoxModelHeight_editingFinished()
     m_check.setModelImgSize(0, ui->sBoxModelHeight->value());
 }
 
+void WidgetTest::on_doubleSpinBoxThresholdCfd_editingFinished()
+{
+    m_check.setConfidence(ui->doubleSpinBoxThresholdCfd->value());
+}
+
+void WidgetTest::on_doubleSpinBoxThresholdNMS_editingFinished()
+{
+    m_check.setNMS(ui->doubleSpinBoxThresholdNMS->value());
+}
 
 void WidgetTest::on_btnAddItem_clicked()
 {
@@ -144,7 +167,6 @@ void WidgetTest::on_btnAddItem_clicked()
     });
 }
 
-
 void WidgetTest::on_btnRemoveItem_clicked()
 {
     int row = ui->tableWidgetClassEdit->currentRow();
@@ -157,4 +179,3 @@ void WidgetTest::on_tableWidgetClassEdit_cellDoubleClicked(int row, int column)
 {
     ui->tableWidgetClassEdit->editItem(ui->tableWidgetClassEdit->item(row, column));
 }
-

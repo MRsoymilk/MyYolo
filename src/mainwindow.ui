@@ -26,34 +26,30 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="labelProjectRoot">
-            <property name="text">
-             <string>Project Root</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lEditProjectRoot"/>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tBtnProjectRoot">
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextEdit" name="txtEditLog"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="btnBasicCheck">
-          <property name="text">
-           <string>Basic Check</string>
+         <widget class="QTabWidget" name="tabWidgetMain">
+          <property name="currentIndex">
+           <number>0</number>
           </property>
+          <widget class="QWidget" name="tabInfo">
+           <attribute name="title">
+            <string>Info</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gLayInfo"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabSetting">
+           <attribute name="title">
+            <string>Setting</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gLaySetting"/>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>

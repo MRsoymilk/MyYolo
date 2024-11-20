@@ -29,6 +29,12 @@ add_executable(myYolo
     src/util/mylog.cpp
     src/util/mydir.h
     src/util/mydir.cpp
+    src/WidgetMain/Info/widgetmaininfo.h
+    src/WidgetMain/Info/widgetmaininfo.cpp
+    src/WidgetMain/Info/widgetmaininfo.ui
+    src/WidgetMain/Setting/widgetmainsetting.h
+    src/WidgetMain/Setting/widgetmainsetting.cpp
+    src/WidgetMain/Setting/widgetmainsetting.ui
     src/WidgetAddData/widgetadddata.h
     src/WidgetAddData/widgetadddata.cpp
     src/WidgetAddData/widgetadddata.ui

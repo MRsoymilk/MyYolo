@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>738</width>
-    <height>584</height>
+    <width>756</width>
+    <height>733</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_4">
+  <layout class="QGridLayout" name="gridLayout_5">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="gBoxDirectory">
+    <widget class="QGroupBox" name="groupBoxDirectory">
      <property name="title">
       <string>directory</string>
      </property>
-     <layout class="QFormLayout" name="formLayout">
+     <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <widget class="QLabel" name="labelDirInput">
         <property name="text">
@@ -41,93 +41,83 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelTag">
-        <property name="text">
-         <string>tag</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lEditTag"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelScript">
-        <property name="text">
-         <string>script(xml2txt)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <layout class="QHBoxLayout" name="hLayScript">
-        <item>
-         <widget class="QLineEdit" name="lEditScript"/>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tBtnScript">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="labelDirOutput">
-        <property name="text">
-         <string>dir output(txt)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <layout class="QHBoxLayout" name="hLayDirOutput">
-        <item>
-         <widget class="QLineEdit" name="lEditDirOutput"/>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tBtnDirOutput">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelDirTodo">
-        <property name="text">
-         <string>dir todo</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <layout class="QHBoxLayout" name="hLayDirTodo">
-        <item>
-         <widget class="QLineEdit" name="lEditDirTodo"/>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tBtnDirTodo">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnHandleNoGap">
-          <property name="text">
-           <string>handle no gap</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
      </layout>
     </widget>
    </item>
    <item row="1" column="0">
+    <widget class="QGroupBox" name="gBoxHandleXML">
+     <property name="title">
+      <string>handle xml</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,9,0">
+      <item row="0" column="1" colspan="2">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTableWidget" name="tableWidgetTag">
+          <column>
+           <property name="text">
+            <string>id</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>class</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>operate</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnAddTag">
+            <property name="text">
+             <string>add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnRemoveTag">
+            <property name="text">
+             <string>remove</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelTag">
+        <property name="text">
+         <string>tags</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
     <widget class="QGroupBox" name="gBoxDataDivide">
      <property name="title">
-      <string>data divide</string>
+      <string>handle divide</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -167,13 +157,112 @@
         </item>
        </layout>
       </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="checkBoxShuffle">
+        <property name="text">
+         <string>shuffle</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <layout class="QHBoxLayout" name="hLayDirOutputDivide">
+        <item>
+         <widget class="QLabel" name="labelDirOutputDivide">
+          <property name="text">
+           <string>dir output(train + val + test)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lEditDirOutputDivide"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tBtnDirOutputDivide">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="gBoxHandleName">
+     <property name="title">
+      <string>handle name</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBoxRename">
+        <property name="text">
+         <string>rename</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QCheckBox" name="checkBoxReNoTag">
+        <property name="text">
+         <string>rename no tag</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <layout class="QHBoxLayout" name="hLayReNoTag">
+        <item>
+         <widget class="QLabel" name="labelReNoTagPrefix">
+          <property name="text">
+           <string>prefix</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lEditReNoTagPrefix"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelReNoTagSuffix">
+          <property name="text">
+           <string>suffix</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lEditReNoTagSuffix"/>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2">
+       <layout class="QHBoxLayout" name="hLayRename">
+        <item>
+         <widget class="QLabel" name="labelRenamePrefix">
+          <property name="text">
+           <string>prefix</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lEditRenamePrefix"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelRenameSuffix">
+          <property name="text">
+           <string>suffix</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lEditRenameSuffix"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0">
     <widget class="QTextEdit" name="txtEditLog"/>
    </item>
-   <item row="3" column="0">
+   <item row="5" column="0">
     <widget class="QPushButton" name="btnStartAddData">
      <property name="text">
       <string>Start Add Data</string>
@@ -182,6 +271,27 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lEditDirInput</tabstop>
+  <tabstop>tBtnDirInput</tabstop>
+  <tabstop>tableWidgetTag</tabstop>
+  <tabstop>btnAddTag</tabstop>
+  <tabstop>btnRemoveTag</tabstop>
+  <tabstop>sBoxTrain</tabstop>
+  <tabstop>sBoxValid</tabstop>
+  <tabstop>sBoxTest</tabstop>
+  <tabstop>checkBoxShuffle</tabstop>
+  <tabstop>lEditDirOutputDivide</tabstop>
+  <tabstop>tBtnDirOutputDivide</tabstop>
+  <tabstop>checkBoxRename</tabstop>
+  <tabstop>lEditRenamePrefix</tabstop>
+  <tabstop>lEditRenameSuffix</tabstop>
+  <tabstop>checkBoxReNoTag</tabstop>
+  <tabstop>lEditReNoTagPrefix</tabstop>
+  <tabstop>lEditReNoTagSuffix</tabstop>
+  <tabstop>txtEditLog</tabstop>
+  <tabstop>btnStartAddData</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

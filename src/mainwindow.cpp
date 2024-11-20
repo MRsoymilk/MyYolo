@@ -19,6 +19,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    initMain();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::initMain() {
     addBasicWidget();
     OPEN_FOLDER_BTN(ui->tBtnProjectRoot, ui->lEditProjectRoot);
 }
@@ -63,7 +72,7 @@ void MainWindow::checkPython() {
         process.start("python3 --version");
         process.waitForFinished();
         if (process.exitCode() != 0) {
-            qWarning() << "Python not found. Installing virtual environment will fail.";
+            TXT_WARN("Python not found. Installing virtual environment will fail.");
             return; // Exit if no Python is found
         } else {
             pythonCommand = "python3";
@@ -78,18 +87,17 @@ void MainWindow::checkPython() {
     QString venvPath = "project/yolov5-master/venv";
     QDir venvDir(venvPath);
     if (!venvDir.exists()) {
-        qDebug() << "Creating virtual environment in" << venvPath;
-
+        TXT_INFO(QString("Creating virtual environment in %1").arg(venvPath));
         // Create the virtual environment
         QProcess venvProcess;
         venvProcess.start(pythonCommand, QStringList() << "-m" << "venv" << venvPath);
         venvProcess.waitForFinished();
         if (venvProcess.exitCode() != 0) {
-            qWarning() << "Failed to create virtual environment.";
+            TXT_WARN("Failed to create virtual environment.");
             return; // Exit if virtual environment creation fails
         }
     } else {
-        qDebug() << "Virtual environment already exists.";
+        TXT_INFO("Virtual environment already exists.");
     }
 
     // Step 3: Set the Python executable from the virtual environment
@@ -110,13 +118,8 @@ void MainWindow::checkPython() {
     }
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
 void MainWindow::on_btnBasicCheck_clicked()
 {
-    checkBasicDir();
+    // checkBasicDir();
     checkPython();
 }

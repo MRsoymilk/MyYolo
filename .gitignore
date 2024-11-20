@@ -1,3 +1,5 @@
+*.bkp
+*.dtmp
 # qt .user
 CMakeLists.txt.user
 # cmake build
@@ -6,4 +8,5 @@ build
 # vendor
 vendor/opencv
 # project
+project/venv
 project/yolov5-master/venv

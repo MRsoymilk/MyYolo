@@ -19,13 +19,18 @@ public:
     ~WidgetAddData();
     struct ini_add_data {
         QString dir_input = "";
-        QString dir_output = "";
-        QString script = "";
-        QString tag = "";
-        QString dir_todo = "";
+        QStringList list_tag;
         int train = 0;
         int valid = 0;
         int test = 0;
+        QString dir_output_divide = "";
+        int is_shuffle;
+        int is_rename;
+        QString rename_prefix;
+        QString rename_suffix;
+        int is_rename_no_tag;
+        QString re_notag_prefix;
+        QString re_notag_suffix;
     };
 private:
     Ui::WidgetAddData *ui;

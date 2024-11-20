@@ -23,6 +23,7 @@ private:
     void addBasicWidget();
     void checkBasicDir();
     void checkPython();
+    void initMain();
 private slots:
     void on_btnBasicCheck_clicked();
 private:

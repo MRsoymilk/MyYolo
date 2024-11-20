@@ -12,4 +12,11 @@ struct MY_GLOBAL
     QString FILE_EXPORT = "";
 };
 
+struct MSG_RE
+{
+    int code;
+    QString msg;
+    bool status;
+};
+
 #endif

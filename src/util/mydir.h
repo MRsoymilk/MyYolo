@@ -6,7 +6,8 @@
 class MyDir
 {
 public:
-    MyDir();
+    MyDir() = default;
+    ~MyDir() = default;
     static bool CheckDirExists(const QString& path);
     static bool CreateDir(const QString& path);
     static std::string Path2Path(const QString& path);

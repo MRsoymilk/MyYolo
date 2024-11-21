@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "WidgetMain/Info/widgetmaininfo.h"
-#include "WidgetMain/Setting/widgetmainsetting.h"
-#include "WidgetLabel/widgetlabel.h"
-#include "WidgetTest/widgettest.h"
-#include "WidgetTrain/widgettrain.h"
 #include "WidgetAddData/widgetadddata.h"
 #include "WidgetExport/widgetexport.h"
+#include "WidgetFilter/widgetfilter.h"
+#include "WidgetLabel/widgetlabel.h"
+#include "WidgetMain/Info/widgetmaininfo.h"
+#include "WidgetMain/Setting/widgetmainsetting.h"
+#include "WidgetTest/widgettest.h"
+#include "WidgetTrain/widgettrain.h"
 
 #include <QFileDialog>
 #include <QTranslator>
@@ -55,6 +56,7 @@ void MainWindow::initMain() {
 void MainWindow::addBasicWidget() {
     WidgetMainInfo *widgetMainInfo = new WidgetMainInfo();
     WidgetMainSetting *widgetMainSetting = new WidgetMainSetting();
+    WidgetFilter *widgetFilter = new WidgetFilter();
     WidgetAddData *widgetAddData = new WidgetAddData();
     WidgetTrain *widgetTrain = new WidgetTrain();
     WidgetTest *widgetTest = new WidgetTest();
@@ -62,6 +64,7 @@ void MainWindow::addBasicWidget() {
     WidgetLabel *widgetLabel = new WidgetLabel();
     ui->gLayLabel->addWidget(widgetLabel);
     ui->gLayAddData->addWidget(widgetAddData);
+    ui->gLayFilter->addWidget(widgetFilter);
     ui->gLayTrain->addWidget(widgetTrain);
     ui->gLayTest->addWidget(widgetTest);
     ui->gLayExport->addWidget(widgetExport);

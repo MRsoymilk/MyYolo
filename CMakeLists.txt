@@ -35,6 +35,9 @@ add_executable(myYolo
     src/WidgetMain/Setting/widgetmainsetting.h
     src/WidgetMain/Setting/widgetmainsetting.cpp
     src/WidgetMain/Setting/widgetmainsetting.ui
+    src/WidgetFilter/widgetfilter.h
+    src/WidgetFilter/widgetfilter.cpp
+    src/WidgetFilter/widgetfilter.ui
     src/WidgetLabel/widgetlabel.h
     src/WidgetLabel/widgetlabel.cpp
     src/WidgetLabel/widgetlabel.ui

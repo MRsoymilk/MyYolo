@@ -74,37 +74,23 @@ MSG_RE WidgetMainSetting::checkVenv() {
 
 MSG_RE WidgetMainSetting::checkScript()
 {
+#define CHECK_SCRIPT_EXISTS(script_var, script_name) \
+    script_var = QString("%1%2").arg(m_data.project_dir, script_name); \
+    if (!QFile::exists(script_var)) { \
+        re.status = false; \
+        re.msg = QString("no script %1 found: %2").arg(script_name).arg(script_var); \
+        return re; \
+    }
+
     MSG_RE re;
-    GLOBAL.SCRIPT_XML2TXT = QString("%1%2").arg(m_data.project_dir, "/script/xml2txt.py");
-    if(!QFile::exists(GLOBAL.SCRIPT_XML2TXT)) {
-        re.status = false;
-        re.msg = QString("no script xml2txt.py found: %1").arg(GLOBAL.SCRIPT_XML2TXT);
-        return re;
-    }
-    GLOBAL.SCRIPT_NO_XML2TXT = QString("%1%2").arg(m_data.project_dir, "/script/no_xml2txt.py");
-    if(!QFile::exists(GLOBAL.SCRIPT_NO_XML2TXT)) {
-        re.status = false;
-        re.msg = QString("no script no_xml2txt.py found: %1").arg(GLOBAL.SCRIPT_NO_XML2TXT);
-        return re;
-    }
-    GLOBAL.SCRIPT_SPLIT_DATASET = QString("%1%2").arg(m_data.project_dir, "/script/split_dataset.py");
-    if(!QFile::exists(GLOBAL.SCRIPT_SPLIT_DATASET)) {
-        re.status = false;
-        re.msg = QString("no script split_dataset.py found: %1").arg(GLOBAL.SCRIPT_SPLIT_DATASET);
-        return re;
-    }
-    GLOBAL.SCRIPT_RENAME = QString("%1%2").arg(m_data.project_dir, "/script/rename.py");
-    if(!QFile::exists(GLOBAL.SCRIPT_RENAME)) {
-        re.status = false;
-        re.msg = QString("no script rename.py found: %1").arg(GLOBAL.SCRIPT_RENAME);
-        return re;
-    }
-    GLOBAL.SCRIPT_RE_NOTAG = QString("%1%2").arg(m_data.project_dir, "/script/re_notag.py");
-    if(!QFile::exists(GLOBAL.SCRIPT_RE_NOTAG)) {
-        re.status = false;
-        re.msg = QString("no script re_notag.py found: %1").arg(GLOBAL.SCRIPT_RE_NOTAG);
-        return re;
-    }
+
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_MOVE_SIMILAR_IMG, "/script/move_similar_images.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_XML2TXT, "/script/xml2txt.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_NO_XML2TXT, "/script/no_xml2txt.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_SPLIT_DATASET, "/script/split_dataset.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_RENAME, "/script/rename.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_RE_NOTAG, "/script/re_notag.py");
+
     re.status = true;
     return re;
 }

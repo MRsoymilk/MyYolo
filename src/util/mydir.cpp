@@ -2,9 +2,6 @@
 
 #include <QDir>
 
-
-MyDir::MyDir() {}
-
 bool MyDir::CheckDirExists(const QString &path)
 {
     QDir dir(path);

@@ -2,6 +2,9 @@
 #define KEYDEF_H
 
 // config file
+#define CFG_GROUP_FILTER                "FILTER"
+#define CFG_FILTER_DIR_INPUT            "dir_input"
+#define CFG_FILTER_DIR_OUTPUT           "dir_output"
 #define CFG_GROUP_ADD_DATA              "ADD_DATA"
 #define CFG_ADD_DATA_DIR_INPUT          "dir_input"
 #define CFG_ADD_DATA_DIR_OUTPUT_DIVIDE  "dir_output_divide"

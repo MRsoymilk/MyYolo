@@ -159,24 +159,25 @@ void WidgetAddData::callNoXml2Txt() {
 }
 
 void WidgetAddData::callRename() {
-
-    QStringList arguments_rename {
-        GLOBAL.SCRIPT_RENAME,
-        "--input_folder", m_data.dir_img,
-        "--prefix", QString("\"%1\"").arg(m_data.rename_prefix),
-        "--suffix", QString("\"%1\"").arg(m_data.rename_suffix),
-    };
+    QStringList arguments_rename{GLOBAL.SCRIPT_RENAME, "--input_folder", m_data.dir_img};
+    if (!m_data.rename_prefix.isEmpty()) {
+        arguments_rename << "--prefix" << m_data.rename_prefix;
+    }
+    if (!m_data.rename_suffix.isEmpty()) {
+        arguments_rename << "--suffix" << m_data.rename_suffix;
+    }
     TXT_INFO(QString("Script: %1").arg(arguments_rename.join(' ')));
     runScript(arguments_rename);
 }
 
 void WidgetAddData::callReNoTag() {
-    QStringList arguments_re_notag {
-        GLOBAL.SCRIPT_RE_NOTAG,
-        "--input_folder", m_data.dir_img,
-        "--prefix", QString("\"%1\"").arg(m_data.re_notag_prefix),
-        "--suffix", QString("\"%1\"").arg(m_data.re_notag_suffix)
-    };
+    QStringList arguments_re_notag{GLOBAL.SCRIPT_RE_NOTAG, "--input_folder", m_data.dir_img};
+    if (!m_data.re_notag_prefix.isEmpty()) {
+        arguments_re_notag << "--prefix" << m_data.re_notag_prefix;
+    }
+    if (!m_data.re_notag_suffix.isEmpty()) {
+        arguments_re_notag << "--suffix" << m_data.re_notag_suffix;
+    }
     TXT_INFO(QString("Script: %1").arg(arguments_re_notag.join(' ')));
     runScript(arguments_re_notag);
 }

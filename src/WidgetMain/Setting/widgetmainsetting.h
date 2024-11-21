@@ -16,7 +16,8 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
 public:
     explicit WidgetMainSetting(QWidget *parent = nullptr);
     ~WidgetMainSetting();
-    struct ini_data {
+    struct ini_main_setting
+    {
         QString project_dir = "";
         QString cmd_python = "";
         QString cmd_pip = "";
@@ -37,7 +38,7 @@ private:
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
-    ini_data m_data;
+    ini_main_setting m_data;
 };
 
 #endif // WIDGETMAINSETTING_H

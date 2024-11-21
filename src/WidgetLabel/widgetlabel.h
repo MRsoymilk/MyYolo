@@ -16,7 +16,8 @@ class WidgetLabel : public QWidget, public ConfigHandler
 public:
     explicit WidgetLabel(QWidget *parent = nullptr);
     ~WidgetLabel();
-    struct ini_data {
+    struct ini_label
+    {
         QString path_labelimg;
     };
 
@@ -25,7 +26,7 @@ private:
 
     // ConfigHandler interface
     void initLabel();
-    ini_data m_data;
+    ini_label m_data;
 private slots:
     void on_btnStartLabel_clicked();
     void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);

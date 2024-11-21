@@ -34,8 +34,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
 void MainWindow::initMain() {
     addBasicWidget();
     for (QAction* action : ui->menuTheme->actions()) {

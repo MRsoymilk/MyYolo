@@ -8,8 +8,15 @@ struct MY_GLOBAL
     QString PLATFORM = ""; // Windows / Linux
     QString PROEJCT = "";
     QString PYTHON = "";
-    QString FILE_TRAIN = "";
-    QString FILE_EXPORT = "";
+    QString PIP = "";
+    QString SCRIPT_TRAIN = "";
+    QString SCRIPT_EXPORT = "";
+    QString SCRIPT_XML2TXT = "";
+    QString SCRIPT_NO_XML2TXT = "";
+    QString SCRIPT_RENAME = "";
+    QString SCRIPT_RE_NOTAG = "";
+    QString SCRIPT_SPLIT_DATASET = "";
+    QString EXE_LABELIMG = "";
 };
 
 struct MSG_RE

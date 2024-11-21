@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WidgetMainSetting</class>
- <widget class="QWidget" name="WidgetMainSetting">
+ <class>WidgetLabel</class>
+ <widget class="QWidget" name="WidgetLabel">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>636</width>
-    <height>610</height>
+    <width>513</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,19 +15,19 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="hLayLabelImg">
      <item>
-      <widget class="QLabel" name="labelProjectRoot">
+      <widget class="QLabel" name="labelLabelImg">
        <property name="text">
-        <string>Project Root</string>
+        <string>labelImg</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lEditProjectRoot"/>
+      <widget class="QLineEdit" name="lEditLabelImg"/>
      </item>
      <item>
-      <widget class="QToolButton" name="tBtnProjectRoot">
+      <widget class="QToolButton" name="tBtnLabelImg">
        <property name="text">
         <string>...</string>
        </property>
@@ -39,9 +39,9 @@
     <widget class="QTextEdit" name="txtEditLog"/>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="btnBasicCheck">
+    <widget class="QPushButton" name="btnStartLabel">
      <property name="text">
-      <string>Basic Check</string>
+      <string>Start Label</string>
      </property>
     </widget>
    </item>

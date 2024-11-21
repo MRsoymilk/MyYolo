@@ -5,7 +5,7 @@
 #include "../include/keydef.h"
 #include "../util/mylog.h"
 #include "../util/mysetting.h"
-
+#include "../include/global.h"
 #include <QFileDialog>
 #include <QProcess>
 #include <qcombobox.h>
@@ -35,17 +35,22 @@ QStringList getClassList(QTableWidget *widget) {
 void setClassList(QTableWidget *widget, const QStringList &classList) {
     widget->setRowCount(classList.size());
     for (int row = 0; row < classList.size(); ++row) {
+        if(classList.at(row).isEmpty()) {
+            continue;
+        }
         widget->setItem(row, 0, new QTableWidgetItem(QString::number(row)));
         widget->setItem(row, 1, new QTableWidgetItem(classList.at(row)));
     }
 }
 
 void WidgetAddData::getCfgData() {
-    m_data.dir_input = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT);
-    m_data.list_tag = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_LIST_TAG).split(',');
-    m_data.train = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TRAIN).toInt();
-    m_data.valid = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_VALID).toInt();
-    m_data.test = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TEST).toInt();
+    m_data.dir_img = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT);
+    QStringList tags = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_LIST_TAG).split(',');
+    tags.removeAll("");
+    m_data.list_tag = tags;
+    m_data.train = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TRAIN).toDouble();
+    m_data.valid = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_VALID).toDouble();
+    m_data.test = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TEST).toDouble();
     m_data.dir_output_divide = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_OUTPUT_DIVIDE);
     m_data.is_shuffle = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_SHUFFLE).toInt();
     m_data.is_rename = MY_SETTING.getValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_RENAME).toInt();
@@ -57,11 +62,11 @@ void WidgetAddData::getCfgData() {
 }
 
 void WidgetAddData::getUiData() {
-    m_data.dir_input = ui->lEditDirInput->text();
+    m_data.dir_img = ui->lEditDirInput->text();
     m_data.list_tag = getClassList(ui->tableWidgetTag);
-    m_data.train = ui->sBoxTrain->value();
-    m_data.valid = ui->sBoxValid->value();
-    m_data.test = ui->sBoxTest->value();
+    m_data.train = ui->doubleSpinBoxTrain->value();
+    m_data.valid = ui->doubleSpinBoxValid->value();
+    m_data.test = ui->doubleSpinBoxTest->value();
     m_data.dir_output_divide = ui->lEditDirOutputDivide->text();
     m_data.is_shuffle = ui->checkBoxShuffle->isChecked();
     m_data.is_rename = ui->checkBoxRename->isChecked();
@@ -73,11 +78,11 @@ void WidgetAddData::getUiData() {
 }
 
 void WidgetAddData::show2Ui() {
-    ui->lEditDirInput->setText(m_data.dir_input);
+    ui->lEditDirInput->setText(m_data.dir_img);
     setClassList(ui->tableWidgetTag, m_data.list_tag);
-    ui->sBoxTrain->setValue(m_data.train);
-    ui->sBoxValid->setValue(m_data.valid);
-    ui->sBoxTest->setValue(m_data.test);
+    ui->doubleSpinBoxTrain->setValue(m_data.train);
+    ui->doubleSpinBoxValid->setValue(m_data.valid);
+    ui->doubleSpinBoxTest->setValue(m_data.test);
     ui->lEditDirOutputDivide->setText(m_data.dir_output_divide);
     ui->checkBoxShuffle->setCheckState(m_data.is_shuffle ? Qt::Checked : Qt::Unchecked);
     ui->checkBoxRename->setCheckState(m_data.is_rename ? Qt::Checked : Qt::Unchecked);
@@ -89,7 +94,7 @@ void WidgetAddData::show2Ui() {
 }
 
 void WidgetAddData::save2Cfg() {
-    MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT, m_data.dir_input);
+    MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_LIST_TAG, m_data.list_tag.join(','));
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TRAIN, QString::number(m_data.train));
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_VALID, QString::number(m_data.valid));
@@ -104,12 +109,12 @@ void WidgetAddData::save2Cfg() {
     MY_SETTING.setValue(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_SUFFIX, m_data.re_notag_suffix);
 
     MY_LOG_INFO("config save: Group[{}]", CFG_GROUP_ADD_DATA);
-    MY_LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_INPUT, m_data.dir_input);
+    MY_LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_OUTPUT_DIVIDE, m_data.dir_output_divide);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_TRAIN, m_data.train);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_VALID, m_data.valid);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_TEST, m_data.test);
-    MY_LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_INPUT, m_data.dir_input);
+    MY_LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_OUTPUT_DIVIDE, m_data.dir_output_divide);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_TRAIN, m_data.train);
     MY_LOG_INFO("{}: {}", CFG_ADD_DATA_VALID, m_data.valid);
@@ -121,13 +126,79 @@ void WidgetAddData::initAddData() {
     show2Ui();
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     OPEN_FOLDER_BTN(ui->tBtnDirOutputDivide, ui->lEditDirOutputDivide);
+    m_process = new QProcess();
+    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetAddData::onProcessOutput);
+    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetAddData::onProcessError);
+    connect(m_process, &QProcess::finished, this, &WidgetAddData::onProcessFinished);
+    connect(m_process, &QProcess::errorOccurred, [](QProcess::ProcessError error) {
+        qDebug() << "Process error occurred: " << error;
+    });
 }
 
+void WidgetAddData::callXml2Txt() {
+    // python xml2txt.py --class_names car,person --input_folder /path/to/input_folder --output_folder /path/to/output_folder
+    QStringList arguments_xml2txt {
+        GLOBAL.SCRIPT_XML2TXT,
+        "--class_name", m_data.list_tag.join(','),
+        "--input_folder", m_data.dir_img,
+        "--output_folder", m_data.dir_img
+    };
+    TXT_INFO(QString("Script: %1").arg(arguments_xml2txt.join(' ')));
+    runScript(arguments_xml2txt);
+}
+
+void WidgetAddData::callNoXml2Txt() {
+    // python no_xml2txt.py --input_folder /path/to/input_folder --output_folder /path/to/output_folder
+    QStringList arguments_no_xml2txt {
+        GLOBAL.SCRIPT_NO_XML2TXT,
+        "--input_folder", m_data.dir_img,
+        "--output_folder", m_data.dir_img
+    };
+    TXT_INFO(QString("Script: %1").arg(arguments_no_xml2txt.join(' ')));
+    runScript(arguments_no_xml2txt);
+}
+
+void WidgetAddData::callRename() {
+
+    QStringList arguments_rename {
+        GLOBAL.SCRIPT_RENAME,
+        "--input_folder", m_data.dir_img,
+        "--prefix", QString("\"%1\"").arg(m_data.rename_prefix),
+        "--suffix", QString("\"%1\"").arg(m_data.rename_suffix),
+    };
+    TXT_INFO(QString("Script: %1").arg(arguments_rename.join(' ')));
+    runScript(arguments_rename);
+}
+
+void WidgetAddData::callReNoTag() {
+    QStringList arguments_re_notag {
+        GLOBAL.SCRIPT_RE_NOTAG,
+        "--input_folder", m_data.dir_img,
+        "--prefix", QString("\"%1\"").arg(m_data.re_notag_prefix),
+        "--suffix", QString("\"%1\"").arg(m_data.re_notag_suffix)
+    };
+    TXT_INFO(QString("Script: %1").arg(arguments_re_notag.join(' ')));
+    runScript(arguments_re_notag);
+}
+
+void WidgetAddData::callSpliteDataset() {
+    QStringList arguments_splitedata {
+        GLOBAL.SCRIPT_SPLIT_DATASET,
+        "--dir_in", m_data.dir_img,
+        "--dir_out", m_data.dir_output_divide,
+        "--train-ratio", QString::number(m_data.train),
+        "--val-ratio", QString::number(m_data.valid),
+        "--test-ratio", QString::number(m_data.test),
+        "--shuffle", QString::number(m_data.is_shuffle)
+    };
+    TXT_INFO(QString("Script: %1").arg(arguments_splitedata.join(' ')));
+    runScript(arguments_splitedata);
+}
 
 void WidgetAddData::on_btnStartAddData_clicked() {
     getUiData();
     save2Cfg();
-    TXT_INFO("dir input: " + m_data.dir_input);
+    TXT_INFO("dir input: " + m_data.dir_img);
     // TXT_INFO("scirpt: " + m_data.script);
     TXT_INFO("dir output: " + m_data.dir_output_divide);
     TXT_INFO(QString("train: %1").arg(m_data.train));
@@ -135,7 +206,7 @@ void WidgetAddData::on_btnStartAddData_clicked() {
     TXT_INFO(QString("test: %1").arg(m_data.test));
 
     // pre check
-    if(m_data.dir_input.isEmpty()) {
+    if(m_data.dir_img.isEmpty()) {
         SHOW_MSGBOX_CRITICAL("data input can not be empty!");
         return;
     }
@@ -143,69 +214,42 @@ void WidgetAddData::on_btnStartAddData_clicked() {
         SHOW_MSGBOX_CRITICAL("data output divide can not be empty!");
         return;
     }
-    if(m_data.train + m_data.valid + m_data.test != 10) {
-        SHOW_MSGBOX_CRITICAL("train + valid + test must be 10!");
+    const double epsilon = 1e-6;
+    double val = qAbs((m_data.train + m_data.valid + m_data.test) - 1.0);
+    if (val > epsilon) {
+        SHOW_MSGBOX_CRITICAL("train + valid + test must be 1.0!");
         return;
     }
 
-    // process file
-    QDir dir(m_data.dir_input);
-    QFileInfoList entries = dir.entryInfoList(QStringList() << "*.jpg", QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
-    int total = entries.count();
-    int to_train = total * (m_data.train / 10.0);
-    int to_valid = total * ((m_data.train + m_data.valid) / 10.0);
-    int to_test = total - to_train - to_valid;
-    TXT_INFO(QString("count of train: %1").arg(to_train));
-    TXT_INFO(QString("count of valid: %1").arg(to_valid));
-    TXT_INFO(QString("count of test: %1").arg(to_test));
-    // runScript(m_data.script, m_data.tag, m_data.dir_input, m_data.dir_output);
-    QStringList listTrain{}, listValid{}, listTest{};
-    int count = 1;
-    foreach (const QFileInfo &entry, entries) {
-        if(!entry.isFile()) {
-            SHOW_MSGBOX_WARNING(QString("we dont handle: %1").arg(entry.absoluteFilePath()));
-            continue;
-        }
-        TXT_INFO(QString("path %1").arg(entry.absoluteFilePath()));
-        QString baseName = entry.baseName();
-        // .xml and .txt
-        QString xmlFilePath = dir.filePath(baseName + ".xml");
-        QString txtFilePath = dir.filePath(baseName + ".txt");
-
-        if(QFile::exists(xmlFilePath) && QFile::exists(txtFilePath)) {
-            TXT_INFO(QString("exist xml %1, txt %2").arg(xmlFilePath, txtFilePath));
-            if(count <= to_train) {
-                listTrain.append(entry.absoluteFilePath());
-            }
-            else if(count > to_train && count <= to_valid) {
-                listTest.append(entry.absoluteFilePath());
-            }
-            else {
-                listValid.append(entry.absoluteFilePath());
-            }
+    // generate txt file: call xml2txt.py
+    callXml2Txt();
+    // generate no txt file: call no_xml2txt.py
+    callNoXml2Txt();
+    // reaname: call rename.py
+    if(ui->checkBoxRename->isChecked()) {
+        if(ui->lEditRenamePrefix->text().isEmpty() && ui->lEditRenameSuffix->text().isEmpty()) {
+            TXT_WARN("empty prefix and suffix");
         }
         else {
-            // mov jpg to dir todo
-            // QFile::rename(entry.absoluteFilePath(), m_data.dir_todo + "/" + entry.fileName());
+            callRename();
         }
-        ++count;
     }
+    // rename: call re_notag.py
+    if(ui->checkBoxReNoTag->isChecked()) {
+        if(ui->lEditReNoTagPrefix->text().isEmpty() && ui->lEditReNoTagSuffix->text().isEmpty()) {
+            TXT_WARN("empty prefix and suffix");
+        }
+        else {
+            callReNoTag();
+        }
+    }
+    // add train.txt, test.txt, val.txt
+    callSpliteDataset();
 }
 
-void WidgetAddData::runScript(const QString& script_path, const QString& class_name, const QString& input_folder, const QString& output_folder)
+void WidgetAddData::runScript(const QStringList &arguments)
 {
-    QProcess* process = new QProcess(this);
-    QString pythonCommand = "python";
-    QStringList arguments;
-    arguments << "--class_name" << class_name
-              << "--input_folder" << input_folder
-              << "--output_folder" << output_folder;
-
-    connect(process, &QProcess::readyReadStandardOutput, this, &WidgetAddData::onProcessOutput);
-    connect(process, &QProcess::readyReadStandardError, this, &WidgetAddData::onProcessError);
-    connect(process, &QProcess::finished, this, &WidgetAddData::onProcessFinished);
-
-    process->start(pythonCommand, QStringList() << script_path << arguments);
+    m_process->startDetached(GLOBAL.PYTHON, arguments);
 }
 
 void WidgetAddData::onProcessOutput()
@@ -241,48 +285,36 @@ void WidgetAddData::onProcessFinished(int exitCode, QProcess::ExitStatus exitSta
     }
 }
 
-void WidgetAddData::on_btnHandleNoGap_clicked()
+void WidgetAddData::on_btnAddTag_clicked()
 {
-    getUiData();
-    QDir dir("");
+    int newRow = ui->tableWidgetTag->rowCount();
+    ui->tableWidgetTag->insertRow(newRow);
 
-    QFileInfoList entries = dir.entryInfoList(QStringList() << "*.jpg", QDir::Files | QDir::NoDotAndDotDot);
+    QTableWidgetItem *idItem = new QTableWidgetItem(QString::number(newRow));
+    ui->tableWidgetTag->setItem(newRow, 0, idItem);
 
-    foreach (const QFileInfo &entry, entries) {
-        QString baseName = entry.baseName();
+    QTableWidgetItem *classNameItem = new QTableWidgetItem();
+    ui->tableWidgetTag->setItem(newRow, 1, classNameItem);
 
-        QString xmlFilePath = dir.filePath(baseName + ".xml");
+    QPushButton *deleteButton = new QPushButton("Delete");
+    ui->tableWidgetTag->setCellWidget(newRow, 2, deleteButton);
 
-        if (QFile::exists(entry.absoluteFilePath()) && QFile::exists(xmlFilePath)) {
-            QString newJpgFilePath = dir.filePath(baseName + "_no_gap.jpg");
-            QString newXmlFilePath = dir.filePath(baseName + "_no_gap.xml");
+    connect(deleteButton, &QPushButton::clicked, this, [this, deleteButton]() {
+        int row = ui->tableWidgetTag->indexAt(deleteButton->pos()).row();
+        ui->tableWidgetTag->removeRow(row);
+    });
+}
 
-            if (QFile::rename(entry.absoluteFilePath(), newJpgFilePath)) {
-                TXT_INFO(QString("Renamed jpg to: %1").arg(newJpgFilePath));
-            }
-            else {
-                TXT_WARN(QString("Failed to rename jpg: %1").arg(entry.absoluteFilePath()));
-            }
-
-            if (QFile::rename(xmlFilePath, newXmlFilePath)) {
-                TXT_INFO(QString("Renamed xml to: %1").arg(newXmlFilePath));
-            }
-            else {
-                TXT_WARN(QString("Failed to rename xml: %1").arg(xmlFilePath));
-            }
-
-            QString txtFilePath = dir.filePath(baseName + "_no_gap.txt");
-            QFile txtFile(txtFilePath);
-            if (txtFile.open(QIODevice::WriteOnly)) {
-                txtFile.close();
-                TXT_INFO(QString("Created empty txt file: %1").arg(txtFilePath));
-            }
-            else {
-                TXT_WARN(QString("Failed to create txt file: %1").arg(txtFilePath));
-            }
-        }
-        else {
-            TXT_WARN(QString("Missing jpg or xml for %1").arg(entry.absoluteFilePath()));
-        }
+void WidgetAddData::on_btnRemoveTag_clicked()
+{
+    int row = ui->tableWidgetTag->currentRow();
+    if (row >= 0) {
+        ui->tableWidgetTag->removeRow(row);
     }
 }
+
+void WidgetAddData::on_tableWidgetTag_cellDoubleClicked(int row, int column)
+{
+    ui->tableWidgetTag->editItem(ui->tableWidgetTag->item(row, column));
+}
+

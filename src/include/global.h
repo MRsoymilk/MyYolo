@@ -3,6 +3,6 @@
 
 #include "datadef.h"
 
-MY_GLOBAL GLOBAL;
+extern MY_GLOBAL GLOBAL;
 
 #endif // GLOBAL_H

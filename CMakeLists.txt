@@ -35,6 +35,9 @@ add_executable(myYolo
     src/WidgetMain/Setting/widgetmainsetting.h
     src/WidgetMain/Setting/widgetmainsetting.cpp
     src/WidgetMain/Setting/widgetmainsetting.ui
+    src/WidgetLabel/widgetlabel.h
+    src/WidgetLabel/widgetlabel.cpp
+    src/WidgetLabel/widgetlabel.ui
     src/WidgetAddData/widgetadddata.h
     src/WidgetAddData/widgetadddata.cpp
     src/WidgetAddData/widgetadddata.ui
@@ -49,17 +52,31 @@ add_executable(myYolo
     src/WidgetTest/widgettest.ui
     src/WidgetTest/onnxcheck.h
     src/WidgetTest/onnxcheck.cpp
+    src/myYolo.qrc
 )
 
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-target_link_libraries(myYolo PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets LinguistTools)
+target_link_libraries(myYolo PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets)
+
+set(TRANSLATIONS
+    src/res/i18n/en.ts
+    src/res/i18n/zh_simple.ts
+    src/res/i18n/zh_traditional.ts
+)
+
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES)
+
+qt_add_translations(myYolo
+               TS_FILES  ${TRANSLATIONS})
+
+install(FILES ${qm_files} DESTINATION "translations")
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.myYolo)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.soymilk.myYolo)
 endif()
 set_target_properties(myYolo PROPERTIES
     ${BUNDLE_ID_OPTION}

@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabMain">
        <attribute name="title">
@@ -28,7 +28,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidgetMain">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tabInfo">
            <attribute name="title">
@@ -54,13 +54,23 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tabLabel">
+       <attribute name="title">
+        <string>Label</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gLayLabel"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="tabAddData">
        <attribute name="title">
         <string>Add Data</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gLayoutAddData"/>
+         <layout class="QGridLayout" name="gLayAddData"/>
         </item>
        </layout>
       </widget>
@@ -70,7 +80,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gLayoutTrain"/>
+         <layout class="QGridLayout" name="gLayTrain"/>
         </item>
        </layout>
       </widget>
@@ -80,7 +90,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_7">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gLayoutExport"/>
+         <layout class="QGridLayout" name="gLayExport"/>
         </item>
        </layout>
       </widget>
@@ -90,7 +100,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gLayoutTest"/>
+         <layout class="QGridLayout" name="gLayTest"/>
         </item>
        </layout>
       </widget>
@@ -107,8 +117,62 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuTheme">
+    <property name="title">
+     <string>theme</string>
+    </property>
+    <addaction name="actionLite"/>
+    <addaction name="actionDark"/>
+    <addaction name="actionOSX_Lite"/>
+    <addaction name="actionOSX_Dark"/>
+   </widget>
+   <widget class="QMenu" name="menulanguage">
+    <property name="title">
+     <string>language</string>
+    </property>
+    <addaction name="actionen"/>
+    <addaction name="actionzh_simple"/>
+    <addaction name="actionzh_traditioal"/>
+   </widget>
+   <addaction name="menuTheme"/>
+   <addaction name="menulanguage"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionLite">
+   <property name="text">
+    <string>Lite</string>
+   </property>
+  </action>
+  <action name="actionDark">
+   <property name="text">
+    <string>Dark</string>
+   </property>
+  </action>
+  <action name="actionOSX_Dark">
+   <property name="text">
+    <string>OSX Dark</string>
+   </property>
+  </action>
+  <action name="actionOSX_Lite">
+   <property name="text">
+    <string>OSX Lite</string>
+   </property>
+  </action>
+  <action name="actionen">
+   <property name="text">
+    <string>en</string>
+   </property>
+  </action>
+  <action name="actionzh_simple">
+   <property name="text">
+    <string>zh_simple</string>
+   </property>
+  </action>
+  <action name="actionzh_traditioal">
+   <property name="text">
+    <string>zh_traditional</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

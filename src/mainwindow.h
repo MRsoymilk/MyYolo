@@ -19,11 +19,16 @@ public:
     struct ini_main {
         QString path = "";
     };
+
 private:
     void addBasicWidget();
     void initMain();
 private:
     Ui::MainWindow *ui;
     ini_main m_data;
+    void menuThemeSelect(QAction* selectedAction);
+    void setTheme(const QString &theme);
+    void menuLanguageSelect(QAction *selectedAction);
+    void setLanguage(const QString &language);
 };
 #endif // MAINWINDOW_H

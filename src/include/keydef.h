@@ -41,6 +41,8 @@
 #define CFG_EXPORT_TYPE                 "type"
 #define CFG_EXPORT_PT_MODEL             "pt_model"
 #define CFG_EXPORT_DIR_OUTPUT           "dir_output"
+#define CFG_GROUP_LABEL                 "LABEL"
+#define CFG_LABEL_PATH_LABELIMG         "path_labelimg"
 // dir
 #define DIR_TEST                        "test"
 #define DIR_MODEL                       "model"

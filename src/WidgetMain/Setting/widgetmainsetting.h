@@ -3,27 +3,41 @@
 
 #include <QWidget>
 #include "../../include/datadef.h"
+#include "../../common/confighandler.h"
 
 namespace Ui {
 class WidgetMainSetting;
 }
 
-class WidgetMainSetting : public QWidget
+class WidgetMainSetting : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
 public:
     explicit WidgetMainSetting(QWidget *parent = nullptr);
     ~WidgetMainSetting();
+    struct ini_data {
+        QString project_dir = "";
+        QString cmd_python = "";
+        QString cmd_pip = "";
+    };
 private slots:
     void on_btnBasicCheck_clicked();
-
 private:
     Ui::WidgetMainSetting *ui;
-    MSG_RE checkBasicDir();
     MSG_RE checkPython();
     void initMainSetting();
     MSG_RE checkVenv();
+    MSG_RE checkScript();
+    MSG_RE checkTools();
+    MSG_RE checkYolo5();
+    // ConfigHandler interface
+private:
+    void getCfgData() override;
+    void save2Cfg() override;
+    void show2Ui() override;
+    void getUiData() override;
+    ini_data m_data;
 };
 
 #endif // WIDGETMAINSETTING_H

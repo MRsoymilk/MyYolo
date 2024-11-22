@@ -22,22 +22,24 @@ public:
         QString cmd_python = "";
         QString cmd_pip = "";
     };
-private slots:
-    void on_btnBasicCheck_clicked();
+
 private:
-    Ui::WidgetMainSetting *ui;
     MSG_RE checkPython();
     void initMainSetting();
     MSG_RE checkVenv();
     MSG_RE checkScript();
     MSG_RE checkTools();
     MSG_RE checkYolo5();
-    // ConfigHandler interface
-private:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
+
+private slots:
+    void on_btnBasicCheck_clicked();
+
+private:
+    Ui::WidgetMainSetting *ui;
     ini_main_setting m_data;
 };
 

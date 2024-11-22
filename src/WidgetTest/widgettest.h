@@ -27,6 +27,7 @@ public:
         QString dir_input = "";
         QString dir_output = "";
     };
+
 private:
     void initTest();
     void testOnnx();
@@ -34,6 +35,7 @@ private:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
+
 private slots:
     void on_btnStartTest_clicked();
     void on_sBoxModelWidth_editingFinished();

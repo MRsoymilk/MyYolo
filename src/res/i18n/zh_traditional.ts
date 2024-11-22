@@ -25,71 +25,76 @@
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="59"/>
-        <source>Label</source>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="69"/>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.ui" line="79"/>
         <source>Add Data</source>
         <translation>新增數據</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="79"/>
+        <location filename="../../mainwindow.ui" line="89"/>
         <source>Train</source>
         <translation>訓練</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="89"/>
+        <location filename="../../mainwindow.ui" line="99"/>
         <source>Export</source>
         <translation>匯出</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="99"/>
+        <location filename="../../mainwindow.ui" line="109"/>
         <source>Test</source>
         <translation>測試</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="122"/>
+        <location filename="../../mainwindow.ui" line="132"/>
         <source>theme</source>
         <translation>主題</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="131"/>
+        <location filename="../../mainwindow.ui" line="141"/>
         <source>language</source>
         <translation>語言</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="143"/>
+        <location filename="../../mainwindow.ui" line="153"/>
         <source>Lite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="148"/>
+        <location filename="../../mainwindow.ui" line="158"/>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="153"/>
+        <location filename="../../mainwindow.ui" line="163"/>
         <source>OSX Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="158"/>
+        <location filename="../../mainwindow.ui" line="168"/>
         <source>OSX Lite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="163"/>
+        <location filename="../../mainwindow.ui" line="173"/>
         <source>en</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="168"/>
+        <location filename="../../mainwindow.ui" line="178"/>
         <source>zh_simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="173"/>
+        <location filename="../../mainwindow.ui" line="183"/>
         <source>zh_traditional</source>
         <translation type="unfinished"></translation>
     </message>
@@ -271,6 +276,55 @@
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="107"/>
         <source>Start Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WidgetFilter</name>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="14"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="20"/>
+        <source>directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="26"/>
+        <source>dir input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="38"/>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="59"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="47"/>
+        <source>dir output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="71"/>
+        <source>operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="79"/>
+        <source>SSIM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="86"/>
+        <source>threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="111"/>
+        <source>Start Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

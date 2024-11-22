@@ -22,21 +22,21 @@ public:
         QString pt_model = "";
         QString dir_output = "";
     };
+
 private:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
     void runScript(const QString &script_path);
+
 private slots:
     void initExport();
     void on_btnStartExport_clicked();
     void onProcessOutput();
     void onProcessError();
     void onProcessFinished(int exitCode);
-
     void on_btnAddType_clicked();
-
     void on_comboBoxType_currentTextChanged(const QString &type);
 
 private:

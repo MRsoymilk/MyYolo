@@ -21,27 +21,28 @@ public:
         QString dir_input = "";
         QString dir_output = "";
         int is_ssim;
+        double threshold_ssim = 0.0;
     };
-
-private:
-    Ui::WidgetFilter *ui;
-
-    // ConfigHandler interface
-    void initFilter();
-    ini_filter m_data;
-
-    void callMoveSimilarImgs();
-
-    void runScript(const QStringList &arguments);
-
-public:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
-    QProcess *m_process;
+
+private:
+    void initFilter();
+    void callMoveSimilarImgs();
+    void runScript(const QStringList &arguments);
+
 private slots:
     void on_btnStartFilter_clicked();
+    void onProcessOutput();
+    void onProcessError();
+    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
+private:
+    Ui::WidgetFilter *ui;
+    ini_filter m_data;
+    QProcess *m_process;
 };
 
 #endif // WIDGETFILTER_H

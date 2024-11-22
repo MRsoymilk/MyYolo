@@ -20,25 +20,24 @@ public:
     {
         QString path_labelimg;
     };
-
-private:
-    Ui::WidgetLabel *ui;
-
-    // ConfigHandler interface
-    void initLabel();
-    ini_label m_data;
-private slots:
-    void on_btnStartLabel_clicked();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-
-    void onReadyReadStandardError();
-    void onReadyReadStandardOutput();
-public:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
+
+private:
+    void initLabel();
+
+private slots:
+    void on_btnStartLabel_clicked();
+    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onReadyReadStandardError();
+    void onReadyReadStandardOutput();
+
+private:
     QProcess *m_process;
+    Ui::WidgetLabel *ui;
+    ini_label m_data;
 };
 
 #endif // WIDGETLABEL_H

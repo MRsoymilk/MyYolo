@@ -130,9 +130,6 @@ void WidgetAddData::initAddData() {
     connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetAddData::onProcessOutput);
     connect(m_process, &QProcess::readyReadStandardError, this, &WidgetAddData::onProcessError);
     connect(m_process, &QProcess::finished, this, &WidgetAddData::onProcessFinished);
-    connect(m_process, &QProcess::errorOccurred, [](QProcess::ProcessError error) {
-        qDebug() << "Process error occurred: " << error;
-    });
 }
 
 void WidgetAddData::callXml2Txt() {

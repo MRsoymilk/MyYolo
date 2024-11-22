@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QWidget>
 #include <QProcess>
+#include <Process.h>
 #include "../common/confighandler.h"
 #include "onnxcheck.h"
 
@@ -23,7 +24,8 @@ public:
         int model_width = 0;
         double threshold_nms = 0.0;
         double threshold_cfd = 0.0;
-        QString model = "";
+        QString model_onnx = "";
+        QString model_pt = "";
         QString dir_input = "";
         QString dir_output = "";
     };
@@ -35,6 +37,8 @@ private:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
+    void testPt();
+    void runScript(const QStringList &arguments);
 
 private slots:
     void on_btnStartTest_clicked();
@@ -45,11 +49,15 @@ private slots:
     void on_tableWidgetClassEdit_cellDoubleClicked(int row, int column);
     void on_doubleSpinBoxThresholdCfd_editingFinished();
     void on_doubleSpinBoxThresholdNMS_editingFinished();
+    void onProcessOutput();
+    void onProcessError();
+    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
     Ui::WidgetTest *ui;
     ini_test m_data;
-    OnnxCheck m_check;
+    OnnxCheck m_onnxCheck;
+    QProcess *m_process;
 };
 
 #endif // WIDGETTEST_H

@@ -5,6 +5,7 @@
 #include <QDir>
 
 #include "../include/funcdef.h"
+#include "../include/global.h"
 #include "../include/keydef.h"
 #include "../util/mylog.h"
 #include "../util/mysetting.h"
@@ -25,15 +26,21 @@ WidgetTest::~WidgetTest()
 void WidgetTest::initTest() {
     getCfgData();
     show2Ui();
-    OPEN_FILE_BTN(ui->tBtnModel, ui->lEditModel);
+    OPEN_FILE_BTN(ui->tBtnModelOnnx, ui->lEditModelOnnx);
+    OPEN_FILE_BTN(ui->tBtnModelPt, ui->lEditModelPt);
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
+    m_process = new QProcess();
+    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetTest::onProcessOutput);
+    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetTest::onProcessError);
+    connect(m_process, &QProcess::finished, this, &WidgetTest::onProcessFinished);
 }
 
 void WidgetTest::getUiData() {
     m_data.model_height = ui->sBoxModelHeight->value();
     m_data.model_width = ui->sBoxModelWidth->value();
-    m_data.model = ui->lEditModel->text();
+    m_data.model_onnx = ui->lEditModelOnnx->text();
+    m_data.model_pt = ui->lEditModelPt->text();
     m_data.threshold_cfd = ui->doubleSpinBoxThresholdCfd->value();
     m_data.threshold_nms = ui->doubleSpinBoxThresholdNMS->value();
     m_data.dir_input = ui->lEditDirInput->text();
@@ -43,7 +50,8 @@ void WidgetTest::getUiData() {
 void WidgetTest::getCfgData() {
     m_data.model_height = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT).toInt();
     m_data.model_width = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH).toInt();
-    m_data.model = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL);
+    m_data.model_onnx = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL_ONNX);
+    m_data.model_pt = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_MODEL_PT);
     m_data.threshold_cfd = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_CFD).toDouble();
     m_data.threshold_nms = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_NMS).toDouble();
     m_data.dir_input = MY_SETTING.getValue(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT);
@@ -53,7 +61,8 @@ void WidgetTest::getCfgData() {
 void WidgetTest::save2Cfg() {
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT, QString::number(m_data.model_height));
     MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH, QString::number(m_data.model_width));
-    MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL, m_data.model);
+    MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL_ONNX, m_data.model_onnx);
+    MY_SETTING.setValue(CFG_GROUP_TEST, CFG_TEST_MODEL_PT, m_data.model_pt);
     MY_SETTING.setValue(CFG_GROUP_TEST,
                         CFG_TEST_THRESHOLD_CFD,
                         QString::number(m_data.threshold_cfd));
@@ -67,7 +76,8 @@ void WidgetTest::save2Cfg() {
     MY_LOG_INFO("{}: {}", CFG_TEST_MODEL_WIDTH, m_data.model_width);
     MY_LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_CFD, m_data.threshold_cfd);
     MY_LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_NMS, m_data.threshold_nms);
-    MY_LOG_INFO("{}: {}", CFG_TEST_MODEL, m_data.model);
+    MY_LOG_INFO("{}: {}", CFG_TEST_MODEL_ONNX, m_data.model_onnx);
+    MY_LOG_INFO("{}: {}", CFG_TEST_MODEL_PT, m_data.model_pt);
     MY_LOG_INFO("{}: {}", CFG_TEST_DIR_INPUT, m_data.dir_input);
     MY_LOG_INFO("{}: {}", CFG_TEST_DIR_OUTPUT, m_data.dir_output);
 }
@@ -77,13 +87,61 @@ void WidgetTest::show2Ui() {
     ui->sBoxModelWidth->setValue(m_data.model_width);
     ui->doubleSpinBoxThresholdCfd->setValue(m_data.threshold_cfd);
     ui->doubleSpinBoxThresholdNMS->setValue(m_data.threshold_nms);
-    ui->lEditModel->setText(m_data.model);
+    ui->lEditModelOnnx->setText(m_data.model_onnx);
+    ui->lEditModelPt->setText(m_data.model_pt);
     ui->lEditDirInput->setText(m_data.dir_input);
     ui->lEditDirOutput->setText(m_data.dir_output);
 }
 
+void WidgetTest::testPt() {
+    QStringList arguments_detect{
+        GLOBAL.SCRIPT_YOLO_DETECT
+    };
+    TXT_INFO(QString("Script: %1").arg(arguments_detect.join(' ')));
+    runScript(arguments_detect);
+}
+
+void WidgetTest::runScript(const QStringList &arguments)
+{
+    m_process->startDetached(GLOBAL.PYTHON, arguments);
+}
+
+void WidgetTest::onProcessOutput()
+{
+    QProcess* process = qobject_cast<QProcess*>(sender());
+    if (process) {
+        QByteArray output = process->readAllStandardOutput();
+        TXT_INFO(QString::fromUtf8(output));
+    }
+}
+
+void WidgetTest::onProcessError()
+{
+    QProcess* process = qobject_cast<QProcess*>(sender());
+    if (process) {
+        QByteArray errorOutput = process->readAllStandardError();
+        TXT_WARN(QString::fromUtf8(errorOutput));
+    }
+}
+
+void WidgetTest::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    QProcess* process = qobject_cast<QProcess*>(sender());
+    if (process) {
+        if (exitStatus == QProcess::CrashExit) {
+            TXT_WARN("Script crashed!");
+        } else if (exitCode != 0) {
+            TXT_WARN(QString("Script finished with error code: %1").arg(exitCode));
+        } else {
+            TXT_INFO("Script finished successfully!");
+        }
+        process->deleteLater();
+    }
+}
+
+
 void WidgetTest::testOnnx() {
-    if(!m_check.loadModel(m_data.model)) {
+    if(!m_onnxCheck.loadModel(m_data.model_onnx)) {
         TXT_WARN("Failed to load ONNX model!");
     }
     QDir dir_input(m_data.dir_input);
@@ -108,7 +166,7 @@ void WidgetTest::testOnnx() {
         if (!outputSubDir.exists()) {
             outputSubDir.mkpath(".");
         }
-        bool bOk = m_check.checkOnePicture(inputPath, outputPath);
+        bool bOk = m_onnxCheck.checkOnePicture(inputPath, outputPath);
         if(bOk) {
             TXT_INFO(QString("Operate success %1 => %2").arg(inputPath, outputPath));
         }
@@ -124,27 +182,33 @@ void WidgetTest::on_btnStartTest_clicked()
 {
     getUiData();
     save2Cfg();
-    testOnnx();
+    if(ui->toolBoxModel->currentWidget() == ui->pageModelOnnx)
+    {
+        testOnnx();
+    }
+    else if (ui->toolBoxModel->currentWidget() == ui->pageModelPt) {
+        testPt();
+    }
 }
 
 void WidgetTest::on_sBoxModelWidth_editingFinished()
 {
-    m_check.setModelImgSize(ui->sBoxModelWidth->value(), 0);
+    m_onnxCheck.setModelImgSize(ui->sBoxModelWidth->value(), 0);
 }
 
 void WidgetTest::on_sBoxModelHeight_editingFinished()
 {
-    m_check.setModelImgSize(0, ui->sBoxModelHeight->value());
+    m_onnxCheck.setModelImgSize(0, ui->sBoxModelHeight->value());
 }
 
 void WidgetTest::on_doubleSpinBoxThresholdCfd_editingFinished()
 {
-    m_check.setConfidence(ui->doubleSpinBoxThresholdCfd->value());
+    m_onnxCheck.setConfidence(ui->doubleSpinBoxThresholdCfd->value());
 }
 
 void WidgetTest::on_doubleSpinBoxThresholdNMS_editingFinished()
 {
-    m_check.setNMS(ui->doubleSpinBoxThresholdNMS->value());
+    m_onnxCheck.setNMS(ui->doubleSpinBoxThresholdNMS->value());
 }
 
 void WidgetTest::on_btnAddItem_clicked()

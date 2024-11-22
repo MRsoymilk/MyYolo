@@ -35,7 +35,7 @@
         <item>
          <widget class="QToolButton" name="tBtnDirInput">
           <property name="text">
-           <string>...</string>
+           <string>select folder</string>
           </property>
          </widget>
         </item>
@@ -56,7 +56,7 @@
         <item>
          <widget class="QToolButton" name="tBtnDirOutput">
           <property name="text">
-           <string>...</string>
+           <string>select folder</string>
           </property>
          </widget>
         </item>
@@ -96,6 +96,16 @@
            <double>0.100000000000000</double>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelBatchSize">
+          <property name="text">
+           <string>batch size</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="sBoxBatchSize"/>
         </item>
        </layout>
       </item>

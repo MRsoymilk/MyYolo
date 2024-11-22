@@ -38,6 +38,7 @@ void WidgetFilter::getCfgData()
     m_data.dir_output = MY_SETTING.getValue(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT);
     m_data.is_ssim = MY_SETTING.getValue(CFG_GROUP_FILTER, CFG_FILTER_SSIM).toInt();
     m_data.threshold_ssim = MY_SETTING.getValue(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM).toDouble();
+    m_data.batch_ssim = MY_SETTING.getValue(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM).toInt();
 }
 
 void WidgetFilter::save2Cfg()
@@ -46,6 +47,7 @@ void WidgetFilter::save2Cfg()
     MY_SETTING.setValue(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT, m_data.dir_output);
     MY_SETTING.setValue(CFG_GROUP_FILTER, CFG_FILTER_SSIM, QString::number(m_data.is_ssim));
     MY_SETTING.setValue(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM, QString::number(m_data.threshold_ssim));
+    MY_SETTING.setValue(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM, QString::number(m_data.batch_ssim));
 }
 
 void WidgetFilter::show2Ui()
@@ -58,6 +60,7 @@ void WidgetFilter::show2Ui()
         ui->checkBoxSSIM->setCheckState(Qt::Unchecked);
     }
     ui->doubleSpinBoxThresholdSSIM->setValue(m_data.threshold_ssim);
+    ui->sBoxBatchSize->setValue(m_data.batch_ssim);
 }
 
 void WidgetFilter::getUiData()
@@ -70,6 +73,7 @@ void WidgetFilter::getUiData()
         m_data.is_ssim = 0;
     }
     m_data.threshold_ssim = ui->doubleSpinBoxThresholdSSIM->value();
+    m_data.batch_ssim = ui->sBoxBatchSize->value();
 }
 
 void WidgetFilter::runScript(const QStringList &arguments)
@@ -83,7 +87,8 @@ void WidgetFilter::callMoveSimilarImgs()
         GLOBAL.SCRIPT_MOVE_SIMILAR_IMG,
         "--input_folder", m_data.dir_input,
         "--output_folder", m_data.dir_output,
-        "--similarity_threshold", QString::number(m_data.threshold_ssim)
+        "--similarity_threshold", QString::number(m_data.threshold_ssim),
+        "--batch_size", QString::number(m_data.batch_ssim)
     };
     TXT_INFO(QString("Script: %1").arg(arguments_move_similar.join(' ')));
     runScript(arguments_move_similar);
@@ -105,7 +110,6 @@ void WidgetFilter::on_btnStartFilter_clicked()
         callMoveSimilarImgs();
     }
 }
-
 
 void WidgetFilter::onProcessOutput()
 {

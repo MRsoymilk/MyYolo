@@ -90,6 +90,9 @@ MSG_RE WidgetMainSetting::checkScript()
     CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_SPLIT_DATASET, "/script/split_dataset.py");
     CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_RENAME, "/script/rename.py");
     CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_RE_NOTAG, "/script/re_notag.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_YOLO_TRAIN, "/yolov5-master/train.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_YOLO_EXPORT, "/yolov5-master/export.py");
+    CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_YOLO_DETECT, "/yolov5-master/detect.py");
 
     re.status = true;
     return re;

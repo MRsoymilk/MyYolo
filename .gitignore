@@ -8,5 +8,15 @@ build
 # vendor
 vendor/opencv
 # project
+project/train/cfg/*
+!project/train/cfg/_cfg.yaml
+project/train/data/*
+!project/train/data/_data.yaml
+project/train/hyp/*
+!project/train/hyp/_hyp.yaml
+project/train/pretrained/*
+!project/train/pretrained/yolov5n.pt
+project/train/project/*
+!project/train/project/_name.folder
 project/venv
 project/yolov5-master/venv

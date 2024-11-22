@@ -19,9 +19,12 @@
     }
 
 #include <QMessageBox>
-#define SHOW_MSGBOX_INFO(msg) QMessageBox::information(this, "Information", msg);
-#define SHOW_MSGBOX_WARNING(msg) QMessageBox::warning(this, "Warning", msg);
-#define SHOW_MSGBOX_CRITICAL(msg) QMessageBox::critical(this, "Critical", msg);
+#define SHOW_MSGBOX_INFO(msg)                   QMessageBox::information(this, tr("Information"), msg);
+#define SHOW_MSGBOX_WARNING(msg)                QMessageBox::warning(this, tr("Warning"), msg);
+#define SHOW_MSGBOX_CRITICAL(msg)               QMessageBox::critical(this, tr("Critical"), msg);
+#define SHOW_MSGBOX_INFO_REPLY(msg, opt)        QMessageBox::information(this, tr("Information"), msg, opt);
+#define SHOW_MSGBOX_WARNING_REPLY(msg, opt)     QMessageBox::warning(this, tr("Warning"), msg, opt);
+#define SHOW_MSGBOX_CRITICAL_REPLY(msg, opt)    QMessageBox::critical(this, tr("Critical"), msg, opt);
 
 #include <QFileDialog>
 // open folder

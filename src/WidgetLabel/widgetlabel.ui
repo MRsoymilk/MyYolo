@@ -29,7 +29,7 @@
      <item>
       <widget class="QToolButton" name="tBtnLabelImg">
        <property name="text">
-        <string>...</string>
+        <string>select file</string>
        </property>
       </widget>
      </item>

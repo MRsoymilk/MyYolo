@@ -1,87 +1,126 @@
 import os
-import argparse
-import cv2
 import shutil
-from skimage.metrics import structural_similarity as ssim
+import argparse
 from PIL import Image
 import numpy as np
+from skimage.metrics import structural_similarity as ssim
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import sys
+import time
 
 # 计算两张图像的SSIM相似度
 def calculate_ssim(image1, image2):
-    # 转为灰度图像
-    image1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    image2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+    # 将图像转换为灰度
+    image1_gray = image1.convert("L")
+    image2_gray = image2.convert("L")
+    
+    # 将灰度图像转换为numpy数组
+    image1_gray = np.array(image1_gray)
+    image2_gray = np.array(image2_gray)
     
     # 计算SSIM相似度
     score, _ = ssim(image1_gray, image2_gray, full=True)
     return score
 
-# 遍历目录中的图像文件，比较相似度并将相似度较低的图片移动到指定目录
-def move_similar_images(input_folder, output_folder, similarity_threshold=0.9):
-    # 获取目录中所有图像文件
-    image_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-    
-    images = []
-    for file in image_files:
-        # 确保路径是 Unicode 格式，并且没有反斜杠问题
-        file_path = os.path.normpath(os.path.join(input_folder, file))
-        
-        # 使用PIL读取图像
-        try:
-            pil_image = Image.open(file_path)
-        except Exception as e:
-            print(f"Failed to load image {file_path}: {e}")
+# 读取目录下的所有图像文件
+def read_images(input_dir):
+    image_files = [f for f in os.listdir(input_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    image_paths = [os.path.join(input_dir, file) for file in image_files]
+    return image_paths
+
+# 将图像列表分成指定大小的批次
+def divide_into_batches(image_paths, batch_size):
+    return [image_paths[i:i + batch_size] for i in range(0, len(image_paths), batch_size)]
+
+# 处理单个批次，比较其中的图像并标记相似的图像
+def process_batch(batch, image_paths, rm_img, batch_img, threshold_ssim, total_count, batch_size, thread_index):
+    keep_going = False
+    batch_same = True  # 假设当前批次所有图像都相同
+    for i, img_path1 in enumerate(batch):
+        current_index = image_paths.index(img_path1)  # 当前图像的索引
+        if rm_img[current_index]:  # 如果该图像已被标记为删除，跳过
             continue
-        
-        # 转换为OpenCV格式 (BGR)
-        image = np.array(pil_image)
-        if len(image.shape) == 3:  # 如果图像是彩色的
-            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        
-        images.append((file, image))
-    
-    to_move = set()
+        for img_path2 in batch[i + 1:]:
+            current_index2 = image_paths.index(img_path2)  # 第二张图像的索引
+            if rm_img[current_index2]:  # 如果另一个图像已被标记为删除，跳过
+                continue
 
-    # 比较图像相似度
-    len_imgs = len(images)
-    for i in range(len_imgs):
-        file_base, img_base = images[i]
-        print(f"Handle {file_base}")
-        if(file_base in to_move):
-            continue
-        for j in range(i + 1, len_imgs):
-            file_cmp, img_cmp = images[j]
-            similarity = calculate_ssim(img_base, img_cmp)
-            print(f"|__ ({i + 1}/{len_imgs}/{j + 1}){file_cmp} SSIM = {similarity:.4f}")
-            if similarity > similarity_threshold:
-                print(f"|____ move {file_cmp}")
-                to_move.add(file_cmp)
-                
-    # 创建输出目录，如果不存在
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+            # 读取两张图像
+            image1 = Image.open(img_path1)
+            image2 = Image.open(img_path2)
+            
+            # 计算SSIM
+            similarity = calculate_ssim(image1, image2)
+            
+            # 输出当前批次的处理信息（根据线程ID输出到不同的行）
+            sys.stdout.write(f"\033[{thread_index + 2}HT {thread_index + 1} - {batch_size}/{current_index2 + 1}|{current_index + 101}/{total_count} "
+                             f"Comparing {os.path.basename(img_path1)} and {os.path.basename(img_path2)} SSIM = {similarity:.4f}")
+            sys.stdout.flush()
 
-    # 移动相似的图片
-    for file in to_move:
-        source_path = os.path.join(input_folder, file)
-        destination_path = os.path.join(output_folder, file)
-        shutil.move(source_path, destination_path)
-        print(f"Moved {file} to {output_folder}")
+            if similarity > threshold_ssim:
+                rm_img[current_index2] = True
+                batch_img[current_index2] = batch.index(img_path1)
+                keep_going = True  # 如果有图像被标记为删除，则继续处理
+        batch_same = batch_same and batch_img.count(batch.index(img_path1)) == len(batch)
 
+    return keep_going
+
+# 主处理函数
+def move_similar_images(input_dir, output_dir, threshold_ssim, batch_size):
+    # 读取图像路径
+    image_paths = read_images(input_dir)
+    total_count = len(image_paths)  # 总图像数量
+    rm_img = [False] * len(image_paths)  # 初始时所有图像都不会被删除
+    batch_img = [0] * len(image_paths)  # 初始化批次编号
+
+    # 划分批次
+    divided_img = divide_into_batches(image_paths, batch_size)
+
+    keep_going = True
+    while keep_going:
+        keep_going = False
+        with ThreadPoolExecutor() as executor:
+            # 提交每个批次的任务
+            futures = [executor.submit(process_batch, batch, image_paths, rm_img, batch_img, threshold_ssim, total_count, batch_size, i) 
+                       for i, batch in enumerate(divided_img)]
+            
+            try:
+                # 等待所有任务完成
+                for future in as_completed(futures):
+                    if future.result():
+                        keep_going = True
+            except KeyboardInterrupt:
+                # 捕获Ctrl+C退出
+                print("\nProcess interrupted by user.")
+                break
+
+        # 处理已标记为删除的图像并移动
+        for i, marked in enumerate(rm_img):
+            if marked:
+                source_path = image_paths[i]
+                destination_path = os.path.join(output_dir, os.path.basename(source_path))
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+                shutil.move(source_path, destination_path)
+                print(f"\nMoved {os.path.basename(source_path)} to {output_dir}")
+
+    print("\nProcessing completed.")
+
+# 主函数
 def main():
-    # 创建参数解析器
-    parser = argparse.ArgumentParser(description="Move images with low similarity to another directory.")
-    
-    # 添加输入、输出目录和相似度阈值的命令行参数
-    parser.add_argument('--input_folder', type=str, required=True, help='Path to the input image folder')
-    parser.add_argument('--output_folder', type=str, required=True, help='Path to the output folder for similarity images')
-    parser.add_argument('--similarity_threshold', type=float, default=0.9, help='Similarity threshold for image comparison (0 to 1)')
+    try:
+        parser = argparse.ArgumentParser(description="Move images with low similarity to another directory.")
+        parser.add_argument('--input_dir', type=str, required=True, help='Path to the input image folder')
+        parser.add_argument('--output_dir', type=str, required=True, help='Path to the output folder for similarity images')
+        parser.add_argument('--threshold_ssim', type=float, default=0.9, help='Similarity threshold for image comparison (0 to 1)')
+        parser.add_argument('--batch_size', type=int, default=10, help='Number of images to process in a batch')
+        args = parser.parse_args()
 
-    # 解析命令行参数
-    args = parser.parse_args()
+        move_similar_images(args.input_dir, args.output_dir, args.threshold_ssim, args.batch_size)
 
-    # 运行移动相似图像的操作
-    move_similar_images(args.input_folder, args.output_folder, args.similarity_threshold)
+    except KeyboardInterrupt:
+        # 捕获 Ctrl+C 中断
+        print("\nProgram interrupted by user. Exiting gracefully...")
 
 if __name__ == "__main__":
     main()

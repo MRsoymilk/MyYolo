@@ -579,7 +579,7 @@ class LoadImagesAndLabels(Dataset):
                     f += glob.glob(str(p / "**" / "*.*"), recursive=True)
                     # f = list(p.rglob('*.*'))  # pathlib
                 elif p.is_file():  # file
-                    with open(p) as t:
+                    with open(p, encoding='utf-8') as t:
                         t = t.read().strip().splitlines()
                         parent = str(p.parent) + os.sep
                         f += [x.replace("./", parent, 1) if x.startswith("./") else x for x in t]  # to global path

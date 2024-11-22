@@ -9,8 +9,9 @@ struct MY_GLOBAL
     QString PROEJCT = "";
     QString PYTHON = "";
     QString PIP = "";
-    QString SCRIPT_TRAIN = "";
-    QString SCRIPT_EXPORT = "";
+    QString SCRIPT_YOLO_TRAIN = "";
+    QString SCRIPT_YOLO_EXPORT = "";
+    QString SCRIPT_YOLO_DETECT = "";
     QString SCRIPT_MOVE_SIMILAR_IMG = "";
     QString SCRIPT_XML2TXT = "";
     QString SCRIPT_NO_XML2TXT = "";

@@ -104,6 +104,27 @@
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <location filename="../../include/funcdef.h" line="22"/>
+        <location filename="../../include/funcdef.h" line="25"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../include/funcdef.h" line="23"/>
+        <location filename="../../include/funcdef.h" line="26"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../include/funcdef.h" line="24"/>
+        <location filename="../../include/funcdef.h" line="27"/>
+        <source>Critical</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WidgetAddData</name>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="14"/>
@@ -128,7 +149,7 @@
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="56"/>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="77"/>
-        <source>...</source>
+        <source>select folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -247,12 +268,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetExport/widgetexport.ui" line="29"/>
+        <location filename="../../WidgetExport/widgetexport.ui" line="40"/>
         <source>type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetExport/widgetexport.ui" line="41"/>
+        <location filename="../../WidgetExport/widgetexport.ui" line="71"/>
+        <source>select .pt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetExport/widgetexport.ui" line="31"/>
         <source>add type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -267,14 +293,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetExport/widgetexport.ui" line="71"/>
-        <location filename="../../WidgetExport/widgetexport.ui" line="92"/>
-        <source>...</source>
+        <location filename="../../WidgetExport/widgetexport.ui" line="80"/>
+        <source>dir output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetExport/widgetexport.ui" line="80"/>
-        <source>dir output</source>
+        <location filename="../../WidgetExport/widgetexport.ui" line="92"/>
+        <source>select folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -303,7 +328,7 @@
     <message>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="38"/>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="59"/>
-        <source>...</source>
+        <source>select folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -327,7 +352,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetFilter/widgetfilter.ui" line="111"/>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="103"/>
+        <source>batch size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetFilter/widgetfilter.ui" line="121"/>
         <source>Start Filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,7 +376,7 @@
     </message>
     <message>
         <location filename="../../WidgetLabel/widgetlabel.ui" line="32"/>
-        <source>...</source>
+        <source>select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -382,7 +412,7 @@
     </message>
     <message>
         <location filename="../../WidgetMain/Setting/widgetmainsetting.ui" line="32"/>
-        <source>...</source>
+        <source>select folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -399,84 +429,108 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="22"/>
-        <source>model</source>
+        <location filename="../../WidgetTest/widgettest.ui" line="70"/>
+        <source>.pt model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="32"/>
-        <location filename="../../WidgetTest/widgettest.ui" line="202"/>
-        <location filename="../../WidgetTest/widgettest.ui" line="223"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="41"/>
-        <source>Model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="62"/>
-        <source>model width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="69"/>
-        <source>model height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="90"/>
-        <source>threshold confidence</source>
+        <location filename="../../WidgetTest/widgettest.ui" line="82"/>
+        <source>Load .pt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="100"/>
+        <source>Use OpenCV Onnx</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="106"/>
+        <source>.onnx model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="118"/>
+        <source>Load .onnx</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="155"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="176"/>
+        <source>Select Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="194"/>
+        <source>Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="269"/>
+        <source>model width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="276"/>
+        <source>model height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="297"/>
+        <source>threshold confidence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="307"/>
         <source>threshold nms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="130"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="203"/>
         <source>id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="135"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="64"/>
+        <source>Use Yolo detect.py</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTest/widgettest.ui" line="208"/>
         <source>class name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="140"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="213"/>
         <source>operate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="163"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="236"/>
         <source>add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="170"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="243"/>
         <source>remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="184"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="137"/>
         <source>directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="190"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="143"/>
         <source>dir_input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="211"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="164"/>
         <source>dir_output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="238"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="36"/>
         <source>Start Test</source>
         <translation type="unfinished"></translation>
     </message>
@@ -489,61 +543,83 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="23"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="31"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="38"/>
         <source>Start Train</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="32"/>
-        <source>model</source>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="49"/>
+        <source>model scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="44"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="103"/>
+        <source>cfg(yaml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="124"/>
+        <source>data(yaml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="229"/>
+        <source>name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="61"/>
         <source>parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="65"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="82"/>
         <source>weights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="77"/>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="98"/>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="119"/>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="140"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="94"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="115"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="136"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="157"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="220"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="241"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="86"/>
-        <source>data</source>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="166"/>
+        <source>epochs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="107"/>
-        <source>output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="128"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="208"/>
         <source>hyp(yaml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="149"/>
-        <source>epoch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="159"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="180"/>
         <source>batch size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.ui" line="169"/>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="145"/>
+        <source>project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTrain/widgettrain.ui" line="194"/>
         <source>img size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetTrain/widgettrain.cpp" line="187"/>
+        <source>are you sure to cancel?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

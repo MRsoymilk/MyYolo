@@ -21,7 +21,8 @@ public:
         QString dir_input = "";
         QString dir_output = "";
         int is_ssim;
-        double threshold_ssim = 0.0;
+        double threshold_ssim = 0.9;
+        int batch_ssim = 10;
     };
     void getCfgData() override;
     void save2Cfg() override;

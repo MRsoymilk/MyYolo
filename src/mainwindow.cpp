@@ -41,14 +41,14 @@ void MainWindow::initMain() {
             menuThemeSelect(action);
         });
     }
-    ui->actionLite->trigger();
-
     for(QAction* action : ui->menulanguage->actions()) {
         connect(action, &QAction::triggered, this, [this, action]() {
             menuLanguageSelect(action);
         });
     }
-    ui->actionen->trigger();
+
+    getCfgData();
+    show2Ui();
 }
 
 void MainWindow::addBasicWidget() {
@@ -85,6 +85,8 @@ void MainWindow::menuThemeSelect(QAction* selectedAction) {
 
 void MainWindow::setTheme(const QString& theme)
 {
+    m_data.theme = theme;
+    save2Cfg();
     QFile file(QString(":/res/themes/%1.qss").arg(theme));
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QString style = file.readAll();
@@ -107,9 +109,63 @@ void MainWindow::menuLanguageSelect(QAction *selectedAction) {
 
 void MainWindow::setLanguage(const QString& language)
 {
+    m_data.language = language;
+    save2Cfg();
     QTranslator* translator = new QTranslator(this);
     if (translator->load(QString(":/res/i18n/%1.qm").arg(language))) {
         qApp->installTranslator(translator);
         ui->retranslateUi(this);
+    }
+}
+
+void MainWindow::getCfgData()
+{
+    m_data.theme = MY_SETTING.getValue(CFG_GROUP_MAIN, CFG_MAIN_THEME);
+    m_data.language = MY_SETTING.getValue(CFG_GROUP_MAIN, CFG_MAIN_LANGUAGE);
+}
+
+void MainWindow::save2Cfg()
+{
+    MY_SETTING.setValue(CFG_GROUP_MAIN, CFG_MAIN_THEME, m_data.theme);
+    MY_SETTING.setValue(CFG_GROUP_MAIN, CFG_MAIN_LANGUAGE, m_data.language);
+}
+
+void MainWindow::show2Ui()
+{
+    if (m_data.language.isEmpty()) {
+        ui->actionen->trigger();
+    } else {
+        for (QAction *language : ui->menulanguage->actions()) {
+            if (language->text() == m_data.language) {
+                language->trigger();
+                break;
+            }
+        }
+    }
+    if (m_data.theme.isEmpty()) {
+        ui->actionLite->trigger();
+    } else {
+        for (QAction *theme : ui->menuTheme->actions()) {
+            if (theme->text() == m_data.theme) {
+                theme->trigger();
+                break;
+            }
+        }
+    }
+}
+
+void MainWindow::getUiData()
+{
+    for (QAction *language : ui->menulanguage->actions()) {
+        if (language->isChecked()) {
+            m_data.language = language->text();
+            break;
+        }
+    }
+    for (QAction *theme : ui->menuTheme->actions()) {
+        if (theme->isChecked()) {
+            m_data.language = theme->text();
+            break;
+        }
     }
 }

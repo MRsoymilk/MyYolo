@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "common/confighandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -9,7 +10,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, ConfigHandler
 {
     Q_OBJECT
 
@@ -18,6 +19,8 @@ public:
     ~MainWindow();
     struct ini_main {
         QString path = "";
+        QString theme;
+        QString language;
     };
 
 private:
@@ -30,5 +33,12 @@ private:
     void setTheme(const QString &theme);
     void menuLanguageSelect(QAction *selectedAction);
     void setLanguage(const QString &language);
+
+    // ConfigHandler interface
+public:
+    void getCfgData() override;
+    void save2Cfg() override;
+    void show2Ui() override;
+    void getUiData() override;
 };
 #endif // MAINWINDOW_H

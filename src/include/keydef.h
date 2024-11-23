@@ -45,6 +45,8 @@
 #define CFG_TEST_DIR_INPUT              "dir_input"
 #define CFG_TEST_DIR_OUTPUT             "dir_output"
 #define CFG_GROUP_MAIN                  "MAIN"
+#define CFG_MAIN_LANGUAGE "language"
+#define CFG_MAIN_THEME "theme"
 #define CFG_MAIN_PROJECT_DIR            "project_dir"
 #define CFG_GROUP_EXPORT                "EXPORT"
 #define CFG_EXPORT_TYPE                 "type"

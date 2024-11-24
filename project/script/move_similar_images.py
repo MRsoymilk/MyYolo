@@ -1,126 +1,148 @@
+from dataclasses import dataclass, field
+from typing import List
+import time
 import os
 import shutil
+import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from skimage.metrics import structural_similarity as ssim
 from PIL import Image
 import numpy as np
-from skimage.metrics import structural_similarity as ssim
-from threading import Lock
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import argparse
-import sys
-import time
-
-# 读取指定目录的图片
-def read_images(input_dir):
-    return [
-        os.path.join(input_dir, f)
-        for f in os.listdir(input_dir)
-        if f.lower().endswith((".png", ".jpg", ".jpeg"))
-    ]
 
 
-# 将图像划分为指定批次大小的列表
-def divide_into_batches(image_paths, batch_size):
-    return [image_paths[i : i + batch_size] for i in range(0, len(image_paths), batch_size)]
 
+@dataclass
+class IMG:
+    id: int
+    path: str
+    gen: int
+    batch: List[int] = field(default_factory=list) 
+    rm: bool = False
 
-# 计算两张图像的 SSIM
 def calculate_ssim(image1, image2):
+    if image1.size != image2.size:
+        return 1
+    # 使用灰度图计算 SSIM
     image1_gray = np.array(image1.convert("L"))
     image2_gray = np.array(image2.convert("L"))
     score, _ = ssim(image1_gray, image2_gray, full=True)
     return score
 
+def update_batch(img_array, batch_size, gen):
+    remaining_images = [img for img in img_array if not img.rm]
+    len_remain = len(remaining_images)
+    count = 0
+    batch_id = 0
 
-# 多线程批次处理
-def process_batch(batch, batch_index, image_paths, rm_img, batch_img, threshold_ssim, lock, thread_index, total_count):
-    keep_going = False
+    if gen == 0:
+        for i in range(len_remain):
+            remaining_images[i].gen = gen
+            msg = 0
+            remaining_images[i].batch.append(batch_id)
+            count += 1
+            if count >= batch_size:
+                count = 0
+                batch_id += 1
+        return remaining_images
 
-    for i, img_path1 in enumerate(batch):
-        img1_index = image_paths.index(img_path1)
-        if rm_img[img1_index]:  # 如果图像已被标记，跳过
+    new_arr = []
+    is_handle = [False] * len_remain
+    for i in range(len_remain):
+        if is_handle[i]:
             continue
-
-        with lock:
-            batch_img[img1_index] = batch_index  # 设置批次编号
-
-        for j, img_path2 in enumerate(batch[i + 1 :], start=i + 1):
-            img2_index = image_paths.index(img_path2)
-            if rm_img[img2_index]:  # 如果图像已被标记，跳过
+        copy_img = remaining_images[i]
+        copy_img.gen = gen
+        copy_img.batch.append(batch_id)
+        is_handle[i] = True
+        new_arr.append(copy_img)
+        for j in range(i + 1, len_remain):
+            if is_handle[j]:
                 continue
+            if batch_id not in remaining_images[j].batch:
+                copy_img = remaining_images[j]
+                copy_img.gen = gen
+                copy_img.batch.append(batch_id)
+                is_handle[j] = True
+                new_arr.append(copy_img)
+                count += 1
+                if count >= batch_size - 1:
+                    count = 0
+                    batch_id += 1
+                    break
+    return new_arr
 
-            # 计算 SSIM
-            with Image.open(img_path1) as image1, Image.open(img_path2) as image2:
+def process_batch(img_array: List[IMG], batch_index: int, threshold_ssim: float, thread_idx: int, epoch: int, total_count: int):
+    keep_going = False
+    batch_images = [img for img in img_array if img.batch[img.gen] == batch_index and not img.rm]
+    for i, img1 in enumerate(batch_images):
+        for img2 in batch_images[i + 1:]:
+            with Image.open(img1.path) as image1, Image.open(img2.path) as image2:
                 similarity = calculate_ssim(image1, image2)
-
-            # 输出当前进度到控制台
-            sys.stdout.write(
-                f"\033[{thread_index % 10 + 2}H T{thread_index + 1} - {total_count}/{len(batch)}:{i}/{j} "
-                f"Comparing {os.path.basename(img_path1)} and {os.path.basename(img_path2)} SSIM = {similarity:.4f}\033[K\n"
+            print(
+                f"Epoch {epoch}: T{thread_idx + 1}/{total_count} "
+                f"SSIM {img1.path} & {img2.path} = {similarity:.4f}"
             )
-            sys.stdout.flush()
-
             if similarity < threshold_ssim:
-                with lock:
-                    rm_img[img2_index] = True  # 标记为需要删除
+                img2.rm = True
                 keep_going = True
 
     return keep_going
 
+def remove_img(img_array: List[IMG], output_dir: str):
+    os.makedirs(output_dir, exist_ok=True)
 
-# 主函数
-def move_similar_images(input_dir, output_dir, threshold_ssim, batch_size):
-    # 读取图像路径
-    image_paths = read_images(input_dir)
-    rm_img = [False] * len(image_paths)  # 标记删除
-    batch_img = [0] * len(image_paths)  # 批次编号
-    lock = Lock()  # 锁对象
-
-    divided_img = divide_into_batches(image_paths, batch_size)
-    keep_going = True
-    epoch = 0
-
-    while keep_going:
-        keep_going = False
-        epoch += 1
-        print(f"\033[1H Epoch {epoch}: Processing batches...\n")
-        sys.stdout.flush()
-
-        with ThreadPoolExecutor() as executor:
-            futures = [
-                executor.submit(
-                    process_batch,
-                    batch,
-                    batch_index + 1,
-                    image_paths,
-                    rm_img,
-                    batch_img,
-                    threshold_ssim,
-                    lock,
-                    thread_index,
-                    len(image_paths),
-                )
-                for thread_index, (batch_index, batch) in enumerate(enumerate(divided_img))
-            ]
-
-            for future in as_completed(futures):
-                keep_going = keep_going or future.result()
-
-    # 移动已标记为删除的图像
-    print("Start moving similar images...")
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    for i, marked in enumerate(rm_img):
-        if marked:
-            source_path = image_paths[i]
+    for img in img_array:
+        if img.rm:
+            source_path = img.path
             destination_path = os.path.join(output_dir, os.path.basename(source_path))
             shutil.move(source_path, destination_path)
             print(f"Moved {os.path.basename(source_path)} to {output_dir}")
 
-    print("Processing completed.")
+def read_images(input_dir: str):
+    return sorted(
+        [
+            os.path.join(input_dir, f)
+            for f in os.listdir(input_dir)
+            if f.lower().endswith((".png", ".jpg", ".jpeg"))
+        ],
+        key=lambda x: os.path.basename(x).lower()  # 按文件名排序（不区分大小写）
+    )
 
+def move_similar_images(input_dir, output_dir, threshold_ssim, batch_size):
+    image_paths = read_images(input_dir)
+    img_array = [IMG(id=i, path=path, gen=0, batch=[], rm=False) for i, path in enumerate(image_paths)]
 
-# 命令行入口
+    epoch = 0
+    keep_going = True
+
+    while keep_going:
+        keep_going = False
+        remove_img(img_array, output_dir)  # 移动被标记的图像
+        img_array = update_batch(img_array, batch_size, gen=epoch)  # 更新批次
+        batch_indices = range(max((img.batch[img.gen] for img in img_array if not img.rm), default=0) + 1)
+        # mult thread ===========================================================
+        with ThreadPoolExecutor() as executor:
+            futures = [
+                executor.submit(
+                    process_batch,
+                    img_array,
+                    batch_index,
+                    threshold_ssim,
+                    thread_idx,
+                    epoch,
+                    len(img_array)
+                )
+                for thread_idx, batch_index in enumerate(batch_indices)
+            ]
+            for future in as_completed(futures):
+                keep_going = keep_going or future.result()
+        # single thread =========================================================
+        # for thread_idx, batch_index in enumerate(batch_indices):
+        #     res = process_batch(img_array, batch_index, threshold_ssim, thread_idx, len(img_array))
+        #     keep_going = keep_going or res
+        epoch += 1
+
+# 执行测试
 def main():
     parser = argparse.ArgumentParser(description="Move similar images to a specified directory.")
     parser.add_argument("--input_dir", type=str, required=True, help="Path to the input directory containing images.")
@@ -130,7 +152,7 @@ def main():
     args = parser.parse_args()
 
     move_similar_images(args.input_dir, args.output_dir, args.threshold_ssim, args.batch_size)
-
+    # move_similar_images("/tmp/output", "/tmp/to_rm", 0.5, 10)
 
 if __name__ == "__main__":
     tick = time.time()

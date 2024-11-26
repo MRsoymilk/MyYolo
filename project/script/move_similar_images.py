@@ -21,7 +21,7 @@ class IMG:
 
 def calculate_ssim(image1, image2):
     if image1.size != image2.size:
-        return 1
+        return 0
     # 使用灰度图计算 SSIM
     image1_gray = np.array(image1.convert("L"))
     image2_gray = np.array(image2.convert("L"))
@@ -79,10 +79,10 @@ def process_batch(img_array: List[IMG], batch_index: int, threshold_ssim: float,
             with Image.open(img1.path) as image1, Image.open(img2.path) as image2:
                 similarity = calculate_ssim(image1, image2)
             print(
-                f"Epoch {epoch}: T{thread_idx + 1}/{total_count} "
+                f"Epoch {epoch}: T{thread_idx + 1}/{total_count}-{i} "
                 f"SSIM {img1.path} & {img2.path} = {similarity:.4f}"
             )
-            if similarity < threshold_ssim:
+            if similarity > threshold_ssim:
                 img2.rm = True
                 keep_going = True
 

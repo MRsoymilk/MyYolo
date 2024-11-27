@@ -95,7 +95,13 @@ void WidgetTest::show2Ui() {
 
 void WidgetTest::testPt() {
     QStringList arguments_detect{
-        GLOBAL.SCRIPT_YOLO_DETECT
+        GLOBAL.SCRIPT_YOLO_DETECT,
+        "--weights", m_data.model_pt,
+        "--source", m_data.dir_input,
+        "--project", m_data.dir_output,
+        "--imgsz", QString("[%1, %2]").arg(m_data.model_height, m_data.model_width),
+        "--conf-thres", QString::number(m_data.threshold_cfd),
+        "--iou-thres", QString::number(m_data.threshold_nms)
     };
     TXT_INFO(QString("Script: %1").arg(arguments_detect.join(' ')));
     runScript(arguments_detect);

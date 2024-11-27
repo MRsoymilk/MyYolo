@@ -40,5 +40,7 @@ public:
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
+private slots:
+    void on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &arg1);
 };
 #endif // MAINWINDOW_H

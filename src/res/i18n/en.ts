@@ -9,92 +9,97 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="25"/>
+        <location filename="../../mainwindow.ui" line="21"/>
+        <source>Show Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.ui" line="32"/>
         <source>Main</source>
         <translation>Main</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="35"/>
+        <location filename="../../mainwindow.ui" line="42"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="45"/>
+        <location filename="../../mainwindow.ui" line="52"/>
         <source>Setting</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="59"/>
+        <location filename="../../mainwindow.ui" line="66"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="69"/>
+        <location filename="../../mainwindow.ui" line="76"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="79"/>
+        <location filename="../../mainwindow.ui" line="86"/>
         <source>Add Data</source>
         <translation>Add Data</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="89"/>
+        <location filename="../../mainwindow.ui" line="96"/>
         <source>Train</source>
         <translation>Train</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="99"/>
+        <location filename="../../mainwindow.ui" line="106"/>
         <source>Export</source>
         <translation>Export</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="109"/>
+        <location filename="../../mainwindow.ui" line="116"/>
         <source>Test</source>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="132"/>
+        <location filename="../../mainwindow.ui" line="139"/>
         <source>theme</source>
         <translation>theme</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="141"/>
+        <location filename="../../mainwindow.ui" line="148"/>
         <source>language</source>
         <translation>language</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="153"/>
+        <location filename="../../mainwindow.ui" line="160"/>
         <source>Lite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="158"/>
+        <location filename="../../mainwindow.ui" line="165"/>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="163"/>
+        <location filename="../../mainwindow.ui" line="170"/>
         <source>OSX Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="168"/>
+        <location filename="../../mainwindow.ui" line="175"/>
         <source>OSX Lite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="173"/>
+        <location filename="../../mainwindow.ui" line="180"/>
         <source>en</source>
         <translation>en</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="178"/>
+        <location filename="../../mainwindow.ui" line="185"/>
         <source>zh_simple</source>
         <translation>zh_simple</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="183"/>
+        <location filename="../../mainwindow.ui" line="190"/>
         <source>zh_traditional</source>
         <translation type="unfinished"></translation>
     </message>
@@ -386,6 +391,24 @@
     </message>
 </context>
 <context>
+    <name>WidgetLog</name>
+    <message>
+        <location filename="../../WidgetLog/widgetlog.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetLog/widgetlog.ui" line="38"/>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../WidgetLog/widgetlog.ui" line="45"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WidgetMainInfo</name>
     <message>
         <location filename="../../WidgetMain/Info/widgetmaininfo.ui" line="14"/>
@@ -429,108 +452,108 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="70"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="41"/>
         <source>.pt model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="82"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="53"/>
         <source>Load .pt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="100"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="71"/>
         <source>Use OpenCV Onnx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="106"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="77"/>
         <source>.onnx model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="118"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="89"/>
         <source>Load .onnx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="155"/>
-        <location filename="../../WidgetTest/widgettest.ui" line="176"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="263"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="284"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="194"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="102"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="269"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="177"/>
         <source>model width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="276"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="184"/>
         <source>model height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="297"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="205"/>
         <source>threshold confidence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="307"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="215"/>
         <source>threshold nms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="203"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="111"/>
         <source>id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="64"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="35"/>
         <source>Use Yolo detect.py</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="208"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="116"/>
         <source>class name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="213"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="121"/>
         <source>operate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="236"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="144"/>
         <source>add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="243"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="151"/>
         <source>remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="137"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="245"/>
         <source>directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="143"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="251"/>
         <source>dir_input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="164"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="272"/>
         <source>dir_output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTest/widgettest.ui" line="36"/>
+        <location filename="../../WidgetTest/widgettest.ui" line="299"/>
         <source>Start Test</source>
         <translation type="unfinished"></translation>
     </message>

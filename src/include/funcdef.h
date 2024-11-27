@@ -63,6 +63,8 @@
 #define OPEN_FILE_BTN(btn, edit) \
     QObject::connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FILE(edit); })
 
+#include <QDateTime>
+#define TIMESTAMP() (QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
 // FUNCTION ===================================================================
 
 #endif

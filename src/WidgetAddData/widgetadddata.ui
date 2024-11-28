@@ -14,6 +14,13 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_4" columnstretch="0">
+   <item row="2" column="0">
+    <widget class="QPushButton" name="btnStartAddData">
+     <property name="text">
+      <string>Start Add Data</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
@@ -315,15 +322,18 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="btnStartAddData">
-     <property name="text">
-      <string>Start Add Data</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
-    <widget class="QTextEdit" name="txtEditLog"/>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

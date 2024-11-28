@@ -4,13 +4,9 @@
 
 #include "../../include/funcdef.h"
 #include "../../include/keydef.h"
-#include "../../util/mysetting.h"
 
 #include <QProcess>
 #include "../../include/global.h"
-#include "../../util/mydir.h"
-#include "../../util/mylog.h"
-#include "../../util/mysetting.h"
 
 WidgetMainSetting::WidgetMainSetting(QWidget *parent)
     : QWidget(parent)
@@ -39,18 +35,18 @@ MSG_RE WidgetMainSetting::checkVenv() {
     QProcess cmd;
     QDir venv(path);
     if (!venv.exists()) {
-        TXT_INFO(QString("Creating virtual environment in %1").arg(path));
+        WIDGET_LOG_INFO(QString("Creating virtual environment in %1").arg(path));
         cmd.start(m_data.cmd_python, QStringList() << "-m" << "venv" << path);
         cmd.waitForFinished();
         if (cmd.exitCode() != 0) {
-            TXT_WARN("Failed to create virtual environment.");
+            WIDGET_LOG_WARN("Failed to create virtual environment.");
             re.status = false;
             re.code = 1;
             return re;
         }
     }
     else {
-        TXT_INFO("Virtual environment already exists.");
+        WIDGET_LOG_INFO("Virtual environment already exists.");
     }
 #ifdef Q_OS_WIN
     GLOBAL.PYTHON = path + "/Scripts/python.exe"; // Windows
@@ -63,7 +59,7 @@ MSG_RE WidgetMainSetting::checkVenv() {
     cmd.start(m_data.cmd_pip, QStringList() << "config" << "set" << "global.index-url" << "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple");
     cmd.waitForFinished();
     if (cmd.exitCode() != 0) {
-        TXT_WARN("Failed to set global pip mirrors.");
+        WIDGET_LOG_WARN("Failed to set global pip mirrors.");
         re.status = false;
         re.code = 2;
         return re;
@@ -117,12 +113,12 @@ MSG_RE WidgetMainSetting::checkYolo5()
 
 void WidgetMainSetting::getCfgData()
 {
-    m_data.project_dir = MY_SETTING.getValue(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR);
+    m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR);
 }
 
 void WidgetMainSetting::save2Cfg()
 {
-    MY_SETTING.setValue(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR, m_data.project_dir);
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR, m_data.project_dir);
 }
 
 void WidgetMainSetting::show2Ui()
@@ -181,10 +177,10 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
     getUiData();
     re = checkPython();
     if (!re.status) {
-        TXT_WARN(QString("Check Python error: %1").arg(re.msg));
+        WIDGET_LOG_WARN(QString("Check Python error: %1").arg(re.msg));
         return;
     } else {
-        TXT_INFO(QString("Python Detect: %1").arg(re.msg));
+        WIDGET_LOG_INFO(QString("Python Detect: %1").arg(re.msg));
         if(re.code == 1) {
             m_data.cmd_python = "python";
         }
@@ -194,19 +190,19 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
     }
     if(m_data.project_dir.isEmpty()) {
         m_data.project_dir = "./project";
-        TXT_WARN(QString("Use default project root: ./project"));
+        WIDGET_LOG_WARN(QString("Use default project root: ./project"));
     }
     else {
-        m_data.project_dir = MyDir::GetAbsolutePath(m_data.project_dir);
-        TXT_INFO(QString("Use project root: %1").arg(m_data.project_dir));
+        m_data.project_dir = GET_ABSOLUTE_PATH(m_data.project_dir);
+        WIDGET_LOG_INFO(QString("Use project root: %1").arg(m_data.project_dir));
     }
     re = checkVenv();
     if(!re.status) {
-        TXT_WARN(QString("Check python venv error: %1").arg(re.msg));
+        WIDGET_LOG_WARN(QString("Check python venv error: %1").arg(re.msg));
         return;
     }
     else {
-        TXT_INFO(QString("Venv Detect: %1").arg(re.msg));
+        WIDGET_LOG_INFO(QString("Venv Detect: %1").arg(re.msg));
     }
     re = checkScript();
     re = checkTools();

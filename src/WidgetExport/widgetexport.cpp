@@ -3,9 +3,6 @@
 
 #include "../include/funcdef.h"
 #include "../include/keydef.h"
-#include "../util/mylog.h"
-#include "../util/mysetting.h"
-
 #include <QProcess>
 
 
@@ -28,10 +25,10 @@ void WidgetExport::initExport() {
 }
 
 void WidgetExport::getCfgData() {
-    m_data.list_type = MY_SETTING.getValue(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
+    m_data.list_type = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
     m_data.type = m_data.list_type.first();
-    m_data.pt_model = MY_SETTING.getValue(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL);
-    m_data.dir_output = MY_SETTING.getValue(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT);
+    m_data.pt_model = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL);
+    m_data.dir_output = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT);
 }
 
 QStringList getTypeList(QComboBox *box) {
@@ -43,13 +40,13 @@ QStringList getTypeList(QComboBox *box) {
 }
 
 void WidgetExport::save2Cfg() {
-    MY_SETTING.setValue(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE, m_data.list_type.join(','));
-    MY_SETTING.setValue(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL, m_data.pt_model);
-    MY_SETTING.setValue(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT, m_data.dir_output);
-    MY_LOG_INFO("config save: Group[{}]", CFG_GROUP_EXPORT);
-    MY_LOG_INFO("{}: {}", CFG_EXPORT_TYPE, m_data.list_type);
-    MY_LOG_INFO("{}: {}", CFG_EXPORT_PT_MODEL, m_data.pt_model);
-    MY_LOG_INFO("{}: {}", CFG_EXPORT_DIR_OUTPUT, m_data.dir_output);
+    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE, m_data.list_type.join(','));
+    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL, m_data.pt_model);
+    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT, m_data.dir_output);
+    LOG_INFO("config save: Group[{}]", CFG_GROUP_EXPORT);
+    LOG_INFO("{}: {}", CFG_EXPORT_TYPE, m_data.list_type);
+    LOG_INFO("{}: {}", CFG_EXPORT_PT_MODEL, m_data.pt_model);
+    LOG_INFO("{}: {}", CFG_EXPORT_DIR_OUTPUT, m_data.dir_output);
 }
 
 void WidgetExport::show2Ui() {
@@ -100,7 +97,7 @@ void WidgetExport::onProcessOutput()
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         QByteArray output = process->readAllStandardOutput();
-        TXT_INFO(QString::fromUtf8(output));
+        WIDGET_LOG_INFO(QString::fromUtf8(output));
     }
 }
 
@@ -109,7 +106,7 @@ void WidgetExport::onProcessError()
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         QByteArray errorOutput = process->readAllStandardError();
-        TXT_WARN(QString::fromUtf8(errorOutput));
+        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
     }
 }
 
@@ -118,11 +115,11 @@ void WidgetExport::onProcessFinished(int exitCode)
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         if (exitCode == QProcess::CrashExit) {
-            TXT_WARN("Script crashed!");
+            WIDGET_LOG_WARN("Script crashed!");
         } else if (exitCode != 0) {
-            TXT_WARN(QString("Script finished with error code: %1").arg(exitCode));
+            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
         } else {
-            TXT_INFO("Script finished successfully!");
+            WIDGET_LOG_INFO("Script finished successfully!");
         }
         process->deleteLater();
     }

@@ -27,7 +27,7 @@ void WidgetLog::log(const QString &log)
 
 void WidgetLog::logTrace(const QString &log)
 {
-    QColor color = Qt::black;
+    QColor color = Qt::darkGray;
 
     QTextCharFormat format;
     format.setForeground(color);
@@ -41,7 +41,7 @@ void WidgetLog::logTrace(const QString &log)
 
 void WidgetLog::logInfo(const QString &log)
 {
-    QColor color = Qt::darkBlue;
+    QColor color = Qt::black;
 
     QTextCharFormat format;
     format.setForeground(color);

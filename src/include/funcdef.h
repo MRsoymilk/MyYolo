@@ -2,18 +2,35 @@
 #define FUNCDEF_H
 
 // FUNCTION ===================================================================
+#include <QDateTime>
+#define TIMESTAMP() (QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
+#include "../util/mylog.h"
+#define LOG_TRACE(...)                  MyLog::getInstance().getLogger()->trace(__VA_ARGS__)
+#define LOG_INFO(...)                   MyLog::getInstance().getLogger()->info(__VA_ARGS__)
+#define LOG_WARN(...)                   MyLog::getInstance().getLogger()->warn(__VA_ARGS__)
+#define LOG_ERROR(...)                  MyLog::getInstance().getLogger()->error(__VA_ARGS__)
+#define LOG_CRITICAL(...)               MyLog::getInstance().getLogger()->critical(__VA_ARGS__)
 
-#include <QString>
-#define TXT_INFO(msg) ui->txtEditLog->append(QString("[INFO] %1").arg(msg))
-#define TXT_WARN(msg) ui->txtEditLog->append(QString("[WARN] %1").arg(msg))
+#include "../util/mysetting.h"
+#define SETTING_GET(group, key, ...)    MY_SETTING.getValue(group, key, ##__VA_ARGS__)
+#define SETTING_SET(group, key, value)  MY_SETTING.setValue(group, key, value)
+
+#include "../WidgetLog/widgetlog.h"
+#define WIDGET_LOG_TRACE(msg)           MY_WIDGET_LOG.logTrace(msg)
+#define WIDGET_LOG_INFO(msg)            MY_WIDGET_LOG.logInfo(msg)
+#define WIDGET_LOG_WARN(msg)            MY_WIDGET_LOG.logWarn(msg)
+#define WIDGET_LOG_ERROR(msg)           MY_WIDGET_LOG.logError(msg)
+
+#include "../util/mydir.h"
+#define GET_ABSOLUTE_PATH(path)                 MyDir::GetAbsolutePath(path)
 
 #define CHECK_AND_CREATE_DIR(root, dir_name) \
     { \
         QString path = QString("%1/%2").arg(root, dir_name); \
         if (MyDir::CheckDirExists(path)) { \
-            TXT_INFO("exist dir " + path); \
+            WIDGET_LOG_TRACE("exist dir " + path); \
         } else { \
-            TXT_WARN("no dir " + path); \
+            WIDGET_LOG_WARN("no dir " + path); \
             MyDir::CreateDir(path); \
         } \
     }
@@ -62,9 +79,6 @@
 // btn open file
 #define OPEN_FILE_BTN(btn, edit) \
     QObject::connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FILE(edit); })
-
-#include <QDateTime>
-#define TIMESTAMP() (QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
 // FUNCTION ===================================================================
 
 #endif

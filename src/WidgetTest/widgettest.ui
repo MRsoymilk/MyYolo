@@ -28,7 +28,7 @@
         <x>0</x>
         <y>0</y>
         <width>614</width>
-        <height>68</height>
+        <height>69</height>
        </rect>
       </property>
       <attribute name="label">
@@ -63,8 +63,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>194</width>
-        <height>42</height>
+        <width>614</width>
+        <height>69</height>
        </rect>
       </property>
       <attribute name="label">
@@ -166,8 +166,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>290</width>
-           <height>175</height>
+           <width>292</width>
+           <height>223</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
@@ -239,6 +239,13 @@
      </layout>
     </widget>
    </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="btnStartTest">
+     <property name="text">
+      <string>Start Test</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -291,14 +298,17 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QTextEdit" name="txtEditLog"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QPushButton" name="btnStartTest">
-     <property name="text">
-      <string>Start Test</string>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
-    </widget>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

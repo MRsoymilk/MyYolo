@@ -4,8 +4,6 @@
 #include "../include/funcdef.h"
 #include "../include/global.h"
 #include "../include/keydef.h"
-#include "../util/mylog.h"
-#include "../util/mysetting.h"
 
 #include <QFileDialog>
 #include <QProcess>
@@ -52,7 +50,7 @@ void WidgetTrain::callTrain() {
         "--batch-size", QString::number(m_data.batch_size),
         "--imgsz", QString::number(m_data.img_size)
     };
-    TXT_INFO(QString("Script: %1").arg(arguments.join(' ')));
+    WIDGET_LOG_TRACE(QString("Script: %1").arg(arguments.join(' ')));
     runScript(arguments);
 }
 
@@ -60,31 +58,31 @@ void WidgetTrain::on_btnStartTrain_clicked()
 {
     getUiData();
     save2Cfg();
-    MY_LOG_INFO("config save: Group[{}]", CFG_GROUP_TRAIN);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_WEIGHTS, m_data.weights);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_CFG, m_data.cfg);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_HYP, m_data.hyp);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_DATA, m_data.data);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_PROJECT, m_data.project);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_NAME, m_data.name);
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_EPOCHS, QString::number(m_data.epochs));
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
-    MY_LOG_INFO("{}: {}", CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
+    LOG_INFO("config save: Group[{}]", CFG_GROUP_TRAIN);
+    LOG_INFO("{}: {}", CFG_TRAIN_WEIGHTS, m_data.weights);
+    LOG_INFO("{}: {}", CFG_TRAIN_CFG, m_data.cfg);
+    LOG_INFO("{}: {}", CFG_TRAIN_HYP, m_data.hyp);
+    LOG_INFO("{}: {}", CFG_TRAIN_DATA, m_data.data);
+    LOG_INFO("{}: {}", CFG_TRAIN_PROJECT, m_data.project);
+    LOG_INFO("{}: {}", CFG_TRAIN_NAME, m_data.name);
+    LOG_INFO("{}: {}", CFG_TRAIN_EPOCHS, QString::number(m_data.epochs));
+    LOG_INFO("{}: {}", CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
+    LOG_INFO("{}: {}", CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
     callTrain();
 }
 
 void WidgetTrain::getCfgData()
 {
-    m_data.list_model = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_MODEL).split(',');
-    m_data.weights = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS);
-    m_data.cfg = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_CFG);
-    m_data.hyp = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_HYP);
-    m_data.data = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_DATA);
-    m_data.project = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT);
-    m_data.name = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_NAME);
-    m_data.epochs = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS).toInt();
-    m_data.batch_size = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE).toInt();
-    m_data.img_size = MY_SETTING.getValue(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE).toInt();
+    m_data.list_model = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_MODEL).split(',');
+    m_data.weights = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS);
+    m_data.cfg = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_CFG);
+    m_data.hyp = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_HYP);
+    m_data.data = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_DATA);
+    m_data.project = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT);
+    m_data.name = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_NAME);
+    m_data.epochs = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS).toInt();
+    m_data.batch_size = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE).toInt();
+    m_data.img_size = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE).toInt();
 }
 
 void WidgetTrain::getUiData() 
@@ -115,15 +113,15 @@ void WidgetTrain::show2Ui()
 
 void WidgetTrain::save2Cfg() 
 {
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS, m_data.weights);
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_CFG, m_data.cfg);
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_HYP, m_data.hyp);
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_DATA, m_data.data);
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT, m_data.project);
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_NAME, m_data.name);
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS, QString::number(m_data.epochs));
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
-    MY_SETTING.setValue(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS, m_data.weights);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_CFG, m_data.cfg);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_HYP, m_data.hyp);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_DATA, m_data.data);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT, m_data.project);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_NAME, m_data.name);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS, QString::number(m_data.epochs));
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
 }
 
 void WidgetTrain::onProcessOutput()
@@ -131,7 +129,7 @@ void WidgetTrain::onProcessOutput()
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         QByteArray output = process->readAllStandardOutput();
-        TXT_INFO(QString::fromUtf8(output));
+        WIDGET_LOG_INFO(QString::fromUtf8(output));
     }
 }
 
@@ -140,7 +138,7 @@ void WidgetTrain::onProcessError()
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         QByteArray errorOutput = process->readAllStandardError();
-        TXT_WARN(QString::fromUtf8(errorOutput));
+        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
     }
 }
 
@@ -149,11 +147,11 @@ void WidgetTrain::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatu
     QProcess* process = qobject_cast<QProcess*>(sender());
     if (process) {
         if (exitStatus == QProcess::CrashExit) {
-            TXT_WARN("Script crashed!");
+            WIDGET_LOG_WARN("Script crashed!");
         } else if (exitCode != 0) {
-            TXT_WARN(QString("Script finished with error code: %1").arg(exitCode));
+            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
         } else {
-            TXT_INFO("Script finished successfully!");
+            WIDGET_LOG_INFO("Script finished successfully!");
         }
         process->deleteLater();
     }
@@ -163,7 +161,7 @@ void WidgetTrain::runScript(const QStringList &arguments)
 {
     m_process->start(GLOBAL.PYTHON, arguments);
     if (!m_process->waitForStarted()) {
-        TXT_WARN("Failed to start script!");
+        WIDGET_LOG_WARN("Failed to start script!");
     }
 }
 
@@ -174,10 +172,10 @@ void WidgetTrain::stopScript() {
             m_process->kill();
         }
         m_process->deleteLater();
-        TXT_INFO("Script stopped.");
+        WIDGET_LOG_INFO("Script stopped.");
     }
     else {
-        TXT_INFO("No Script is running.");
+        WIDGET_LOG_INFO("No Script is running.");
     }
 }
 

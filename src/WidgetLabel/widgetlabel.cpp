@@ -3,7 +3,6 @@
 #include "../include/keydef.h"
 #include "../include/funcdef.h"
 #include "../include/global.h"
-#include "../util/mysetting.h"
 
 #include <QProcess>
 
@@ -31,12 +30,12 @@ WidgetLabel::~WidgetLabel()
 
 void WidgetLabel::getCfgData()
 {
-    m_data.path_labelimg = MY_SETTING.getValue(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, GLOBAL.EXE_LABELIMG);
+    m_data.path_labelimg = SETTING_GET(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, GLOBAL.EXE_LABELIMG);
 }
 
 void WidgetLabel::save2Cfg()
 {
-    MY_SETTING.setValue(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, m_data.path_labelimg);
+    SETTING_SET(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, m_data.path_labelimg);
 }
 
 void WidgetLabel::show2Ui()
@@ -55,34 +54,31 @@ void WidgetLabel::on_btnStartLabel_clicked()
     bool succss = m_process->startDetached(program);
 
     if (!succss) {
-        TXT_WARN(QString("Failed to Start: %1").arg(program));
+        WIDGET_LOG_WARN(QString("Failed to Start: %1").arg(program));
     } else {
-        TXT_INFO(QString("Success start LabelImg"));
+        WIDGET_LOG_INFO(QString("Success start LabelImg"));
     }
 }
 
 void WidgetLabel::onReadyReadStandardOutput()
 {
-    // 获取并处理外部程序的标准输出
     QProcess *process = qobject_cast<QProcess *>(sender());
     QByteArray output = process->readAllStandardOutput();
-    TXT_INFO(QString("LabelImg: %1").arg(output));
+    WIDGET_LOG_INFO(QString("LabelImg: %1").arg(output));
 }
 
 void WidgetLabel::onReadyReadStandardError()
 {
-    // 获取并处理外部程序的错误输出
     QProcess *process = qobject_cast<QProcess *>(sender());
     QByteArray error = process->readAllStandardError();
-    TXT_WARN(error);
+    WIDGET_LOG_WARN(error);
 }
 
 void WidgetLabel::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    // 处理外部程序的退出状态
     if (exitStatus == QProcess::NormalExit) {
-        TXT_INFO("LabelImg success quit.");
+        WIDGET_LOG_TRACE("LabelImg success quit.");
     } else {
-        TXT_WARN("LabelImg abnormal quit!");
+        WIDGET_LOG_WARN("LabelImg abnormal quit!");
     }
 }

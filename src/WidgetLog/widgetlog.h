@@ -30,8 +30,5 @@ private:
 };
 
 #define MY_WIDGET_LOG WidgetLog::getInstance()
-#define MY_WIDGET_LOG_TRACE(msg)    MY_WIDGET_LOG.logTrace(msg)
-#define MY_WIDGET_LOG_INFO(msg)     MY_WIDGET_LOG.logInfo(msg)
-#define MY_WIDGET_LOG_WARN(msg)     MY_WIDGET_LOG.logWarn(msg)
-#define MY_WIDGET_LOG_ERROR(msg)    MY_WIDGET_LOG.logError(msg)
+
 #endif // WIDGETLOG_H

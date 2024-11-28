@@ -120,38 +120,38 @@ void MainWindow::setLanguage(const QString& language)
 
 void MainWindow::getCfgData()
 {
-    m_data.theme = MY_SETTING.getValue(CFG_GROUP_MAIN, CFG_MAIN_THEME);
-    m_data.language = MY_SETTING.getValue(CFG_GROUP_MAIN, CFG_MAIN_LANGUAGE);
+    m_data.theme = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_THEME);
+    m_data.language = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_LANGUAGE);
 }
 
 void MainWindow::save2Cfg()
 {
-    MY_SETTING.setValue(CFG_GROUP_MAIN, CFG_MAIN_THEME, m_data.theme);
-    MY_SETTING.setValue(CFG_GROUP_MAIN, CFG_MAIN_LANGUAGE, m_data.language);
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_THEME, m_data.theme);
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_LANGUAGE, m_data.language);
 }
 
 void MainWindow::show2Ui()
 {
     if (m_data.language.isEmpty()) {
         ui->actionen->trigger();
-        MY_WIDGET_LOG_INFO("use default language: en");
+        WIDGET_LOG_INFO("use default language: en");
     } else {
         for (QAction *language : ui->menulanguage->actions()) {
             if (language->text() == m_data.language) {
                 language->trigger();
-                MY_WIDGET_LOG_INFO(QString("use default language: %1").arg(language->text()));
+                WIDGET_LOG_INFO(QString("use default language: %1").arg(language->text()));
                 break;
             }
         }
     }
     if (m_data.theme.isEmpty()) {
         ui->actionLite->trigger();
-        MY_WIDGET_LOG_INFO("use default theme: Lite");
+        WIDGET_LOG_INFO("use default theme: Lite");
     } else {
         for (QAction *theme : ui->menuTheme->actions()) {
             if (theme->text() == m_data.theme) {
                 theme->trigger();
-                MY_WIDGET_LOG_INFO(QString("use default theme: %1").arg(theme->text()));
+                WIDGET_LOG_INFO(QString("use default theme: %1").arg(theme->text()));
                 break;
             }
         }
@@ -176,14 +176,14 @@ void MainWindow::getUiData()
 
 void MainWindow::on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &state)
 {
-    MY_WIDGET_LOG_TRACE("show log click");
+    WIDGET_LOG_INFO("show log click");
     if(state == Qt::Checked) {
         MY_WIDGET_LOG.show();
-        MY_WIDGET_LOG_INFO("show log view");
+        WIDGET_LOG_INFO("show log view");
     }
     else if(state == Qt::Unchecked){
         MY_WIDGET_LOG.hide();
-        MY_WIDGET_LOG_INFO("hide log view");
+        WIDGET_LOG_INFO("hide log view");
     }
 }
 

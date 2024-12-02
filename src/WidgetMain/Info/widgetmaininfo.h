@@ -7,16 +7,15 @@ namespace Ui {
 class WidgetMainInfo;
 }
 
-class WidgetMainInfo : public QWidget
-{
-    Q_OBJECT
+class WidgetMainInfo : public QWidget {
+  Q_OBJECT
 
-public:
-    explicit WidgetMainInfo(QWidget *parent = nullptr);
-    ~WidgetMainInfo();
+ public:
+  explicit WidgetMainInfo(QWidget *parent = nullptr);
+  ~WidgetMainInfo();
 
-private:
-    Ui::WidgetMainInfo *ui;
+ private:
+  Ui::WidgetMainInfo *ui;
 };
 
-#endif // WIDGETMAININFO_H
+#endif  // WIDGETMAININFO_H

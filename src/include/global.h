@@ -5,4 +5,4 @@
 
 extern MY_GLOBAL GLOBAL;
 
-#endif // GLOBAL_H
+#endif  // GLOBAL_H

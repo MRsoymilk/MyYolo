@@ -15,9 +15,7 @@
 
 #include "include/funcdef.h"
 #include "include/keydef.h"
-#include "util/mysetting.h"
 
-#include "util/mylog.h"
 #include "util/mydir.h"
 
 MY_GLOBAL GLOBAL;
@@ -68,6 +66,7 @@ void MainWindow::addBasicWidget() {
     ui->gLayExport->addWidget(widgetExport);
     ui->gLayInfo->addWidget(widgetMainInfo);
     ui->gLaySetting->addWidget(widgetMainSetting);
+    connect(&MY_WIDGET_LOG, &WidgetLog::signalHide, this, &MainWindow::slotWidgetTestHide);
 }
 
 void MainWindow::menuThemeSelect(QAction* selectedAction) {
@@ -187,3 +186,13 @@ void MainWindow::on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &stat
     }
 }
 
+void MainWindow::slotWidgetTestHide()
+{
+    ui->checkBoxShowLog->setChecked(false);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    WIDGET_LOG_CLOSE();
+    QMainWindow::closeEvent(event);
+}

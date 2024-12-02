@@ -134,6 +134,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lEditDirInput</tabstop>
+  <tabstop>tBtnDirInput</tabstop>
+  <tabstop>lEditDirOutput</tabstop>
+  <tabstop>tBtnDirOutput</tabstop>
+  <tabstop>checkBoxSSIM</tabstop>
+  <tabstop>doubleSpinBoxThresholdSSIM</tabstop>
+  <tabstop>sBoxBatchSize</tabstop>
+  <tabstop>btnStartFilter</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

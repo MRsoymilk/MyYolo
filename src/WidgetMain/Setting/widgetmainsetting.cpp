@@ -75,7 +75,10 @@ MSG_RE WidgetMainSetting::checkScript()
     if (!QFile::exists(script_var)) { \
         re.status = false; \
         re.msg = QString("no script %1 found: %2").arg(script_name).arg(script_var); \
+        WIDGET_LOG_ERROR(re.msg); \
         return re; \
+    } else { \
+        WIDGET_LOG_TRACE(QString("find script: %1").arg(script_name)); \
     }
 
     MSG_RE re;
@@ -98,9 +101,12 @@ MSG_RE WidgetMainSetting::checkTools()
 {
     MSG_RE re;
 #ifdef Q_OS_WIN
-    GLOBAL.EXE_LABELIMG = QString("%1/%2").arg(m_data.project_dir, "/tools/windows/labelImg/labelImg.exe");
+    GLOBAL.EXE_LABELIMG = QString("%1%2").arg(m_data.project_dir,
+                                              "/tools/windows/labelImg/labelImg.exe");
 #endif
 #ifdef Q_OS_UNIX
+    GLOBAL.EXE_LABELIMG = QString("%1%2").arg(m_data.project_dir,
+                                              "/tools/linux/labelImg-1.8.1/labelImg.py");
 #endif
     return re;
 }

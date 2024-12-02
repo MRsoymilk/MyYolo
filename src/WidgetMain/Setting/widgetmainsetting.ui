@@ -57,6 +57,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lEditProjectRoot</tabstop>
+  <tabstop>tBtnProjectRoot</tabstop>
+  <tabstop>btnBasicCheck</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

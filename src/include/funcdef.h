@@ -5,11 +5,11 @@
 #include <QDateTime>
 #define TIMESTAMP() (QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
 #include "../util/mylog.h"
-#define LOG_TRACE(...)                  MyLog::getInstance().getLogger()->trace(__VA_ARGS__)
-#define LOG_INFO(...)                   MyLog::getInstance().getLogger()->info(__VA_ARGS__)
-#define LOG_WARN(...)                   MyLog::getInstance().getLogger()->warn(__VA_ARGS__)
-#define LOG_ERROR(...)                  MyLog::getInstance().getLogger()->error(__VA_ARGS__)
-#define LOG_CRITICAL(...)               MyLog::getInstance().getLogger()->critical(__VA_ARGS__)
+#define LOG_TRACE(...) MY_LOG.getLogger()->trace(__VA_ARGS__)
+#define LOG_INFO(...) MY_LOG.getLogger()->info(__VA_ARGS__)
+#define LOG_WARN(...) MY_LOG.getLogger()->warn(__VA_ARGS__)
+#define LOG_ERROR(...) MY_LOG.getLogger()->error(__VA_ARGS__)
+#define LOG_CRITICAL(...) MY_LOG.getLogger()->critical(__VA_ARGS__)
 
 #include "../util/mysetting.h"
 #define SETTING_GET(group, key, ...)    MY_SETTING.getValue(group, key, ##__VA_ARGS__)
@@ -20,9 +20,15 @@
 #define WIDGET_LOG_INFO(msg)            MY_WIDGET_LOG.logInfo(msg)
 #define WIDGET_LOG_WARN(msg)            MY_WIDGET_LOG.logWarn(msg)
 #define WIDGET_LOG_ERROR(msg)           MY_WIDGET_LOG.logError(msg)
+#define WIDGET_LOG_CLOSE() MY_WIDGET_LOG.close()
 
 #include "../util/mydir.h"
 #define GET_ABSOLUTE_PATH(path)                 MyDir::GetAbsolutePath(path)
+
+#include "../util/myprocess.h"
+#define PROCESS_START_ATTACH(cmd, arguments) MY_PROCESS.startAttach(cmd, arguments)
+#define PROCESS_START_DETACH(cmd, arguments) MY_PROCESS.startDetach(cmd, arguments)
+#define PROCESS_STOP(t) MY_PROCESS.stopScript(t)
 
 #define CHECK_AND_CREATE_DIR(root, dir_name) \
     { \

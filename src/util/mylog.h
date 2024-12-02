@@ -34,4 +34,6 @@ template <> struct fmt::formatter<QStringList>: formatter<std::string> {
     }
 };
 
+#define MY_LOG MyLog::getInstance()
+
 #endif // MYLOG_H

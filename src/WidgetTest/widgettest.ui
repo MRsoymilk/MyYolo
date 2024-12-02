@@ -28,7 +28,7 @@
         <x>0</x>
         <y>0</y>
         <width>614</width>
-        <height>69</height>
+        <height>68</height>
        </rect>
       </property>
       <attribute name="label">
@@ -64,7 +64,7 @@
         <x>0</x>
         <y>0</y>
         <width>614</width>
-        <height>69</height>
+        <height>68</height>
        </rect>
       </property>
       <attribute name="label">
@@ -166,8 +166,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>292</width>
-           <height>223</height>
+           <width>290</width>
+           <height>222</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
@@ -312,6 +312,25 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lEditModelPt</tabstop>
+  <tabstop>tBtnModelPt</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>sBoxModelWidth</tabstop>
+  <tabstop>sBoxModelHeight</tabstop>
+  <tabstop>doubleSpinBoxThresholdCfd</tabstop>
+  <tabstop>doubleSpinBoxThresholdNMS</tabstop>
+  <tabstop>tableWidgetClassEdit</tabstop>
+  <tabstop>btnAddItem</tabstop>
+  <tabstop>btnRemoveItem</tabstop>
+  <tabstop>lEditDirInput</tabstop>
+  <tabstop>tBtnDirInput</tabstop>
+  <tabstop>lEditDirOutput</tabstop>
+  <tabstop>tBtnDirOutput</tabstop>
+  <tabstop>btnStartTest</tabstop>
+  <tabstop>tBtnModelOnnx</tabstop>
+  <tabstop>lEditModelOnnx</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

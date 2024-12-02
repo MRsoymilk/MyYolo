@@ -2,9 +2,8 @@
 #include "ui_widgetexport.h"
 
 #include "../include/funcdef.h"
+#include "../include/global.h"
 #include "../include/keydef.h"
-#include <QProcess>
-
 
 WidgetExport::WidgetExport(QWidget *parent)
     : QWidget(parent)
@@ -20,15 +19,18 @@ WidgetExport::~WidgetExport()
 }
 
 void WidgetExport::initExport() {
+    getCfgData();
+    show2Ui();
     OPEN_FILE_BTN(ui->tBtnPtModel, ui->lEditPtModel);
-    OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
 }
 
 void WidgetExport::getCfgData() {
     m_data.list_type = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
     m_data.type = m_data.list_type.first();
     m_data.pt_model = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL);
-    m_data.dir_output = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT);
+    m_data.model_h = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_H).toInt();
+    m_data.model_w = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_W).toInt();
+    m_data.model_batch = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_BATCH).toInt();
 }
 
 QStringList getTypeList(QComboBox *box) {
@@ -42,87 +44,51 @@ QStringList getTypeList(QComboBox *box) {
 void WidgetExport::save2Cfg() {
     SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE, m_data.list_type.join(','));
     SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL, m_data.pt_model);
-    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_DIR_OUTPUT, m_data.dir_output);
+    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_H, QString::number(m_data.model_h));
+    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_W, QString::number(m_data.model_w));
+    SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_BATCH, QString::number(m_data.model_batch));
     LOG_INFO("config save: Group[{}]", CFG_GROUP_EXPORT);
     LOG_INFO("{}: {}", CFG_EXPORT_TYPE, m_data.list_type);
     LOG_INFO("{}: {}", CFG_EXPORT_PT_MODEL, m_data.pt_model);
-    LOG_INFO("{}: {}", CFG_EXPORT_DIR_OUTPUT, m_data.dir_output);
+    LOG_INFO("{}: {}", CFG_EXPORT_MODEL_H, m_data.model_h);
+    LOG_INFO("{}: {}", CFG_EXPORT_MODEL_W, m_data.model_w);
+    LOG_INFO("{}: {}", CFG_EXPORT_MODEL_BATCH, m_data.model_batch);
 }
 
 void WidgetExport::show2Ui() {
     ui->comboBoxType->clear();
     ui->comboBoxType->addItems(m_data.list_type);
     ui->lEditPtModel->setText(m_data.pt_model);
-    ui->lEditDirOutput->setText(m_data.dir_output);
+    ui->sBoxModelH->setValue(m_data.model_h);
+    ui->sBoxModelW->setValue(m_data.model_w);
+    ui->sBoxModelBatch->setValue(m_data.model_batch);
 }
 
 void WidgetExport::getUiData() {
     m_data.list_type = getTypeList(ui->comboBoxType);
     m_data.type = ui->comboBoxType->currentText();
     m_data.pt_model = ui->lEditPtModel->text();
-    m_data.dir_output = ui->lEditDirOutput->text();
+    m_data.model_h = ui->sBoxModelH->value();
+    m_data.model_w = ui->sBoxModelW->value();
+    m_data.model_batch = ui->sBoxModelBatch->value();
 }
 
 
 void WidgetExport::on_btnStartExport_clicked()
 {
     getUiData();
-    runScript("E:/project/train/yolov5-master/export.py");
-}
-
-void WidgetExport::runScript(const QString& script_path)
-{
-    QProcess* process = new QProcess(this);
-
-    connect(process, &QProcess::readyReadStandardOutput, this, &WidgetExport::onProcessOutput);
-    connect(process, &QProcess::readyReadStandardError, this, &WidgetExport::onProcessError);
-    connect(process, &QProcess::finished, this, &WidgetExport::onProcessFinished);
-
-    for(int i = 0; i < m_data.list_type.size(); ++i) {
-        QString pythonCommand = "python";
-        QStringList arguments;
-        arguments << "--weights" << m_data.pt_model
-                  << "--batch-size" << "1"
-                  << "--imgsz" << "352"
-                  << "--project" << m_data.dir_output;/*
-                  << "--include" << m_data.list_type.at(i);*/
-        qDebug() << arguments;
-        process->start(pythonCommand, QStringList() << script_path << arguments);
-    }
-}
-
-
-void WidgetExport::onProcessOutput()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray output = process->readAllStandardOutput();
-        WIDGET_LOG_INFO(QString::fromUtf8(output));
-    }
-}
-
-void WidgetExport::onProcessError()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray errorOutput = process->readAllStandardError();
-        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
-    }
-}
-
-void WidgetExport::onProcessFinished(int exitCode)
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        if (exitCode == QProcess::CrashExit) {
-            WIDGET_LOG_WARN("Script crashed!");
-        } else if (exitCode != 0) {
-            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
-        } else {
-            WIDGET_LOG_INFO("Script finished successfully!");
-        }
-        process->deleteLater();
-    }
+    save2Cfg();
+    QStringList arguments_export{GLOBAL.SCRIPT_YOLO_EXPORT,
+                                 "--weights",
+                                 m_data.pt_model,
+                                 "--batch-size",
+                                 QString::number(m_data.model_batch),
+                                 "--imgsz",
+                                 QString::number(m_data.model_h),
+                                 QString::number(m_data.model_w),
+                                 "--include",
+                                 m_data.type};
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_export);
 }
 
 void WidgetExport::on_btnAddType_clicked()

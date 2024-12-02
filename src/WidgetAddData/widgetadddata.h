@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QLineEdit>
-#include <QProcess>
 #include "../common/confighandler.h"
 
 namespace Ui {
@@ -39,27 +38,21 @@ private:
     void save2Cfg() override;
     void getUiData() override;
     void show2Ui() override;
-    void runScript(const QString &script_path, const QString &class_name, const QString &input_folder, const QString &output_folder);
     void callXml2Txt();
     void callNoXml2Txt();
     void callRename();
     void callSpliteDataset();
     void callReNoTag();
-    void runScript(const QStringList &params);
 
 private slots:
     void on_btnStartAddData_clicked();
     void on_btnAddTag_clicked();
     void on_btnRemoveTag_clicked();
     void on_tableWidgetTag_cellDoubleClicked(int row, int column);
-    void onProcessOutput();
-    void onProcessError();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
     Ui::WidgetAddData *ui;
     ini_add_data m_data;
-    QProcess* m_process;
 
 };
 

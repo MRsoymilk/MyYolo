@@ -7,6 +7,7 @@ WidgetLog::WidgetLog(QWidget *parent)
     , ui(new Ui::WidgetLog)
 {
     ui->setupUi(this);
+    ui->txtEditLog->setMaximumHeight(10000);
 }
 
 WidgetLog &WidgetLog::getInstance()
@@ -84,6 +85,7 @@ void WidgetLog::logError(const QString &log)
 void WidgetLog::on_btnHide_clicked()
 {
     this->hide();
+    emit signalHide();
 }
 
 

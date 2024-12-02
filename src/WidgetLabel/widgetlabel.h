@@ -30,12 +30,7 @@ private:
 
 private slots:
     void on_btnStartLabel_clicked();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-    void onReadyReadStandardError();
-    void onReadyReadStandardOutput();
-
 private:
-    QProcess *m_process;
     Ui::WidgetLabel *ui;
     ini_label m_data;
 };

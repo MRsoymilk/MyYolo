@@ -48,15 +48,12 @@ private slots:
     void on_tableWidgetClassEdit_cellDoubleClicked(int row, int column);
     void on_doubleSpinBoxThresholdCfd_editingFinished();
     void on_doubleSpinBoxThresholdNMS_editingFinished();
-    void onProcessOutput();
-    void onProcessError();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
     Ui::WidgetTest *ui;
     ini_test m_data;
     OnnxCheck m_onnxCheck;
-    QProcess *m_process;
+    // QProcess *m_process;
 };
 
 #endif // WIDGETTEST_H

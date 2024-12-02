@@ -52,6 +52,9 @@
 #define CFG_EXPORT_TYPE                 "type"
 #define CFG_EXPORT_PT_MODEL             "pt_model"
 #define CFG_EXPORT_DIR_OUTPUT           "dir_output"
+#define CFG_EXPORT_MODEL_H "model_h"
+#define CFG_EXPORT_MODEL_W "model_w"
+#define CFG_EXPORT_MODEL_BATCH "model_batch"
 #define CFG_GROUP_LABEL                 "LABEL"
 #define CFG_LABEL_PATH_LABELIMG         "path_labelimg"
 // dir

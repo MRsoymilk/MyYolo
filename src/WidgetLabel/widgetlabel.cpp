@@ -4,8 +4,6 @@
 #include "../include/funcdef.h"
 #include "../include/global.h"
 
-#include <QProcess>
-
 WidgetLabel::WidgetLabel(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WidgetLabel)
@@ -18,9 +16,6 @@ void WidgetLabel::initLabel() {
     getCfgData();
     show2Ui();
     OPEN_FILE_BTN(ui->tBtnLabelImg, ui->lEditLabelImg);
-    m_process = new QProcess(this);
-    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetLabel::onReadyReadStandardOutput);
-    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetLabel::onReadyReadStandardError);
 }
 
 WidgetLabel::~WidgetLabel()
@@ -50,35 +45,16 @@ void WidgetLabel::getUiData()
 
 void WidgetLabel::on_btnStartLabel_clicked()
 {
-    QString program = GLOBAL.EXE_LABELIMG;
-    bool succss = m_process->startDetached(program);
-
-    if (!succss) {
-        WIDGET_LOG_WARN(QString("Failed to Start: %1").arg(program));
+    bool success;
+#ifdef Q_OS_WIN
+    success = PROCESS_START_DETACH(GLOBAL.EXE_LABELIMG, {});
+#endif
+#ifdef Q_OS_UNIX
+    success = PROCESS_START_DETACH(GLOBAL.PYTHON, {GLOBAL.EXE_LABELIMG});
+#endif
+    if (!success) {
+        WIDGET_LOG_WARN(QString("Failed to Start: %1").arg(GLOBAL.EXE_LABELIMG));
     } else {
         WIDGET_LOG_INFO(QString("Success start LabelImg"));
-    }
-}
-
-void WidgetLabel::onReadyReadStandardOutput()
-{
-    QProcess *process = qobject_cast<QProcess *>(sender());
-    QByteArray output = process->readAllStandardOutput();
-    WIDGET_LOG_INFO(QString("LabelImg: %1").arg(output));
-}
-
-void WidgetLabel::onReadyReadStandardError()
-{
-    QProcess *process = qobject_cast<QProcess *>(sender());
-    QByteArray error = process->readAllStandardError();
-    WIDGET_LOG_WARN(error);
-}
-
-void WidgetLabel::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-    if (exitStatus == QProcess::NormalExit) {
-        WIDGET_LOG_TRACE("LabelImg success quit.");
-    } else {
-        WIDGET_LOG_WARN("LabelImg abnormal quit!");
     }
 }

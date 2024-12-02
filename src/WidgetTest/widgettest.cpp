@@ -7,8 +7,6 @@
 #include "../include/funcdef.h"
 #include "../include/global.h"
 #include "../include/keydef.h"
-#include "../util/mylog.h"
-#include "../util/mysetting.h"
 
 WidgetTest::WidgetTest(QWidget *parent)
     : QWidget(parent)
@@ -30,10 +28,6 @@ void WidgetTest::initTest() {
     OPEN_FILE_BTN(ui->tBtnModelPt, ui->lEditModelPt);
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
-    m_process = new QProcess();
-    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetTest::onProcessOutput);
-    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetTest::onProcessError);
-    connect(m_process, &QProcess::finished, this, &WidgetTest::onProcessFinished);
 }
 
 void WidgetTest::getUiData() {
@@ -94,57 +88,29 @@ void WidgetTest::show2Ui() {
 }
 
 void WidgetTest::testPt() {
-    QStringList arguments_detect{
-        GLOBAL.SCRIPT_YOLO_DETECT,
-        "--weights", m_data.model_pt,
-        "--source", m_data.dir_input,
-        "--project", m_data.dir_output,
-        "--imgsz", QString("[%1, %2]").arg(m_data.model_height, m_data.model_width),
-        "--conf-thres", QString::number(m_data.threshold_cfd),
-        "--iou-thres", QString::number(m_data.threshold_nms)
-    };
+    QStringList arguments_detect{GLOBAL.SCRIPT_YOLO_DETECT,
+                                 "--weights",
+                                 m_data.model_pt,
+                                 "--source",
+                                 m_data.dir_input,
+                                 "--project",
+                                 m_data.dir_output,
+                                 "--imgsz",
+                                 QString::number(m_data.model_height),
+                                 QString::number(m_data.model_width),
+                                 "--conf-thres",
+                                 QString::number(m_data.threshold_cfd),
+                                 "--iou-thres",
+                                 QString::number(m_data.threshold_nms)};
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_detect.join(' ')));
     runScript(arguments_detect);
 }
 
 void WidgetTest::runScript(const QStringList &arguments)
 {
-    m_process->startDetached(GLOBAL.PYTHON, arguments);
+    // m_process->startDetached(GLOBAL.PYTHON, arguments);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments);
 }
-
-void WidgetTest::onProcessOutput()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray output = process->readAllStandardOutput();
-        WIDGET_LOG_INFO(QString::fromUtf8(output));
-    }
-}
-
-void WidgetTest::onProcessError()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray errorOutput = process->readAllStandardError();
-        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
-    }
-}
-
-void WidgetTest::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        if (exitStatus == QProcess::CrashExit) {
-            WIDGET_LOG_WARN("Script crashed!");
-        } else if (exitCode != 0) {
-            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
-        } else {
-            WIDGET_LOG_INFO("Script finished successfully!");
-        }
-        process->deleteLater();
-    }
-}
-
 
 void WidgetTest::testOnnx() {
     if(!m_onnxCheck.loadModel(m_data.model_onnx)) {

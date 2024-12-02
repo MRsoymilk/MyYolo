@@ -19,6 +19,8 @@ public:
     void logInfo(const QString &log);
     void logWarn(const QString &log);
     void logError(const QString &log);
+signals:
+    void signalHide();
 private slots:
     void on_btnHide_clicked();
     void on_btnClear_clicked();

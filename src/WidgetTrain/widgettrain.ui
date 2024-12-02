@@ -30,8 +30,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>672</width>
-           <height>272</height>
+           <width>668</width>
+           <height>279</height>
           </rect>
          </property>
          <layout class="QFormLayout" name="formLayout">
@@ -263,6 +263,27 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>comboBoxModelScheme</tabstop>
+  <tabstop>scrollAreaParameter</tabstop>
+  <tabstop>lEditWeights</tabstop>
+  <tabstop>tBtnWeights</tabstop>
+  <tabstop>lEditCfg</tabstop>
+  <tabstop>tBtnCfg</tabstop>
+  <tabstop>lEditHyp</tabstop>
+  <tabstop>tBtnHyp</tabstop>
+  <tabstop>lEditData</tabstop>
+  <tabstop>tBtnData</tabstop>
+  <tabstop>lEditProject</tabstop>
+  <tabstop>tBtnProject</tabstop>
+  <tabstop>lEditName</tabstop>
+  <tabstop>tBtnName</tabstop>
+  <tabstop>sBoxEpoch</tabstop>
+  <tabstop>sBoxBatchSize</tabstop>
+  <tabstop>sBoxImgSize</tabstop>
+  <tabstop>btnStartTrain</tabstop>
+  <tabstop>btnCancel</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

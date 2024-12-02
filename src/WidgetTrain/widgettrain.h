@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QLineEdit>
-#include <QProcess>
 #include "../common/confighandler.h"
 
 namespace Ui {
@@ -37,23 +36,17 @@ private:
     void save2Cfg() override;
     void initTrain();
     void callTrain();
-    void runScript(const QStringList &arguments);
-    void stopScript();
+    // void runScript(const QStringList &arguments);
+    // void stopScript();
 
 private slots:
     void on_btnStartTrain_clicked();
-    void onProcessOutput();
-    void onProcessError();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-
     void on_btnCancel_clicked();
-
     void on_tBtnName_clicked();
 
 private:
     Ui::WidgetTrain *ui;
     ini_train m_data;
-    QProcess *m_process;
 };
 
 #endif // WIDGETTRAIN_H

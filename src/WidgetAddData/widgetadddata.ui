@@ -32,7 +32,7 @@
         <x>0</x>
         <y>0</y>
         <width>738</width>
-        <height>360</height>
+        <height>336</height>
        </rect>
       </property>
       <attribute name="label">
@@ -313,7 +313,7 @@
         <x>0</x>
         <y>0</y>
         <width>738</width>
-        <height>282</height>
+        <height>285</height>
        </rect>
       </property>
       <attribute name="label">
@@ -337,6 +337,26 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lEditDirInput</tabstop>
+  <tabstop>tBtnDirInput</tabstop>
+  <tabstop>lEditDirOutputDivide</tabstop>
+  <tabstop>tBtnDirOutputDivide</tabstop>
+  <tabstop>tableWidgetTag</tabstop>
+  <tabstop>btnAddTag</tabstop>
+  <tabstop>btnRemoveTag</tabstop>
+  <tabstop>doubleSpinBoxTrain</tabstop>
+  <tabstop>doubleSpinBoxValid</tabstop>
+  <tabstop>doubleSpinBoxTest</tabstop>
+  <tabstop>checkBoxShuffle</tabstop>
+  <tabstop>checkBoxRename</tabstop>
+  <tabstop>lEditRenamePrefix</tabstop>
+  <tabstop>lEditRenameSuffix</tabstop>
+  <tabstop>checkBoxReNoTag</tabstop>
+  <tabstop>lEditReNoTagPrefix</tabstop>
+  <tabstop>lEditReNoTagSuffix</tabstop>
+  <tabstop>btnStartAddData</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

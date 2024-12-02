@@ -42,5 +42,10 @@ public:
     void getUiData() override;
 private slots:
     void on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &arg1);
+    void slotWidgetTestHide();
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event) override;
 };
 #endif // MAINWINDOW_H

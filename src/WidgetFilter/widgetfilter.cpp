@@ -24,10 +24,10 @@ void WidgetFilter::initFilter()
     show2Ui();
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
-    m_process = new QProcess();
-    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetFilter::onProcessOutput);
-    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetFilter::onProcessError);
-    connect(m_process, &QProcess::finished, this, &WidgetFilter::onProcessFinished);
+    // m_process = new QProcess();
+    // connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetFilter::onProcessOutput);
+    // connect(m_process, &QProcess::readyReadStandardError, this, &WidgetFilter::onProcessError);
+    // connect(m_process, &QProcess::finished, this, &WidgetFilter::onProcessFinished);
 }
 
 void WidgetFilter::getCfgData()
@@ -76,18 +76,21 @@ void WidgetFilter::getUiData()
 
 void WidgetFilter::runScript(const QStringList &arguments)
 {
-    m_process->startDetached(GLOBAL.PYTHON, arguments);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments);
+    // m_process->startDetached(GLOBAL.PYTHON, arguments);
 }
 
 void WidgetFilter::callMoveSimilarImgs()
 {
-    QStringList arguments_move_similar{
-        GLOBAL.SCRIPT_MOVE_SIMILAR_IMG,
-        "--input_folder", m_data.dir_input,
-        "--output_folder", m_data.dir_output,
-        "--similarity_threshold", QString::number(m_data.threshold_ssim),
-        "--batch_size", QString::number(m_data.batch_ssim)
-    };
+    QStringList arguments_move_similar{GLOBAL.SCRIPT_MOVE_SIMILAR_IMG,
+                                       "--input_dir",
+                                       m_data.dir_input,
+                                       "--output_dir",
+                                       m_data.dir_output,
+                                       "--threshold_ssim",
+                                       QString::number(m_data.threshold_ssim),
+                                       "--batch_size",
+                                       QString::number(m_data.batch_ssim)};
     WIDGET_LOG_TRACE(QString("Script: %1").arg(arguments_move_similar.join(' ')));
     runScript(arguments_move_similar);
 }
@@ -109,35 +112,35 @@ void WidgetFilter::on_btnStartFilter_clicked()
     }
 }
 
-void WidgetFilter::onProcessOutput()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray output = process->readAllStandardOutput();
-        WIDGET_LOG_TRACE(QString::fromUtf8(output));
-    }
-}
+// void WidgetFilter::onProcessOutput()
+// {
+//     QProcess* process = qobject_cast<QProcess*>(sender());
+//     if (process) {
+//         QByteArray output = process->readAllStandardOutput();
+//         WIDGET_LOG_TRACE(QString::fromUtf8(output));
+//     }
+// }
 
-void WidgetFilter::onProcessError()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray errorOutput = process->readAllStandardError();
-        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
-    }
-}
+// void WidgetFilter::onProcessError()
+// {
+//     QProcess* process = qobject_cast<QProcess*>(sender());
+//     if (process) {
+//         QByteArray errorOutput = process->readAllStandardError();
+//         WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
+//     }
+// }
 
-void WidgetFilter::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        if (exitStatus == QProcess::CrashExit) {
-            WIDGET_LOG_WARN("Script crashed!");
-        } else if (exitCode != 0) {
-            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
-        } else {
-            WIDGET_LOG_TRACE("Script finished successfully!");
-        }
-        process->deleteLater();
-    }
-}
+// void WidgetFilter::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+// {
+//     QProcess* process = qobject_cast<QProcess*>(sender());
+//     if (process) {
+//         if (exitStatus == QProcess::CrashExit) {
+//             WIDGET_LOG_WARN("Script crashed!");
+//         } else if (exitCode != 0) {
+//             WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
+//         } else {
+//             WIDGET_LOG_TRACE("Script finished successfully!");
+//         }
+//         process->deleteLater();
+//     }
+// }

@@ -50,6 +50,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtEditLog</tabstop>
+  <tabstop>btnHide</tabstop>
+  <tabstop>btnClear</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

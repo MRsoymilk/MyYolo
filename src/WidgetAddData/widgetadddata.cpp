@@ -125,10 +125,6 @@ void WidgetAddData::initAddData() {
     show2Ui();
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     OPEN_FOLDER_BTN(ui->tBtnDirOutputDivide, ui->lEditDirOutputDivide);
-    m_process = new QProcess();
-    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetAddData::onProcessOutput);
-    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetAddData::onProcessError);
-    connect(m_process, &QProcess::finished, this, &WidgetAddData::onProcessFinished);
 }
 
 void WidgetAddData::callXml2Txt() {
@@ -140,7 +136,7 @@ void WidgetAddData::callXml2Txt() {
         "--output_folder", m_data.dir_img
     };
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_xml2txt.join(' ')));
-    runScript(arguments_xml2txt);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_xml2txt);
 }
 
 void WidgetAddData::callNoXml2Txt() {
@@ -151,7 +147,7 @@ void WidgetAddData::callNoXml2Txt() {
         "--output_folder", m_data.dir_img
     };
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_no_xml2txt.join(' ')));
-    runScript(arguments_no_xml2txt);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_no_xml2txt);
 }
 
 void WidgetAddData::callRename() {
@@ -163,7 +159,7 @@ void WidgetAddData::callRename() {
         arguments_rename << "--suffix" << m_data.rename_suffix;
     }
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_rename.join(' ')));
-    runScript(arguments_rename);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_rename);
 }
 
 void WidgetAddData::callReNoTag() {
@@ -175,7 +171,7 @@ void WidgetAddData::callReNoTag() {
         arguments_re_notag << "--suffix" << m_data.re_notag_suffix;
     }
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_re_notag.join(' ')));
-    runScript(arguments_re_notag);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_re_notag);
 }
 
 void WidgetAddData::callSpliteDataset() {
@@ -189,14 +185,13 @@ void WidgetAddData::callSpliteDataset() {
         "--shuffle", QString::number(m_data.is_shuffle)
     };
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_splitedata.join(' ')));
-    runScript(arguments_splitedata);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_splitedata);
 }
 
 void WidgetAddData::on_btnStartAddData_clicked() {
     getUiData();
     save2Cfg();
     WIDGET_LOG_INFO("dir input: " + m_data.dir_img);
-    // WIDGET_LOG_INFO("scirpt: " + m_data.script);
     WIDGET_LOG_INFO("dir output: " + m_data.dir_output_divide);
     WIDGET_LOG_INFO(QString("train: %1").arg(m_data.train));
     WIDGET_LOG_INFO(QString("valid: %1").arg(m_data.valid));
@@ -242,44 +237,6 @@ void WidgetAddData::on_btnStartAddData_clicked() {
     }
     // add train.txt, test.txt, val.txt
     callSpliteDataset();
-}
-
-void WidgetAddData::runScript(const QStringList &arguments)
-{
-    m_process->startDetached(GLOBAL.PYTHON, arguments);
-}
-
-void WidgetAddData::onProcessOutput()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray output = process->readAllStandardOutput();
-        WIDGET_LOG_INFO(QString::fromUtf8(output));
-    }
-}
-
-void WidgetAddData::onProcessError()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray errorOutput = process->readAllStandardError();
-        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
-    }
-}
-
-void WidgetAddData::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        if (exitStatus == QProcess::CrashExit) {
-            WIDGET_LOG_WARN("Script crashed!");
-        } else if (exitCode != 0) {
-            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
-        } else {
-            WIDGET_LOG_INFO("Script finished successfully!");
-        }
-        process->deleteLater();
-    }
 }
 
 void WidgetAddData::on_btnAddTag_clicked()

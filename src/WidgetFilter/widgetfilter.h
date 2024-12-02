@@ -36,14 +36,9 @@ private:
 
 private slots:
     void on_btnStartFilter_clicked();
-    void onProcessOutput();
-    void onProcessError();
-    void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-
 private:
     Ui::WidgetFilter *ui;
     ini_filter m_data;
-    QProcess *m_process;
 };
 
 #endif // WIDGETFILTER_H

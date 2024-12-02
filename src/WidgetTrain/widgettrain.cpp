@@ -31,10 +31,6 @@ void WidgetTrain::initTrain()
     OPEN_FILE_BTN(ui->tBtnHyp, ui->lEditHyp);
     OPEN_FILE_BTN(ui->tBtnData, ui->lEditData);
     OPEN_FOLDER_BTN(ui->tBtnProject, ui->lEditProject);
-    m_process = new QProcess();
-    connect(m_process, &QProcess::readyReadStandardOutput, this, &WidgetTrain::onProcessOutput);
-    connect(m_process, &QProcess::readyReadStandardError, this, &WidgetTrain::onProcessError);
-    connect(m_process, &QProcess::finished, this, &WidgetTrain::onProcessFinished);
 }
 
 void WidgetTrain::callTrain() {
@@ -51,7 +47,7 @@ void WidgetTrain::callTrain() {
         "--imgsz", QString::number(m_data.img_size)
     };
     WIDGET_LOG_TRACE(QString("Script: %1").arg(arguments.join(' ')));
-    runScript(arguments);
+    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments);
 }
 
 void WidgetTrain::on_btnStartTrain_clicked()
@@ -124,75 +120,18 @@ void WidgetTrain::save2Cfg()
     SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
 }
 
-void WidgetTrain::onProcessOutput()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray output = process->readAllStandardOutput();
-        WIDGET_LOG_INFO(QString::fromUtf8(output));
-    }
-}
-
-void WidgetTrain::onProcessError()
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        QByteArray errorOutput = process->readAllStandardError();
-        WIDGET_LOG_WARN(QString::fromUtf8(errorOutput));
-    }
-}
-
-void WidgetTrain::onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-    QProcess* process = qobject_cast<QProcess*>(sender());
-    if (process) {
-        if (exitStatus == QProcess::CrashExit) {
-            WIDGET_LOG_WARN("Script crashed!");
-        } else if (exitCode != 0) {
-            WIDGET_LOG_WARN(QString("Script finished with error code: %1").arg(exitCode));
-        } else {
-            WIDGET_LOG_INFO("Script finished successfully!");
-        }
-        process->deleteLater();
-    }
-}
-
-void WidgetTrain::runScript(const QStringList &arguments)
-{
-    m_process->start(GLOBAL.PYTHON, arguments);
-    if (!m_process->waitForStarted()) {
-        WIDGET_LOG_WARN("Failed to start script!");
-    }
-}
-
-void WidgetTrain::stopScript() {
-    if (m_process && m_process->state() == QProcess::Running) {
-        m_process->terminate();
-        if (!m_process->waitForFinished(3000)) {
-            m_process->kill();
-        }
-        m_process->deleteLater();
-        WIDGET_LOG_INFO("Script stopped.");
-    }
-    else {
-        WIDGET_LOG_INFO("No Script is running.");
-    }
-}
-
 void WidgetTrain::on_btnCancel_clicked()
 {
     QMessageBox::StandardButton reply;
     reply = SHOW_MSGBOX_WARNING_REPLY(tr("are you sure to cancel?"), QMessageBox::Yes | QMessageBox::No);
 
     if (reply == QMessageBox::Yes) {
-        stopScript();
+        PROCESS_STOP();
     }
 }
 
 void WidgetTrain::on_tBtnName_clicked()
 {
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString timestamp = currentDateTime.toString("yyyyMMddHHmmss");
-    ui->lEditName->setText(QString("%1").arg(timestamp));
+    ui->lEditName->setText(QString("%1").arg(TIMESTAMP()));
 }
 

@@ -13,7 +13,75 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="gBoxParameter">
+     <property name="title">
+      <string>parameter</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
+      <item row="0" column="2">
+       <layout class="QHBoxLayout" name="hLayPtModel">
+        <item>
+         <widget class="QLineEdit" name="lEditPtModel"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tBtnPtModel">
+          <property name="text">
+           <string>select .pt</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <widget class="QSpinBox" name="sBoxModelW">
+        <property name="maximum">
+         <number>999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelPtModel">
+        <property name="text">
+         <string>pt model</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelModelBatch">
+        <property name="text">
+         <string>model batch</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QSpinBox" name="sBoxModelH">
+        <property name="maximum">
+         <number>999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="2">
+       <widget class="QSpinBox" name="sBoxModelBatch"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelModelH">
+        <property name="text">
+         <string>model h</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelModelW">
+        <property name="text">
+         <string>model w</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="0" column="1">
     <widget class="QGroupBox" name="gBoxExport">
      <property name="title">
@@ -47,79 +115,39 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="gBoxParameter">
-     <property name="title">
-      <string>parameter</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelPtModel">
-        <property name="text">
-         <string>pt model</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <layout class="QHBoxLayout" name="hLayPtModel">
-        <item>
-         <widget class="QLineEdit" name="lEditPtModel"/>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tBtnPtModel">
-          <property name="text">
-           <string>select .pt</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelDirOutput">
-        <property name="text">
-         <string>dir output</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <layout class="QHBoxLayout" name="hLayDirOutput">
-        <item>
-         <widget class="QLineEdit" name="lEditDirOutput"/>
-        </item>
-        <item>
-         <widget class="QToolButton" name="tBtnDirOutput">
-          <property name="text">
-           <string>select folder</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QPushButton" name="btnStartExport">
-     <property name="text">
-      <string>Start Export</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
+   <item row="1" column="0" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>40</height>
+       <width>528</width>
+       <height>236</height>
       </size>
      </property>
     </spacer>
    </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QPushButton" name="btnStartExport">
+     <property name="text">
+      <string>Start Export</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lEditPtModel</tabstop>
+  <tabstop>tBtnPtModel</tabstop>
+  <tabstop>sBoxModelH</tabstop>
+  <tabstop>sBoxModelW</tabstop>
+  <tabstop>sBoxModelBatch</tabstop>
+  <tabstop>comboBoxType</tabstop>
+  <tabstop>lEditAddType</tabstop>
+  <tabstop>btnAddType</tabstop>
+  <tabstop>btnStartExport</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

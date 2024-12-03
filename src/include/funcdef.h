@@ -3,8 +3,8 @@
 
 // FUNCTION ===================================================================
 #include <QDateTime>
-#define TIMESTAMP() \
-  (QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
+#define TIMESTAMP(format) (QDateTime::currentDateTime().toString(format))
+
 #include "../util/mylog.h"
 #define LOG_TRACE(...) MY_LOG.getLogger()->trace(__VA_ARGS__)
 #define LOG_INFO(...) MY_LOG.getLogger()->info(__VA_ARGS__)

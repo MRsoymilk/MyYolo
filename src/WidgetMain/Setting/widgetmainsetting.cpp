@@ -7,6 +7,17 @@
 #include "../../include/keydef.h"
 #include "ui_widgetmainsetting.h"
 
+#define CHECK_FILE_EXISTS(file_var, file_name)                             \
+  file_var = QString("%1%2").arg(m_data.project_dir, file_name);           \
+  if (!QFile::exists(file_var)) {                                          \
+    re.status = false;                                                     \
+    re.msg = QString("no file %1 found: %2").arg(file_name).arg(file_var); \
+    WIDGET_LOG_ERROR(re.msg);                                              \
+    return re;                                                             \
+  } else {                                                                 \
+    WIDGET_LOG_TRACE(QString("find file: %1").arg(file_name));             \
+  }
+
 WidgetMainSetting::WidgetMainSetting(QWidget *parent)
     : QWidget(parent), ui(new Ui::WidgetMainSetting) {
   ui->setupUi(this);
@@ -60,36 +71,25 @@ MSG_RE WidgetMainSetting::checkVenv() {
     return re;
   }
   re.status = true;
+  re.msg = QString("venv %1 is done").arg(path);
   return re;
 }
 
 MSG_RE WidgetMainSetting::checkScript() {
-#define CHECK_SCRIPT_EXISTS(script_var, script_name)                        \
-  script_var = QString("%1%2").arg(m_data.project_dir, script_name);        \
-  if (!QFile::exists(script_var)) {                                         \
-    re.status = false;                                                      \
-    re.msg =                                                                \
-        QString("no script %1 found: %2").arg(script_name).arg(script_var); \
-    WIDGET_LOG_ERROR(re.msg);                                               \
-    return re;                                                              \
-  } else {                                                                  \
-    WIDGET_LOG_TRACE(QString("find script: %1").arg(script_name));          \
-  }
-
   MSG_RE re;
 
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_MOVE_SIMILAR_IMG,
-                      "/script/move_similar_images.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_XML2TXT, "/script/xml2txt.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_NO_XML2TXT, "/script/no_xml2txt.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_SPLIT_DATASET, "/script/split_dataset.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_RENAME, "/script/rename.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_RE_NOTAG, "/script/re_notag.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_YOLO_TRAIN, "/yolov5-master/train.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_YOLO_EXPORT, "/yolov5-master/export.py");
-  CHECK_SCRIPT_EXISTS(GLOBAL.SCRIPT_YOLO_DETECT, "/yolov5-master/detect.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_MOVE_SIMILAR_IMG,
+                    "/script/move_similar_images.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_XML2TXT, "/script/xml2txt.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_NO_XML2TXT, "/script/no_xml2txt.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_SPLIT_DATASET, "/script/split_dataset.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_RENAME, "/script/rename.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_RE_NOTAG, "/script/re_notag.py");
 
   re.status = true;
+  re.msg =
+      "move_similar_images.py, xml2txt.py, no_xml2txt.py, split_dataset.py, "
+      "rename.py, re_notag.py";
   return re;
 }
 
@@ -103,11 +103,24 @@ MSG_RE WidgetMainSetting::checkTools() {
   GLOBAL.EXE_LABELIMG = QString("%1%2").arg(
       m_data.project_dir, "/tools/linux/labelImg-1.8.1/labelImg.py");
 #endif
+  if (!QFile::exists(GLOBAL.EXE_LABELIMG)) {
+    re.status = false;
+    re.msg = QString("no LabelImg found: %1").arg(GLOBAL.EXE_LABELIMG);
+  }
+  re.status = true;
+  re.msg = QString("LabelImg: %1").arg(GLOBAL.EXE_LABELIMG);
   return re;
 }
 
 MSG_RE WidgetMainSetting::checkYolo5() {
   MSG_RE re;
+
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_YOLO_TRAIN, "/yolov5-master/train.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_YOLO_EXPORT, "/yolov5-master/export.py");
+  CHECK_FILE_EXISTS(GLOBAL.SCRIPT_YOLO_DETECT, "/yolov5-master/detect.py");
+
+  re.status = true;
+  re.msg = "train.py, export.py, detect.py";
   return re;
 }
 
@@ -199,6 +212,24 @@ void WidgetMainSetting::on_btnBasicCheck_clicked() {
     WIDGET_LOG_INFO(QString("Venv Detect: %1").arg(re.msg));
   }
   re = checkScript();
+  if (!re.status) {
+    WIDGET_LOG_WARN(QString("Check script error: %1").arg(re.msg));
+    return;
+  } else {
+    WIDGET_LOG_INFO(QString("Script Detect: %1").arg(re.msg));
+  }
   re = checkTools();
+  if (!re.status) {
+    WIDGET_LOG_WARN(QString("Check tools error: %1").arg(re.msg));
+    return;
+  } else {
+    WIDGET_LOG_INFO(QString("Tools Detect: %1").arg(re.msg));
+  }
   re = checkYolo5();
+  if (!re.status) {
+    WIDGET_LOG_WARN(QString("Check yolov5 error: %1").arg(re.msg));
+    return;
+  } else {
+    WIDGET_LOG_INFO(QString("Yolov5 Detect: %1").arg(re.msg));
+  }
 }

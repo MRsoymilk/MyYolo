@@ -131,5 +131,5 @@ void WidgetTrain::on_btnCancel_clicked() {
 }
 
 void WidgetTrain::on_tBtnName_clicked() {
-  ui->lEditName->setText(QString("%1").arg(TIMESTAMP()));
+  ui->lEditName->setText(QString("%1").arg(TIMESTAMP("yyMMddHHmmss")));
 }

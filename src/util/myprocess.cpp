@@ -1,6 +1,9 @@
 #include "myprocess.h"
 
+#include <QThread>
+
 #include "../include/funcdef.h"
+#include "processthread.h"
 
 MyProcess &MyProcess::getInstance() {
   static MyProcess instance;
@@ -20,7 +23,24 @@ MyProcess::MyProcess(QObject *parent) {
 
 void MyProcess::startAttach(const QString &program,
                             const QStringList &arguments) {
-  m_process->start(program, arguments);
+  auto *thread = new ProcessThread(program, arguments, this);
+
+  connect(thread, &ProcessThread::outputReceived, this,
+          [](const QString &output) { WIDGET_LOG_TRACE(output); });
+  connect(thread, &ProcessThread::errorReceived, this,
+          [](const QString &error) { WIDGET_LOG_ERROR(error); });
+  connect(
+      thread, &ProcessThread::processFinished, this,
+      [thread](int exitCode, QProcess::ExitStatus exitStatus) {
+        QString message =
+            (exitStatus == QProcess::NormalExit)
+                ? QString("Process finished with exit code %1").arg(exitCode)
+                : "Process crashed.";
+        WIDGET_LOG_INFO(message);
+        thread->deleteLater();
+      });
+
+  thread->start();
 }
 
 bool MyProcess::startDetach(const QString &program,

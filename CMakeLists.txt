@@ -31,6 +31,8 @@ add_executable(myYolo
     src/util/mydir.cpp
     src/util/myprocess.h
     src/util/myprocess.cpp
+    src/util/processthread.h
+    src/util/processthread.cpp
     src/WidgetLog/widgetlog.h
     src/WidgetLog/widgetlog.cpp
     src/WidgetLog/widgetlog.ui

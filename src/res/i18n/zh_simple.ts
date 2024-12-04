@@ -36,7 +36,7 @@
     <message>
         <location filename="../../mainwindow.ui" line="76"/>
         <source>Label</source>
-        <translation>标签</translation>
+        <translation>标注</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="86"/>
@@ -71,27 +71,27 @@
     <message>
         <location filename="../../mainwindow.ui" line="160"/>
         <source>Lite</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="165"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="170"/>
         <source>OSX Dark</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="175"/>
         <source>OSX Lite</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="180"/>
         <source>en</source>
-        <translation type="unfinished"></translation>
+        <translation>英文</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="185"/>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../../mainwindow.ui" line="190"/>
         <source>zh_traditional</source>
-        <translation type="unfinished"></translation>
+        <translation>繁体中文</translation>
     </message>
     <message>
         <source>zh_tradition</source>
@@ -114,19 +114,19 @@
         <location filename="../../include/funcdef.h" line="39"/>
         <location filename="../../include/funcdef.h" line="42"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../../include/funcdef.h" line="40"/>
         <location filename="../../include/funcdef.h" line="43"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../../include/funcdef.h" line="41"/>
         <location filename="../../include/funcdef.h" line="44"/>
         <source>Critical</source>
-        <translation type="unfinished"></translation>
+        <translation>严重</translation>
     </message>
 </context>
 <context>
@@ -205,17 +205,17 @@
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="177"/>
         <source>test</source>
-        <translation type="unfinished"></translation>
+        <translation>测试集</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="184"/>
         <source>train</source>
-        <translation type="unfinished"></translation>
+        <translation>训练集</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="191"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>验证集</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="230"/>
@@ -241,13 +241,13 @@
         <location filename="../../WidgetAddData/widgetadddata.ui" line="262"/>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="286"/>
         <source>prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>前缀</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="272"/>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="296"/>
         <source>suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>后缀</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="320"/>
@@ -328,18 +328,18 @@
     <message>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="86"/>
         <source>dir input</source>
-        <translation type="unfinished"></translation>
+        <translation>输入目录</translation>
     </message>
     <message>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="98"/>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="119"/>
         <source>select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目录</translation>
     </message>
     <message>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="107"/>
         <source>dir output</source>
-        <translation type="unfinished"></translation>
+        <translation>输出目录</translation>
     </message>
     <message>
         <location filename="../../WidgetFilter/widgetfilter.ui" line="20"/>
@@ -400,12 +400,12 @@
     <message>
         <location filename="../../WidgetLog/widgetlog.ui" line="38"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏</translation>
     </message>
     <message>
         <location filename="../../WidgetLog/widgetlog.ui" line="45"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>清除</translation>
     </message>
 </context>
 <context>
@@ -436,12 +436,12 @@
     <message>
         <location filename="../../WidgetMain/Setting/widgetmainsetting.ui" line="39"/>
         <source>select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目录</translation>
     </message>
     <message>
         <location filename="../../WidgetMain/Setting/widgetmainsetting.ui" line="20"/>
         <source>Basic Check</source>
-        <translation type="unfinished"></translation>
+        <translation>基础检查</translation>
     </message>
 </context>
 <context>
@@ -454,17 +454,17 @@
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="41"/>
         <source>.pt model</source>
-        <translation type="unfinished"></translation>
+        <translation>.pt 模型</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="53"/>
         <source>Load .pt</source>
-        <translation type="unfinished"></translation>
+        <translation>加载 .pt</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="71"/>
         <source>Use OpenCV Onnx</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 OpenCV Onnx</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="77"/>
@@ -474,13 +474,13 @@
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="89"/>
         <source>Load .onnx</source>
-        <translation type="unfinished"></translation>
+        <translation>加载 .onnx</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="270"/>
         <location filename="../../WidgetTest/widgettest.ui" line="291"/>
         <source>Select Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目录</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="102"/>
@@ -545,12 +545,12 @@
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="258"/>
         <source>dir_input</source>
-        <translation type="unfinished"></translation>
+        <translation>输入目录</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="279"/>
         <source>dir_output</source>
-        <translation type="unfinished"></translation>
+        <translation>输出目录</translation>
     </message>
     <message>
         <location filename="../../WidgetTest/widgettest.ui" line="245"/>

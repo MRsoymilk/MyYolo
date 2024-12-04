@@ -2,6 +2,8 @@
 
 **Beta on Linux**
 
+![my-yolo](README/my-yolo.gif)
+
 ## Depend
 
 - Python 3.12

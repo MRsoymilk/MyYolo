@@ -21,7 +21,7 @@
     <message>
         <location filename="../../mainwindow.ui" line="42"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">信息</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="52"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../../mainwindow.ui" line="66"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>筛选</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="76"/>
@@ -139,68 +139,68 @@
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="39"/>
         <source>Add Data Default</source>
-        <translation type="unfinished"></translation>
+        <translation>默认添加数据</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="45"/>
         <source>directory</source>
-        <translation type="unfinished"></translation>
+        <translation>目录</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="51"/>
         <source>dir input(jpg + xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>输入目录（jpg + xml）</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="63"/>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="84"/>
         <source>select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目录</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="72"/>
         <source>dir output(train + val + test)</source>
-        <translation type="unfinished"></translation>
+        <translation>输出目录（训练 + 验证 + 测试）</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="96"/>
         <source>handle xml</source>
-        <translation type="unfinished"></translation>
+        <translation>处理xml</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="105"/>
         <source>id</source>
-        <translation type="unfinished"></translation>
+        <translation>id</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="110"/>
         <source>class</source>
-        <translation type="unfinished"></translation>
+        <translation>类别</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="115"/>
         <source>operate</source>
-        <translation type="unfinished"></translation>
+        <translation>操作</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="138"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>添加</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="145"/>
         <source>remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="156"/>
         <source>tags</source>
-        <translation type="unfinished"></translation>
+        <translation>标签</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="166"/>
         <source>handle divide</source>
-        <translation type="unfinished"></translation>
+        <translation>处理划分</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="177"/>
@@ -220,22 +220,22 @@
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="230"/>
         <source>shuffle</source>
-        <translation type="unfinished"></translation>
+        <translation>随机</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="240"/>
         <source>handle name</source>
-        <translation type="unfinished"></translation>
+        <translation>处理名称</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="246"/>
         <source>rename</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="253"/>
         <source>rename no tag</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名无标签</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="262"/>
@@ -252,12 +252,12 @@
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="320"/>
         <source>Add Data Self</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义添加数据</translation>
     </message>
     <message>
         <location filename="../../WidgetAddData/widgetadddata.ui" line="20"/>
         <source>Start Add Data</source>
-        <translation type="unfinished"></translation>
+        <translation>开始添加数据</translation>
     </message>
 </context>
 <context>
@@ -275,42 +275,42 @@
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="40"/>
         <source>type</source>
-        <translation type="unfinished"></translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="71"/>
         <source>select .pt</source>
-        <translation type="unfinished"></translation>
+        <translation>选择 .pt</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="31"/>
         <source>add type</source>
-        <translation type="unfinished"></translation>
+        <translation>添加类型</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="53"/>
         <source>parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>参数</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="59"/>
         <source>pt model</source>
-        <translation type="unfinished"></translation>
+        <translation>pt 模型</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="80"/>
         <source>dir output</source>
-        <translation type="unfinished"></translation>
+        <translation>输出目录</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="92"/>
         <source>select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目录</translation>
     </message>
     <message>
         <location filename="../../WidgetExport/widgetexport.ui" line="104"/>
         <source>Start Export</source>
-        <translation type="unfinished"></translation>
+        <translation>开始导出</translation>
     </message>
 </context>
 <context>
@@ -382,12 +382,12 @@
     <message>
         <location filename="../../WidgetLabel/widgetlabel.ui" line="52"/>
         <source>select file</source>
-        <translation type="unfinished"></translation>
+        <translation>选择文件</translation>
     </message>
     <message>
         <location filename="../../WidgetLabel/widgetlabel.ui" line="33"/>
         <source>Start Label</source>
-        <translation type="unfinished"></translation>
+        <translation>开始标注</translation>
     </message>
 </context>
 <context>

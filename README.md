@@ -60,7 +60,7 @@ use OpenCV to test onnx(**there may be problems**)
 │   ├── venv
 │   └── yolov5-master
 ├── README.md
-├── src
+├── myYolo_qt
 │   ├── common
 │   ├── include
 │   ├── main.cpp
@@ -90,7 +90,7 @@ use OpenCV to test onnx(**there may be problems**)
   - venv: python venv folder
   - yolov5-master: yolov5 folder, some custom modifications have been made
 - README.md
-- src: source code of myYolo
+- `myYolo_qt`: source code of myYolo in Qt
   - common
   - include
   - main.cpp
@@ -114,7 +114,7 @@ use OpenCV to test onnx(**there may be problems**)
 
 ## Necessary operate
 
-### myYolo
+### `myYolo_qt`
 
 ```bash
 mkdir build
@@ -122,6 +122,12 @@ cd build
 cmake ..
 make -j$(nproc)
 ./myYolo
+```
+### `myYolo_web`
+
+```bash
+npm install
+npm build
 ```
 
 ### requirements
@@ -281,3 +287,4 @@ shape.py:
 -                    painter.drawText(min_x, min_y, self.label)
 +                    painter.drawText(int(min_x), int(min_y), self.label)
 ```
+

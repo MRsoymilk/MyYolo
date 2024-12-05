@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Add Data</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_4" columnstretch="0">
    <item row="2" column="0">
@@ -312,8 +312,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>738</width>
-        <height>285</height>
+        <width>98</width>
+        <height>28</height>
        </rect>
       </property>
       <attribute name="label">

@@ -10,59 +10,59 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_SOURCES
-        src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
-        src/mainwindow.ui
+        myYolo_qt/main.cpp
+        myYolo_qt/mainwindow.cpp
+        myYolo_qt/mainwindow.h
+        myYolo_qt/mainwindow.ui
 )
 
 add_executable(myYolo
     ${PROJECT_SOURCES}
-    src/include/global.h
-    src/include/keydef.h
-    src/include/datadef.h
-    src/include/funcdef.h
-    src/common/confighandler.h
-    src/util/mysetting.h
-    src/util/mysetting.cpp
-    src/util/mylog.h
-    src/util/mylog.cpp
-    src/util/mydir.h
-    src/util/mydir.cpp
-    src/util/myprocess.h
-    src/util/myprocess.cpp
-    src/util/processthread.h
-    src/util/processthread.cpp
-    src/WidgetLog/widgetlog.h
-    src/WidgetLog/widgetlog.cpp
-    src/WidgetLog/widgetlog.ui
-    src/WidgetMain/Info/widgetmaininfo.h
-    src/WidgetMain/Info/widgetmaininfo.cpp
-    src/WidgetMain/Info/widgetmaininfo.ui
-    src/WidgetMain/Setting/widgetmainsetting.h
-    src/WidgetMain/Setting/widgetmainsetting.cpp
-    src/WidgetMain/Setting/widgetmainsetting.ui
-    src/WidgetFilter/widgetfilter.h
-    src/WidgetFilter/widgetfilter.cpp
-    src/WidgetFilter/widgetfilter.ui
-    src/WidgetLabel/widgetlabel.h
-    src/WidgetLabel/widgetlabel.cpp
-    src/WidgetLabel/widgetlabel.ui
-    src/WidgetAddData/widgetadddata.h
-    src/WidgetAddData/widgetadddata.cpp
-    src/WidgetAddData/widgetadddata.ui
-    src/WidgetTrain/widgettrain.h
-    src/WidgetTrain/widgettrain.cpp
-    src/WidgetTrain/widgettrain.ui
-    src/WidgetExport/widgetexport.h
-    src/WidgetExport/widgetexport.cpp
-    src/WidgetExport/widgetexport.ui
-    src/WidgetTest/widgettest.h
-    src/WidgetTest/widgettest.cpp
-    src/WidgetTest/widgettest.ui
-    src/WidgetTest/onnxcheck.h
-    src/WidgetTest/onnxcheck.cpp
-    src/myYolo.qrc
+    myYolo_qt/include/global.h
+    myYolo_qt/include/keydef.h
+    myYolo_qt/include/datadef.h
+    myYolo_qt/include/funcdef.h
+    myYolo_qt/common/confighandler.h
+    myYolo_qt/util/mysetting.h
+    myYolo_qt/util/mysetting.cpp
+    myYolo_qt/util/mylog.h
+    myYolo_qt/util/mylog.cpp
+    myYolo_qt/util/mydir.h
+    myYolo_qt/util/mydir.cpp
+    myYolo_qt/util/myprocess.h
+    myYolo_qt/util/myprocess.cpp
+    myYolo_qt/util/processthread.h
+    myYolo_qt/util/processthread.cpp
+    myYolo_qt/WidgetLog/widgetlog.h
+    myYolo_qt/WidgetLog/widgetlog.cpp
+    myYolo_qt/WidgetLog/widgetlog.ui
+    myYolo_qt/WidgetMain/Info/widgetmaininfo.h
+    myYolo_qt/WidgetMain/Info/widgetmaininfo.cpp
+    myYolo_qt/WidgetMain/Info/widgetmaininfo.ui
+    myYolo_qt/WidgetMain/Setting/widgetmainsetting.h
+    myYolo_qt/WidgetMain/Setting/widgetmainsetting.cpp
+    myYolo_qt/WidgetMain/Setting/widgetmainsetting.ui
+    myYolo_qt/WidgetFilter/widgetfilter.h
+    myYolo_qt/WidgetFilter/widgetfilter.cpp
+    myYolo_qt/WidgetFilter/widgetfilter.ui
+    myYolo_qt/WidgetLabel/widgetlabel.h
+    myYolo_qt/WidgetLabel/widgetlabel.cpp
+    myYolo_qt/WidgetLabel/widgetlabel.ui
+    myYolo_qt/WidgetAddData/widgetadddata.h
+    myYolo_qt/WidgetAddData/widgetadddata.cpp
+    myYolo_qt/WidgetAddData/widgetadddata.ui
+    myYolo_qt/WidgetTrain/widgettrain.h
+    myYolo_qt/WidgetTrain/widgettrain.cpp
+    myYolo_qt/WidgetTrain/widgettrain.ui
+    myYolo_qt/WidgetExport/widgetexport.h
+    myYolo_qt/WidgetExport/widgetexport.cpp
+    myYolo_qt/WidgetExport/widgetexport.ui
+    myYolo_qt/WidgetTest/widgettest.h
+    myYolo_qt/WidgetTest/widgettest.cpp
+    myYolo_qt/WidgetTest/widgettest.ui
+    myYolo_qt/WidgetTest/onnxcheck.h
+    myYolo_qt/WidgetTest/onnxcheck.cpp
+    myYolo_qt/myYolo.qrc
 )
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools)
@@ -70,9 +70,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets LinguistTool
 target_link_libraries(myYolo PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets)
 
 set(TRANSLATIONS
-    src/res/i18n/en.ts
-    src/res/i18n/zh_simple.ts
-    src/res/i18n/zh_traditional.ts
+    myYolo_qt/res/i18n/en.ts
+    myYolo_qt/res/i18n/zh_simple.ts
+    myYolo_qt/res/i18n/zh_traditional.ts
 )
 
 qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES)

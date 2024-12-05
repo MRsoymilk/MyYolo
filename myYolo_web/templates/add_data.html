@@ -1,0 +1,9 @@
+{% extends "framework/layout.html" %}
+
+{% block title %}Add Data{% endblock %}
+
+{% block content %}
+  <h1>add data</h1>
+
+   <iframe src="{{ url_for('make_sense.make_sense', filename='index.html') }}" width="100%" height="600px"></iframe>
+{% endblock %}

@@ -32,6 +32,10 @@ app.register_blueprint(make_sense_bp)
 def home():
     return render_template('index.html')
 
+@app.route('/label')
+def label():
+    return render_template('label.html')
+
 @app.route('/add_data')
 def add_data():
     return render_template('add_data.html')

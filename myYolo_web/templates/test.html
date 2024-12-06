@@ -3,5 +3,117 @@
 {% block title %}Test{% endblock %}
 
 {% block content %}
-  <h1>test</h1>
+<div class="container mt-4">
+  <!-- Window Title -->
+  <h1>Test</h1>
+
+  <div class="row">
+    <!-- ToolBox with Tabs -->
+    <div class="col-12">
+      <div class="nav nav-tabs" id="toolBoxTab" role="tablist">
+        <a class="nav-item nav-link active" id="yolo-tab" data-bs-toggle="tab" href="#yolo" role="tab"
+          aria-controls="yolo" aria-selected="true">Use Yolo detect.py</a>
+        <a class="nav-item nav-link" id="opencv-tab" data-bs-toggle="tab" href="#opencv" role="tab"
+          aria-controls="opencv" aria-selected="false">Use OpenCV Onnx</a>
+      </div>
+
+      <div class="tab-content mt-2" id="toolBoxTabContent">
+        <!-- Yolo tab content -->
+        <div class="tab-pane fade show active" id="yolo" role="tabpanel" aria-labelledby="yolo-tab">
+          <div class="mb-3 row">
+            <label for="modelPt" class="col-sm-2 col-form-label">.pt model</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="modelPt" placeholder="/path/to/model.pt">
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-primary">Load .pt</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OpenCV Onnx tab content -->
+        <div class="tab-pane fade" id="opencv" role="tabpanel" aria-labelledby="opencv-tab">
+          <div class="mb-3 row">
+            <label for="modelOnnx" class="col-sm-2 col-form-label">.onnx model</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="modelOnnx" placeholder="/path/to/model.onnx">
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-primary">Load .onnx</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model Settings -->
+    <div class="col-12 mt-4">
+      <div class="card">
+        <div class="card-header">
+          Model
+        </div>
+        <div class="card-body">
+          <div class="table-responsive mb-3">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Class</th>
+                  <th scope="col">Operate</th>
+                </tr>
+              </thead>
+              <tbody id="classEditTable">
+                <tr>
+                  <td>1</td>
+                  <td>Class 1</td>
+                  <td>
+                    <button class="btn btn-danger btn-sm">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-success">Add</button>
+            <button class="btn btn-danger">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Directory Selection -->
+    <div class="col-12 mt-4">
+      <div class="card">
+        <div class="card-header">
+          Directory
+        </div>
+        <div class="card-body">
+          <div class="mb-3 row">
+            <label for="dirInput" class="col-sm-2 col-form-label">dir_input</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="dirInput" placeholder="/path/to/dir/input">
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-primary">Select Folder</button>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="dirOutput" class="col-sm-2 col-form-label">dir_output</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="dirOutput" placeholder="/path/to/dir/output">
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-primary">Select Folder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start Test Button -->
+    <div class="col-12 mt-4 text-center">
+      <button class="btn btn-success btn-lg">Start Test</button>
+    </div>
+  </div>
+</div>
 {% endblock %}

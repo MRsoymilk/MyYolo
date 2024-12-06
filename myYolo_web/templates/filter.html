@@ -3,5 +3,62 @@
 {% block title %}Filter{% endblock %}
 
 {% block content %}
-  <h1>filter</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">filter</h1>
+    <div class="row">
+        <!-- Operation Group -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Operation</strong>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" id="checkBoxSSIM">
+                            <label class="form-check-label" for="checkBoxSSIM">SSIM</label>
+                        </div>
+                        <label for="thresholdSSIM" class="form-label me-2">Threshold</label>
+                        <input type="number" class="form-control w-auto" id="thresholdSSIM" step="0.1" max="1"
+                            value="0.5">
+                    </div>
+                    <div class="mt-3">
+                        <label for="batchSize" class="form-label">Batch Size</label>
+                        <input type="number" class="form-control" id="batchSize">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Directory Group -->
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Directory</strong>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="dirInput" class="form-label">Dir Input</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="dirInput">
+                            <button class="btn btn-outline-secondary" type="button" id="dirInputBtn">Select
+                                Folder</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dirOutput" class="form-label">Dir Output</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="dirOutput">
+                            <button class="btn btn-outline-secondary" type="button" id="dirOutputBtn">Select
+                                Folder</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start Button -->
+        <div class="col-12 mt-3">
+            <button class="btn btn-primary w-100" id="startFilterBtn">Start Filter</button>
+        </div>
+    </div>
+</div>
 {% endblock %}

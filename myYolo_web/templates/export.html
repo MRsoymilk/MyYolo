@@ -3,5 +3,82 @@
 {% block title %}Export{% endblock %}
 
 {% block content %}
-  <h1>export</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">filter</h1>
+    <div class="row">
+        <!-- Parameter Group -->
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Parameter</strong>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="ptModel" class="form-label">PT Model</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="ptModel" placeholder="Model path" />
+                            <button class="btn btn-outline-secondary" type="button" id="ptModelBtn">
+                                Select .pt
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelH" class="form-label">Model H</label>
+                        <input type="number" class="form-control" id="modelH" max="999" value="224" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelW" class="form-label">Model W</label>
+                        <input type="number" class="form-control" id="modelW" max="999" value="224" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelBatch" class="form-label">Model Batch</label>
+                        <input type="number" class="form-control" id="modelBatch" max="999" value="32" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Export Group -->
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Export</strong>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <select class="form-select" id="type">
+                            <option selected>Choose type...</option>
+                            <option value="1">Type 1</option>
+                            <option value="2">Type 2</option>
+                            <option value="3">Type 3</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addType" class="form-label">Add Type</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="addType" placeholder="New Type" />
+                            <button class="btn btn-outline-secondary" type="button" id="addTypeBtn">
+                                Add Type
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Spacer -->
+    <div class="row">
+        <div class="col-12">
+            <div class="my-4"></div>
+        </div>
+    </div>
+    <!-- Start Export Button -->
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary w-100" id="startExportBtn">
+                Start Export
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}

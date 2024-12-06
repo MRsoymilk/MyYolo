@@ -2,6 +2,9 @@ from flask import Flask, render_template, Blueprint, send_from_directory
 import os
 
 app = Flask(__name__)
+app.static_folder = 'static'
+app.add_url_rule('/lib/<path:filename>', endpoint='lib', view_func=lambda filename: app.send_static_file(f'lib/{filename}'))
+
 
 make_sense_bp = Blueprint('make_sense', 
                             __name__,

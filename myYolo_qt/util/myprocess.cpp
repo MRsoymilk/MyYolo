@@ -37,7 +37,6 @@ void MyProcess::startAttach(const QString &program, const QStringList &arguments
                 LOG_INFO(message);
                 thread->deleteLater();
             });
-
     thread->start();
 }
 

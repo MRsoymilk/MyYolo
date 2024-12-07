@@ -8,6 +8,9 @@ build
 # vendor
 vendor/opencv
 vendor/make-sense-1.11.0-alpha/dist
+# myYolo_web
+myYolo_web/app/__pycache__
+myYolo_web/app/blueprints/__pycache__
 # project
 project/train/cfg/*
 !project/train/cfg/_cfg.yaml

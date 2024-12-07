@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}myYolo Web{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link href="{{ url_for('static', filename='lib/bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
     <style>
@@ -34,13 +35,13 @@
 <body>
 
     <div class="navbar">
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('filter_data') }}">Filter</a>
-        <a href="{{ url_for('label') }}">Label</a>
-        <a href="{{ url_for('add_data') }}">Add Data</a>
-        <a href="{{ url_for('train') }}">Train</a>
-        <a href="{{ url_for('test') }}">Test</a>
-        <a href="{{ url_for('export') }}">Export</a>
+        <a href="{{ url_for('root.home') }}">Home</a>
+        <a href="{{ url_for('filter.filter_data') }}">Filter</a>
+        <a href="{{ url_for('label.label') }}">Label</a>
+        <a href="{{ url_for('add_data.add_data') }}">Add Data</a>
+        <a href="{{ url_for('train.train') }}">Train</a>
+        <a href="{{ url_for('test.test') }}">Test</a>
+        <a href="{{ url_for('export.export') }}">Export</a>
     </div>
 
     <div class="content">
@@ -48,6 +49,7 @@
     </div>
 
 <script src="{{ url_for('static', filename='lib/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/jquery-3.7.1.min.js') }}"></script>
 </body>
 </html>
 

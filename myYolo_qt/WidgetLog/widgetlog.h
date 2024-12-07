@@ -15,6 +15,7 @@ class WidgetLog : public QWidget
    public:
     static WidgetLog &getInstance();
     ~WidgetLog();
+    void setMaxLength(const int &length);
     void log(const QString &log);
     void logTrace(const QString &log);
     void logInfo(const QString &log);
@@ -26,11 +27,15 @@ class WidgetLog : public QWidget
     void on_btnHide_clicked();
     void on_btnClear_clicked();
 
+    void slotTextChanged();
+
    private:
     explicit WidgetLog(QWidget *parent = nullptr);
 
    private:
     Ui::WidgetLog *ui;
+    void initLog();
+    int m_maxLength;
 };
 
 #define MY_WIDGET_LOG WidgetLog::getInstance()

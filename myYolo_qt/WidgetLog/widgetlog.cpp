@@ -6,7 +6,22 @@
 WidgetLog::WidgetLog(QWidget *parent) : QWidget(parent), ui(new Ui::WidgetLog)
 {
     ui->setupUi(this);
-    ui->txtEditLog->setMaximumHeight(10000);
+    initLog();
+}
+
+void WidgetLog::initLog()
+{
+    m_maxLength = 10000;
+    connect(ui->txtEditLog, &QTextEdit::textChanged, this, &WidgetLog::slotTextChanged);
+}
+
+void WidgetLog::slotTextChanged()
+{
+    if (ui->txtEditLog->toPlainText().length() > m_maxLength)
+    {
+        QString text = ui->txtEditLog->toPlainText().right(m_maxLength);
+        ui->txtEditLog->setPlainText(text);
+    }
 }
 
 WidgetLog &WidgetLog::getInstance()
@@ -16,6 +31,8 @@ WidgetLog &WidgetLog::getInstance()
 }
 
 WidgetLog::~WidgetLog() { delete ui; }
+
+void WidgetLog::setMaxLength(const int &length) { m_maxLength = length; }
 
 void WidgetLog::log(const QString &log) { ui->txtEditLog->append(log); }
 

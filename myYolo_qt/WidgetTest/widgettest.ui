@@ -63,8 +63,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>614</width>
-        <height>68</height>
+        <width>217</width>
+        <height>42</height>
        </rect>
       </property>
       <attribute name="label">
@@ -167,35 +167,14 @@
            <x>0</x>
            <y>0</y>
            <width>290</width>
-           <height>222</height>
+           <height>293</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="labelModelWidth">
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="checkBoxSaveTxt">
             <property name="text">
-             <string>model width</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="labelModelHeight">
-            <property name="text">
-             <string>model height</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QSpinBox" name="sBoxModelWidth">
-            <property name="maximum">
-             <number>999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="sBoxModelHeight">
-            <property name="maximum">
-             <number>999</number>
+             <string>save txt</string>
             </property>
            </widget>
           </item>
@@ -206,20 +185,31 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBoxThresholdCfd"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="labelThresholdNMS">
-            <property name="text">
-             <string>threshold nms</string>
+          <item row="1" column="0">
+           <widget class="QSpinBox" name="sBoxModelWidth">
+            <property name="maximum">
+             <number>999</number>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBoxThresholdNMS"/>
           </item>
-          <item row="4" column="0" colspan="2">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="checkBoxSaveConf">
+            <property name="text">
+             <string>save conf</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="sBoxModelHeight">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0" colspan="2">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Orientation::Vertical</enum>
@@ -231,6 +221,61 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxThresholdCfd"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="checkBoxSaveCsv">
+            <property name="text">
+             <string>save csv</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelThresholdNMS">
+            <property name="text">
+             <string>threshold nms</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="labelModelHeight">
+            <property name="text">
+             <string>model height</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="checkBoxViewImg">
+            <property name="text">
+             <string>view img</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="checkBoxSaveCrop">
+            <property name="text">
+             <string>save crop</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelModelWidth">
+            <property name="text">
+             <string>model width</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="labelLineThinckness">
+            <property name="text">
+             <string>line thickness</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QSpinBox" name="spinBoxLineThickness"/>
           </item>
          </layout>
         </widget>
@@ -255,7 +300,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="labelDirInput">
         <property name="text">
-         <string>dir_input</string>
+         <string>dir input</string>
         </property>
        </widget>
       </item>
@@ -276,7 +321,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="labelDirOutput">
         <property name="text">
-         <string>dir_output</string>
+         <string>dir output</string>
         </property>
        </widget>
       </item>
@@ -293,6 +338,16 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelName">
+        <property name="text">
+         <string>name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lEditName"/>
       </item>
      </layout>
     </widget>

@@ -83,6 +83,7 @@ void WidgetFilter::callMoveSimilarImgs()
                                        "--batch_size",
                                        QString::number(m_data.batch_ssim)};
     WIDGET_LOG_TRACE(QString("Script: %1").arg(arguments_move_similar.join(' ')));
+    LOG_INFO("Filter of move similar: {}", arguments_move_similar);
     PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_move_similar);
 }
 

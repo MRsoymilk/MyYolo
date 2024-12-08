@@ -29,6 +29,13 @@ class WidgetTest : public QWidget, public ConfigHandler
         QString model_pt = "";
         QString dir_input = "";
         QString dir_output = "";
+        QString name = "";
+        int save_txt = 0;
+        int save_csv = 0;
+        int save_conf = 0;
+        int save_crop = 0;
+        int line_thickness = 0;
+        int view_img = 0;
     };
 
    private:

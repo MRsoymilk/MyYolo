@@ -4,88 +4,101 @@
 
 {% block content %}
 <div class="container mt-4">
-  <h1 class="text-center mb-4">Train</h1>
-  <div class="card">
-    <div class="card-header">
-      <h4>Parameter</h4>
+    <h1 class="text-center mb-4">Train</h1>
+    <div class="card">
+        <div class="card-header">
+            <h4>Parameter</h4>
+        </div>
+        <div class="card-body">
+            <form>
+                <!-- Weights -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="weights" class="form-label">Weights</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="weights" placeholder="Enter weights">
+                            <button class="btn btn-outline-secondary" type="button">...</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Config (YAML) -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="cfg" class="form-label">Cfg (YAML)</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cfg" placeholder="Enter config file">
+                            <button class="btn btn-outline-secondary" type="button">...</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data (YAML) -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="data" class="form-label">Data (YAML)</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="data" placeholder="Enter data file">
+                            <button class="btn btn-outline-secondary" type="button">...</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="project" class="form-label">Project</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="project" placeholder="Enter project path">
+                            <button class="btn btn-outline-secondary" type="button">...</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Epochs -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="epochs" class="form-label">Epochs</label>
+                        <input type="number" class="form-control" id="epochs" max="999"
+                            placeholder="Enter number of epochs">
+                    </div>
+                </div>
+
+                <!-- Batch Size -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="batch-size" class="form-label">Batch Size</label>
+                        <input type="number" class="form-control" id="batch-size" max="999"
+                            placeholder="Enter batch size">
+                    </div>
+                </div>
+
+                <!-- Image Size -->
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="img-size" class="form-label">Image Size</label>
+                        <input type="number" class="form-control" id="img-size" max="999"
+                            placeholder="Enter image size">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="card-body">
-      <form>
-        <!-- Weights -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="weights" class="form-label">Weights</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="weights" placeholder="Enter weights">
-              <button class="btn btn-outline-secondary" type="button">...</button>
-            </div>
-          </div>
-        </div>
 
-        <!-- Config (YAML) -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="cfg" class="form-label">Cfg (YAML)</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="cfg" placeholder="Enter config file">
-              <button class="btn btn-outline-secondary" type="button">...</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Data (YAML) -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="data" class="form-label">Data (YAML)</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="data" placeholder="Enter data file">
-              <button class="btn btn-outline-secondary" type="button">...</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="project" class="form-label">Project</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="project" placeholder="Enter project path">
-              <button class="btn btn-outline-secondary" type="button">...</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Epochs -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="epochs" class="form-label">Epochs</label>
-            <input type="number" class="form-control" id="epochs" max="999" placeholder="Enter number of epochs">
-          </div>
-        </div>
-
-        <!-- Batch Size -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="batch-size" class="form-label">Batch Size</label>
-            <input type="number" class="form-control" id="batch-size" max="999" placeholder="Enter batch size">
-          </div>
-        </div>
-
-        <!-- Image Size -->
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="img-size" class="form-label">Image Size</label>
-            <input type="number" class="form-control" id="img-size" max="999" placeholder="Enter image size">
-          </div>
-        </div>
-      </form>
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-danger" id="btnCancel">Cancel</button>
+        <button class="btn btn-primary" id="btnStartTrain">Start Train</button>
     </div>
-  </div>
-
-  <!-- Buttons -->
-  <div class="d-flex justify-content-between mt-4">
-    <button class="btn btn-danger" id="btn-cancel">Cancel</button>
-    <button class="btn btn-primary" id="btn-start-train">Start Train</button>
-  </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        function startTrain() {
+            console.log("Start Train");
+        }
+        $('#btnStartTrain').click(startTrain);
+    });
+</script>
 {% endblock %}

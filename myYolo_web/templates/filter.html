@@ -57,8 +57,19 @@
         </div>
         <!-- Start Button -->
         <div class="col-12 mt-3">
-            <button class="btn btn-primary w-100" id="startFilterBtn">Start Filter</button>
+            <button class="btn btn-primary w-100" id="btnStartFilter">Start Filter</button>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        function startFilter() {
+            console.log("Start Filter");
+        }
+
+        $('#btnStartFilter').click(startFilter);
+    });
+</script>
 {% endblock %}

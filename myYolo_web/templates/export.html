@@ -75,10 +75,21 @@
     <!-- Start Export Button -->
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-primary w-100" id="startExportBtn">
+            <button class="btn btn-primary w-100" id="btnStartExport">
                 Start Export
             </button>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        function startExport() {
+            console.log("Start Export");           
+        }
+
+        $('#btnStartExport').click(startExport);
+    });
+</script>
 {% endblock %}

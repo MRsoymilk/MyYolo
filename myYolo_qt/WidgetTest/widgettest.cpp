@@ -36,6 +36,13 @@ void WidgetTest::getUiData()
     m_data.threshold_nms = ui->doubleSpinBoxThresholdNMS->value();
     m_data.dir_input = ui->lEditDirInput->text();
     m_data.dir_output = ui->lEditDirOutput->text();
+    m_data.name = ui->lEditName->text();
+    m_data.save_txt = ui->checkBoxSaveTxt->isChecked() ? 1 : 0;
+    m_data.save_csv = ui->checkBoxSaveCsv->isChecked() ? 1 : 0;
+    m_data.save_conf = ui->checkBoxSaveConf->isChecked() ? 1 : 0;
+    m_data.save_crop = ui->checkBoxSaveCrop->isChecked() ? 1 : 0;
+    m_data.line_thickness = ui->spinBoxLineThickness->value();
+    m_data.view_img = ui->checkBoxViewImg->isChecked() ? 1 : 0;
 }
 
 void WidgetTest::getCfgData()
@@ -48,6 +55,13 @@ void WidgetTest::getCfgData()
     m_data.threshold_nms = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_NMS).toDouble();
     m_data.dir_input = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT);
     m_data.dir_output = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_DIR_OUTPUT);
+    m_data.name = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_NAME);
+    m_data.save_txt = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_SAVE_TXT).toInt();
+    m_data.save_csv = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_SAVE_CSV).toInt();
+    m_data.save_conf = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_SAVE_CONF).toInt();
+    m_data.save_crop = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_SAVE_CROP).toInt();
+    m_data.line_thickness = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_LINE_THICKNESS).toInt();
+    m_data.view_img = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_VIEW_IMG).toInt();
 }
 
 void WidgetTest::save2Cfg()
@@ -60,6 +74,13 @@ void WidgetTest::save2Cfg()
     SETTING_SET(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_NMS, QString::number(m_data.threshold_nms));
     SETTING_SET(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT, m_data.dir_input);
     SETTING_SET(CFG_GROUP_TEST, CFG_TEST_DIR_OUTPUT, m_data.dir_output);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_NAME, m_data.name);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_TXT, QString::number(m_data.save_txt));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CSV, QString::number(m_data.save_csv));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CONF, QString::number(m_data.save_conf));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CROP, QString::number(m_data.save_crop));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_LINE_THICKNESS, QString::number(m_data.line_thickness));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_VIEW_IMG, QString::number(m_data.view_img));
     LOG_INFO("config save: Group[{}]", CFG_GROUP_TEST);
     LOG_INFO("{}: {}", CFG_TEST_MODEL_HEIGHT, m_data.model_height);
     LOG_INFO("{}: {}", CFG_TEST_MODEL_WIDTH, m_data.model_width);
@@ -81,6 +102,13 @@ void WidgetTest::show2Ui()
     ui->lEditModelPt->setText(m_data.model_pt);
     ui->lEditDirInput->setText(m_data.dir_input);
     ui->lEditDirOutput->setText(m_data.dir_output);
+    ui->lEditName->setText(m_data.name);
+    ui->checkBoxSaveTxt->setCheckState(m_data.save_txt ? Qt::Checked : Qt::Unchecked);
+    ui->checkBoxSaveCsv->setCheckState(m_data.save_csv ? Qt::Checked : Qt::Unchecked);
+    ui->checkBoxSaveConf->setCheckState(m_data.save_conf ? Qt::Checked : Qt::Unchecked);
+    ui->checkBoxSaveCrop->setCheckState(m_data.save_crop ? Qt::Checked : Qt::Unchecked);
+    ui->spinBoxLineThickness->setValue(m_data.line_thickness);
+    ui->checkBoxViewImg->setCheckState(m_data.view_img ? Qt::Checked : Qt::Unchecked);
 }
 
 void WidgetTest::testPt()
@@ -92,6 +120,10 @@ void WidgetTest::testPt()
                                  m_data.dir_input,
                                  "--project",
                                  m_data.dir_output,
+                                 "--name",
+                                 m_data.name,
+                                 "--line-thickness",
+                                 QString::number(m_data.line_thickness),
                                  "--imgsz",
                                  QString::number(m_data.model_height),
                                  QString::number(m_data.model_width),
@@ -99,7 +131,28 @@ void WidgetTest::testPt()
                                  QString::number(m_data.threshold_cfd),
                                  "--iou-thres",
                                  QString::number(m_data.threshold_nms)};
+    if (m_data.view_img)
+    {
+        arguments_detect << "--view-img";
+    }
+    if (m_data.save_txt)
+    {
+        arguments_detect << "--save-txt";
+    }
+    if (m_data.save_csv)
+    {
+        arguments_detect << "--save-csv";
+    }
+    if (m_data.save_conf)
+    {
+        arguments_detect << "--save-conf";
+    }
+    if (m_data.save_crop)
+    {
+        arguments_detect << "--save-crop";
+    }
     WIDGET_LOG_INFO(QString("Script: %1").arg(arguments_detect.join(' ')));
+    LOG_INFO("Test .pt: {}", arguments_detect);
     PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_detect);
 }
 

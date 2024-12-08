@@ -50,6 +50,7 @@ void WidgetTrain::callTrain()
                           "--imgsz",
                           QString::number(m_data.img_size)};
     WIDGET_LOG_TRACE(QString("Script: %1").arg(arguments.join(' ')));
+    LOG_INFO("Train: {}", arguments);
     PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments);
 }
 

@@ -4,121 +4,136 @@
 
 {% block content %}
 <div class="container my-4">
-  <h1 class="mb-4">Add Data</h1>
+    <h1 class="mb-4">Add Data</h1>
 
-  <div class="row">
-    <div class="col-md-12">
-      <!-- ToolBox -->
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-link active" id="nav-addDataDefault-tab" data-bs-toggle="tab" href="#nav-addDataDefault"
-          role="tab" aria-controls="nav-addDataDefault" aria-selected="true">Add Data Default</a>
-        <a class="nav-link" id="nav-addDataSelf-tab" data-bs-toggle="tab" href="#nav-addDataSelf" role="tab"
-          aria-controls="nav-addDataSelf" aria-selected="false">Add Data Self</a>
-      </div>
-      <div class="tab-content mt-3" id="nav-tabContent">
-        <!-- Add Data Default -->
-        <div class="tab-pane fade show active" id="nav-addDataDefault" role="tabpanel"
-          aria-labelledby="nav-addDataDefault-tab">
-          <div class="mb-3">
-            <h5>Directory</h5>
-            <div class="row">
-              <div class="col-md-6">
-                <label for="dirInput" class="form-label">Dir Input (jpg + xml)</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="dirInput" placeholder="Select folder">
-                  <button class="btn btn-outline-secondary" type="button" id="tBtnDirInput">Select Folder</button>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- ToolBox -->
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-link active" id="nav-addDataDefault-tab" data-bs-toggle="tab" href="#nav-addDataDefault"
+                    role="tab" aria-controls="nav-addDataDefault" aria-selected="true">Add Data Default</a>
+                <a class="nav-link" id="nav-addDataSelf-tab" data-bs-toggle="tab" href="#nav-addDataSelf" role="tab"
+                    aria-controls="nav-addDataSelf" aria-selected="false">Add Data Self</a>
+            </div>
+            <div class="tab-content mt-3" id="nav-tabContent">
+                <!-- Add Data Default -->
+                <div class="tab-pane fade show active" id="nav-addDataDefault" role="tabpanel"
+                    aria-labelledby="nav-addDataDefault-tab">
+                    <div class="mb-3">
+                        <h5>Directory</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="dirInput" class="form-label">Dir Input (jpg + xml)</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dirInput" placeholder="Select folder">
+                                    <button class="btn btn-outline-secondary" type="button" id="tBtnDirInput">Select
+                                        Folder</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="dirOutputDivide" class="form-label">Dir Output (train + val + test)</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dirOutputDivide"
+                                        placeholder="Select folder">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        id="tBtnDirOutputDivide">Select
+                                        Folder</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Handle XML -->
+                    <div class="mb-3">
+                        <h5>Handle XML</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Class</th>
+                                    <th>Operate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableWidgetTag">
+                                <!-- Tags will be added dynamically here -->
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-success me-2" id="btnAddTag">Add</button>
+                            <button class="btn btn-danger" id="btnRemoveTag">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- Data Divide -->
+                    <div class="mb-3">
+                        <h5>Handle Divide</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="doubleSpinBoxTrain" class="form-label">Train</label>
+                                <input type="number" class="form-control" id="doubleSpinBoxTrain" step="0.1" max="1"
+                                    min="0" value="0.8">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="doubleSpinBoxValid" class="form-label">Valid</label>
+                                <input type="number" class="form-control" id="doubleSpinBoxValid" step="0.1" max="1"
+                                    min="0" value="0.1">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="doubleSpinBoxTest" class="form-label">Test</label>
+                                <input type="number" class="form-control" id="doubleSpinBoxTest" step="0.1" max="1"
+                                    min="0" value="0.1">
+                            </div>
+                        </div>
+                        <div class="form-check mt-3">
+                            <input type="checkbox" class="form-check-input" id="checkBoxShuffle">
+                            <label class="form-check-label" for="checkBoxShuffle">Shuffle</label>
+                        </div>
+                    </div>
+
+                    <!-- Handle Name -->
+                    <div class="mb-3">
+                        <h5>Handle Name</h5>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="checkBoxRename">
+                            <label class="form-check-label" for="checkBoxRename">Rename</label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" id="checkBoxReNoTag">
+                            <label class="form-check-label" for="checkBoxReNoTag">Rename No Tag</label>
+                        </div>
+                        <div class="mt-3" id="hLayRename" style="display:none;">
+                            <div class="d-flex mb-2">
+                                <label for="lEditRenamePrefix" class="form-label me-2">Prefix</label>
+                                <input type="text" class="form-control" id="lEditRenamePrefix">
+                            </div>
+                            <div class="d-flex mb-2">
+                                <label for="lEditRenameSuffix" class="form-label me-2">Suffix</label>
+                                <input type="text" class="form-control" id="lEditRenameSuffix">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label for="dirOutputDivide" class="form-label">Dir Output (train + val + test)</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="dirOutputDivide" placeholder="Select folder">
-                  <button class="btn btn-outline-secondary" type="button" id="tBtnDirOutputDivide">Select
-                    Folder</button>
+
+                <!-- Add Data Self -->
+                <div class="tab-pane fade" id="nav-addDataSelf" role="tabpanel" aria-labelledby="nav-addDataSelf-tab">
+                    <p>Self Add Data Content</p>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Handle XML -->
-          <div class="mb-3">
-            <h5>Handle XML</h5>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Class</th>
-                  <th>Operate</th>
-                </tr>
-              </thead>
-              <tbody id="tableWidgetTag">
-                <!-- Tags will be added dynamically here -->
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-success me-2" id="btnAddTag">Add</button>
-              <button class="btn btn-danger" id="btnRemoveTag">Remove</button>
             </div>
-          </div>
-
-          <!-- Data Divide -->
-          <div class="mb-3">
-            <h5>Handle Divide</h5>
-            <div class="row">
-              <div class="col-md-4">
-                <label for="doubleSpinBoxTrain" class="form-label">Train</label>
-                <input type="number" class="form-control" id="doubleSpinBoxTrain" step="0.1" max="1" min="0"
-                  value="0.8">
-              </div>
-              <div class="col-md-4">
-                <label for="doubleSpinBoxValid" class="form-label">Valid</label>
-                <input type="number" class="form-control" id="doubleSpinBoxValid" step="0.1" max="1" min="0"
-                  value="0.1">
-              </div>
-              <div class="col-md-4">
-                <label for="doubleSpinBoxTest" class="form-label">Test</label>
-                <input type="number" class="form-control" id="doubleSpinBoxTest" step="0.1" max="1" min="0" value="0.1">
-              </div>
-            </div>
-            <div class="form-check mt-3">
-              <input type="checkbox" class="form-check-input" id="checkBoxShuffle">
-              <label class="form-check-label" for="checkBoxShuffle">Shuffle</label>
-            </div>
-          </div>
-
-          <!-- Handle Name -->
-          <div class="mb-3">
-            <h5>Handle Name</h5>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="checkBoxRename">
-              <label class="form-check-label" for="checkBoxRename">Rename</label>
-            </div>
-            <div class="form-check mt-2">
-              <input type="checkbox" class="form-check-input" id="checkBoxReNoTag">
-              <label class="form-check-label" for="checkBoxReNoTag">Rename No Tag</label>
-            </div>
-            <div class="mt-3" id="hLayRename" style="display:none;">
-              <div class="d-flex mb-2">
-                <label for="lEditRenamePrefix" class="form-label me-2">Prefix</label>
-                <input type="text" class="form-control" id="lEditRenamePrefix">
-              </div>
-              <div class="d-flex mb-2">
-                <label for="lEditRenameSuffix" class="form-label me-2">Suffix</label>
-                <input type="text" class="form-control" id="lEditRenameSuffix">
-              </div>
-            </div>
-          </div>
+            <!-- Start Add Data Button -->
+            <button class="btn btn-primary mb-3" id="btnStartAddData">Start Add Data</button>
         </div>
-
-        <!-- Add Data Self -->
-        <div class="tab-pane fade" id="nav-addDataSelf" role="tabpanel" aria-labelledby="nav-addDataSelf-tab">
-          <p>Self Add Data Content</p>
-        </div>
-
-      </div>
-      <!-- Start Add Data Button -->
-      <button class="btn btn-primary mb-3" id="btnStartAddData">Start Add Data</button>
     </div>
-  </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        function startAddData() {
+            console.log("Start AddData");
+        }
+
+        $('#btnStartAddData').click(startAddData);
+    });
+</script>
 {% endblock %}

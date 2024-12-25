@@ -26,6 +26,9 @@ void WidgetTrain::initTrain()
     OPEN_FILE_BTN(ui->tBtnHyp, ui->lEditHyp);
     OPEN_FILE_BTN(ui->tBtnData, ui->lEditData);
     OPEN_FOLDER_BTN(ui->tBtnProject, ui->lEditProject);
+    // TODO: add train scheme
+    ui->labelModelScheme->setVisible(false);
+    ui->comboBoxModelScheme->setVisible(false);
 }
 
 void WidgetTrain::callTrain()

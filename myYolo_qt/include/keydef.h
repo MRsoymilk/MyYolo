@@ -51,6 +51,7 @@
 #define CFG_TEST_SAVE_CROP "save_crop"
 #define CFG_TEST_LINE_THICKNESS "line_thickness"
 #define CFG_TEST_VIEW_IMG "view_img"
+#define CFG_TEST_CLASSES "classes"
 #define CFG_GROUP_MAIN "MAIN"
 #define CFG_MAIN_LANGUAGE "language"
 #define CFG_MAIN_THEME "theme"
@@ -64,6 +65,8 @@
 #define CFG_EXPORT_MODEL_BATCH "model_batch"
 #define CFG_GROUP_LABEL "LABEL"
 #define CFG_LABEL_PATH_LABELIMG "path_labelimg"
+#define CFG_GROUP_LOG "LOG"
+#define CFG_LOG_LENGTH "length"
 // dir
 #define DIR_TEST "test"
 #define DIR_MODEL "model"

@@ -1,6 +1,7 @@
 #include "widgetlog.h"
 
 #include "../include/funcdef.h"
+#include "../include/keydef.h"
 #include "ui_widgetlog.h"
 
 WidgetLog::WidgetLog(QWidget *parent) : QWidget(parent), ui(new Ui::WidgetLog)
@@ -11,7 +12,7 @@ WidgetLog::WidgetLog(QWidget *parent) : QWidget(parent), ui(new Ui::WidgetLog)
 
 void WidgetLog::initLog()
 {
-    m_maxLength = 10000;
+    m_maxLength = SETTING_GET(CFG_GROUP_LOG, CFG_LOG_LENGTH, "10000").toInt();
     connect(ui->txtEditLog, &QTextEdit::textChanged, this, &WidgetLog::slotTextChanged);
 }
 

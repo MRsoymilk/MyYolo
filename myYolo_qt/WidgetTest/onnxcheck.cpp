@@ -11,7 +11,7 @@ OnnxCheck::~OnnxCheck() {}
 
 void OnnxCheck::init()
 {
-    m_info.class_names = {"ZD6-A-BSG", "ZD6-B-BSG", "ZYJ7-A-BSG", "ZYJ7-B-BSG", "ZYJ7-C-BSG", "ZYJ7-D-BSG"};
+    m_info.class_names = {""};
     m_info.nc = m_info.class_names.size();
     m_info.model_width = 352;
     m_info.model_height = 352;

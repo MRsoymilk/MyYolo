@@ -30,12 +30,19 @@ class WidgetTest : public QWidget, public ConfigHandler
         QString dir_input = "";
         QString dir_output = "";
         QString name = "";
+        QStringList classes;
         int save_txt = 0;
         int save_csv = 0;
         int save_conf = 0;
         int save_crop = 0;
         int line_thickness = 0;
         int view_img = 0;
+    };
+
+    enum TEST_SWITCH
+    {
+        YOLOV5_DETECT = 0,
+        OPENCV_ONNX
     };
 
    private:

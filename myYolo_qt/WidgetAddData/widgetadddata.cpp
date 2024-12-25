@@ -18,7 +18,7 @@ WidgetAddData::WidgetAddData(QWidget *parent) : QWidget(parent), ui(new Ui::Widg
 
 WidgetAddData::~WidgetAddData() { delete ui; }
 
-QStringList getClassList(QTableWidget *widget)
+QStringList getTagsList(QTableWidget *widget)
 {
     QStringList list{};
     int rowCount = widget->rowCount();
@@ -30,7 +30,7 @@ QStringList getClassList(QTableWidget *widget)
     return list;
 }
 
-void setClassList(QTableWidget *widget, const QStringList &classList)
+void setTagsList(QTableWidget *widget, const QStringList &classList)
 {
     widget->setRowCount(classList.size());
     for (int row = 0; row < classList.size(); ++row)
@@ -66,7 +66,7 @@ void WidgetAddData::getCfgData()
 void WidgetAddData::getUiData()
 {
     m_data.dir_img = ui->lEditDirInput->text();
-    m_data.list_tag = getClassList(ui->tableWidgetTag);
+    m_data.list_tag = getTagsList(ui->tableWidgetTag);
     m_data.train = ui->doubleSpinBoxTrain->value();
     m_data.valid = ui->doubleSpinBoxValid->value();
     m_data.test = ui->doubleSpinBoxTest->value();
@@ -83,7 +83,7 @@ void WidgetAddData::getUiData()
 void WidgetAddData::show2Ui()
 {
     ui->lEditDirInput->setText(m_data.dir_img);
-    setClassList(ui->tableWidgetTag, m_data.list_tag);
+    setTagsList(ui->tableWidgetTag, m_data.list_tag);
     ui->doubleSpinBoxTrain->setValue(m_data.train);
     ui->doubleSpinBoxValid->setValue(m_data.valid);
     ui->doubleSpinBoxTest->setValue(m_data.test);

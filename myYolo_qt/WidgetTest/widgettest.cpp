@@ -24,6 +24,33 @@ void WidgetTest::initTest()
     OPEN_FILE_BTN(ui->tBtnModelPt, ui->lEditModelPt);
     OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
+    on_toolBoxModel_currentChanged(TEST_SWITCH::YOLOV5_DETECT);
+}
+
+QStringList getClassList(QTableWidget *widget)
+{
+    QStringList list{};
+    int rowCount = widget->rowCount();
+    for (int i = 0; i < rowCount; ++i)
+    {
+        QString cellValue = widget->item(i, 1)->text();
+        list.append(cellValue);
+    }
+    return list;
+}
+
+void setClassList(QTableWidget *widget, const QStringList &classList)
+{
+    widget->setRowCount(classList.size());
+    for (int row = 0; row < classList.size(); ++row)
+    {
+        if (classList.at(row).isEmpty())
+        {
+            continue;
+        }
+        widget->setItem(row, 0, new QTableWidgetItem(QString::number(row)));
+        widget->setItem(row, 1, new QTableWidgetItem(classList.at(row)));
+    }
 }
 
 void WidgetTest::getUiData()
@@ -43,6 +70,7 @@ void WidgetTest::getUiData()
     m_data.save_crop = ui->checkBoxSaveCrop->isChecked() ? 1 : 0;
     m_data.line_thickness = ui->spinBoxLineThickness->value();
     m_data.view_img = ui->checkBoxViewImg->isChecked() ? 1 : 0;
+    m_data.classes = getClassList(ui->tableWidgetClassEdit);
 }
 
 void WidgetTest::getCfgData()
@@ -62,6 +90,9 @@ void WidgetTest::getCfgData()
     m_data.save_crop = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_SAVE_CROP).toInt();
     m_data.line_thickness = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_LINE_THICKNESS).toInt();
     m_data.view_img = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_VIEW_IMG).toInt();
+    QStringList classes = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_CLASSES).split(',');
+    classes.removeAll("");
+    m_data.classes = classes;
 }
 
 void WidgetTest::save2Cfg()
@@ -81,6 +112,7 @@ void WidgetTest::save2Cfg()
     SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CROP, QString::number(m_data.save_crop));
     SETTING_SET(CFG_GROUP_TEST, CFG_TEST_LINE_THICKNESS, QString::number(m_data.line_thickness));
     SETTING_SET(CFG_GROUP_TEST, CFG_TEST_VIEW_IMG, QString::number(m_data.view_img));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_CLASSES, m_data.classes.join(','));
     LOG_INFO("config save: Group[{}]", CFG_GROUP_TEST);
     LOG_INFO("{}: {}", CFG_TEST_MODEL_HEIGHT, m_data.model_height);
     LOG_INFO("{}: {}", CFG_TEST_MODEL_WIDTH, m_data.model_width);
@@ -109,6 +141,7 @@ void WidgetTest::show2Ui()
     ui->checkBoxSaveCrop->setCheckState(m_data.save_crop ? Qt::Checked : Qt::Unchecked);
     ui->spinBoxLineThickness->setValue(m_data.line_thickness);
     ui->checkBoxViewImg->setCheckState(m_data.view_img ? Qt::Checked : Qt::Unchecked);
+    setClassList(ui->tableWidgetClassEdit, m_data.classes);
 }
 
 void WidgetTest::testPt()
@@ -174,6 +207,11 @@ void WidgetTest::testOnnx()
         WIDGET_LOG_WARN(QString("dir input not exist: %1").arg(m_data.dir_output));
         return;
     }
+
+    m_onnxCheck.setClasses(m_data.classes);
+    m_onnxCheck.setModelImgSize(m_data.model_width, m_data.model_height);
+    m_onnxCheck.setNMS(m_data.threshold_nms);
+    m_onnxCheck.setConfidence(m_data.threshold_cfd);
 
     QFileInfoList files = dir_input.entryInfoList(QStringList() << "*.jpg" << "*.png" << "*.jpeg", QDir::Files);
 
@@ -269,21 +307,29 @@ void WidgetTest::on_tableWidgetClassEdit_cellDoubleClicked(int row, int column)
 
 void WidgetTest::on_toolBoxModel_currentChanged(int index)
 {
-    if(index == 0) {
+    if (index == TEST_SWITCH::YOLOV5_DETECT)
+    {
         // yolov5 detect.py
         ui->checkBoxSaveConf->setVisible(true);
         ui->checkBoxSaveCrop->setVisible(true);
         ui->checkBoxSaveCsv->setVisible(true);
         ui->checkBoxSaveTxt->setVisible(true);
         ui->checkBoxViewImg->setVisible(true);
+        ui->tableWidgetClassEdit->setVisible(false);
+        ui->btnAddItem->setVisible(false);
+        ui->btnRemoveItem->setVisible(false);
     }
-    if(index == 1) {
+    if (index == TEST_SWITCH::OPENCV_ONNX)
+    {
         // opencv onnx
         ui->checkBoxSaveConf->setVisible(false);
         ui->checkBoxSaveCrop->setVisible(false);
         ui->checkBoxSaveCsv->setVisible(false);
         ui->checkBoxSaveTxt->setVisible(false);
         ui->checkBoxViewImg->setVisible(false);
+        ui->tableWidgetClassEdit->setVisible(true);
+        ui->btnAddItem->setVisible(true);
+        ui->btnRemoveItem->setVisible(true);
     }
 }
 

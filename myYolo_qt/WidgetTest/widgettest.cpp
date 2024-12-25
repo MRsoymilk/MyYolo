@@ -174,6 +174,7 @@ void WidgetTest::testOnnx()
         WIDGET_LOG_WARN(QString("dir input not exist: %1").arg(m_data.dir_output));
         return;
     }
+
     QFileInfoList files = dir_input.entryInfoList(QStringList() << "*.jpg" << "*.png" << "*.jpeg", QDir::Files);
 
     for (const QFileInfo &fileInfo : files)
@@ -265,3 +266,24 @@ void WidgetTest::on_tableWidgetClassEdit_cellDoubleClicked(int row, int column)
 {
     ui->tableWidgetClassEdit->editItem(ui->tableWidgetClassEdit->item(row, column));
 }
+
+void WidgetTest::on_toolBoxModel_currentChanged(int index)
+{
+    if(index == 0) {
+        // yolov5 detect.py
+        ui->checkBoxSaveConf->setVisible(true);
+        ui->checkBoxSaveCrop->setVisible(true);
+        ui->checkBoxSaveCsv->setVisible(true);
+        ui->checkBoxSaveTxt->setVisible(true);
+        ui->checkBoxViewImg->setVisible(true);
+    }
+    if(index == 1) {
+        // opencv onnx
+        ui->checkBoxSaveConf->setVisible(false);
+        ui->checkBoxSaveCrop->setVisible(false);
+        ui->checkBoxSaveCsv->setVisible(false);
+        ui->checkBoxSaveTxt->setVisible(false);
+        ui->checkBoxViewImg->setVisible(false);
+    }
+}
+

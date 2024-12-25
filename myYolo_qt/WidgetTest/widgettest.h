@@ -57,6 +57,8 @@ class WidgetTest : public QWidget, public ConfigHandler
     void on_doubleSpinBoxThresholdCfd_editingFinished();
     void on_doubleSpinBoxThresholdNMS_editingFinished();
 
+    void on_toolBoxModel_currentChanged(int index);
+
    private:
     Ui::WidgetTest *ui;
     ini_test m_data;

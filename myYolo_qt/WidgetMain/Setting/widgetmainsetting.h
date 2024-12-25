@@ -28,7 +28,7 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
    private:
     MSG_RE checkPython();
     void initMainSetting();
-    MSG_RE checkVenv();
+    MSG_RE checkVenv(const bool &use);
     MSG_RE checkScript();
     MSG_RE checkTools();
     MSG_RE checkYolo5();
@@ -39,6 +39,8 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
 
    private slots:
     void on_btnBasicCheck_clicked();
+
+    void on_checkBoxUseVenv_checkStateChanged(const Qt::CheckState &arg1);
 
    private:
     Ui::WidgetMainSetting *ui;

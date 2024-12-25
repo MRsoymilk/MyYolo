@@ -681,7 +681,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../WidgetTrain/widgettrain.cpp" line="130"/>
+        <location filename="../../WidgetTrain/widgettrain.cpp" line="133"/>
         <source>are you sure to cancel?</source>
         <translation type="unfinished"></translation>
     </message>

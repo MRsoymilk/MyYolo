@@ -37,49 +37,55 @@ void WidgetMainSetting::initMainSetting()
 
 WidgetMainSetting::~WidgetMainSetting() { delete ui; }
 
-MSG_RE WidgetMainSetting::checkVenv()
+MSG_RE WidgetMainSetting::checkVenv(const bool &use)
 {
     MSG_RE re;
-    QString path = m_data.project_dir + "/venv";
-    QProcess cmd;
-    QDir venv(path);
-    if (!venv.exists())
-    {
-        WIDGET_LOG_INFO(QString("Creating virtual environment in %1").arg(path));
-        cmd.start(m_data.cmd_python, QStringList() << "-m" << "venv" << path);
+    if(use) {
+        QString path = m_data.project_dir + "/venv";
+        QProcess cmd;
+        QDir venv(path);
+        if (!venv.exists())
+        {
+            WIDGET_LOG_INFO(QString("Creating virtual environment in %1").arg(path));
+            cmd.start(m_data.cmd_python, QStringList() << "-m" << "venv" << path);
+            cmd.waitForFinished();
+            if (cmd.exitCode() != 0)
+            {
+                WIDGET_LOG_WARN("Failed to create virtual environment.");
+                re.status = false;
+                re.code = 1;
+                return re;
+            }
+        }
+        else
+        {
+            WIDGET_LOG_INFO("Virtual environment already exists.");
+        }
+#ifdef Q_OS_WIN
+        GLOBAL.PYTHON = path + "/Scripts/python.exe";  // Windows
+        GLOBAL.PIP = path + "/Scripts/pip.exe";
+#endif
+#ifdef Q_OS_UNIX
+        GLOBAL.PYTHON = path + "/bin/python";  // Linux/Mac
+        GLOBAL.PIP = path + "/bin/pip";
+#endif
+        cmd.start(m_data.cmd_pip, QStringList() << "config" << "set" << "global.index-url"
+                                                << "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple");
         cmd.waitForFinished();
         if (cmd.exitCode() != 0)
         {
-            WIDGET_LOG_WARN("Failed to create virtual environment.");
+            WIDGET_LOG_WARN("Failed to set global pip mirrors.");
             re.status = false;
-            re.code = 1;
+            re.code = 2;
             return re;
         }
+        re.status = true;
+        re.msg = QString("venv %1 is done").arg(path);
     }
-    else
-    {
-        WIDGET_LOG_INFO("Virtual environment already exists.");
+    else {
+        GLOBAL.PYTHON = m_data.cmd_python;
+        GLOBAL.PIP = m_data.cmd_pip;
     }
-#ifdef Q_OS_WIN
-    GLOBAL.PYTHON = path + "/Scripts/python.exe";  // Windows
-    GLOBAL.PIP = path + "/Scripts/pip.exe";
-#endif
-#ifdef Q_OS_UNIX
-    GLOBAL.PYTHON = path + "/bin/python";  // Linux/Mac
-    GLOBAL.PIP = path + "/bin/pip";
-#endif
-    cmd.start(m_data.cmd_pip, QStringList() << "config" << "set" << "global.index-url"
-                                            << "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple");
-    cmd.waitForFinished();
-    if (cmd.exitCode() != 0)
-    {
-        WIDGET_LOG_WARN("Failed to set global pip mirrors.");
-        re.status = false;
-        re.code = 2;
-        return re;
-    }
-    re.status = true;
-    re.msg = QString("venv %1 is done").arg(path);
     return re;
 }
 
@@ -201,10 +207,12 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
         if (re.code == 1)
         {
             m_data.cmd_python = "python";
+            m_data.cmd_pip = "pip";
         }
         if (re.code == 2)
         {
             m_data.cmd_python = "python3";
+            m_data.cmd_pip = "pip3";
         }
     }
     if (m_data.project_dir.isEmpty())
@@ -217,7 +225,7 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
         m_data.project_dir = GET_ABSOLUTE_PATH(m_data.project_dir);
         WIDGET_LOG_INFO(QString("Use project root: %1").arg(m_data.project_dir));
     }
-    re = checkVenv();
+    re = checkVenv(ui->checkBoxVenv == Qt::CheckState::Checked);
     if (!re.status)
     {
         WIDGET_LOG_WARN(QString("Check python venv error: %1").arg(re.msg));
@@ -257,4 +265,9 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
     {
         WIDGET_LOG_INFO(QString("Yolov5 Detect: %1").arg(re.msg));
     }
+}
+
+void WidgetMainSetting::on_checkBoxUseVenv_checkStateChanged(const Qt::CheckState &arg1)
+{
+    checkVenv(ui->checkBoxVenv == Qt::CheckState::Checked);
 }

@@ -22,8 +22,9 @@ void WidgetExport::initExport()
 
 void WidgetExport::getCfgData()
 {
-    m_data.list_type = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
-    m_data.type = m_data.list_type.first();
+    QStringList types = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
+    types.removeAll("");
+    m_data.list_type = types;
     m_data.pt_model = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL);
     m_data.model_h = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_H).toInt();
     m_data.model_w = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_W).toInt();

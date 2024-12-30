@@ -225,7 +225,7 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
         m_data.project_dir = GET_ABSOLUTE_PATH(m_data.project_dir);
         WIDGET_LOG_INFO(QString("Use project root: %1").arg(m_data.project_dir));
     }
-    re = checkVenv(ui->checkBoxVenv == Qt::CheckState::Checked);
+    re = checkVenv(ui->checkBoxUseVenv->isChecked());
     if (!re.status)
     {
         WIDGET_LOG_WARN(QString("Check python venv error: %1").arg(re.msg));
@@ -269,5 +269,5 @@ void WidgetMainSetting::on_btnBasicCheck_clicked()
 
 void WidgetMainSetting::on_checkBoxUseVenv_checkStateChanged(const Qt::CheckState &arg1)
 {
-    checkVenv(ui->checkBoxVenv == Qt::CheckState::Checked);
+    checkVenv(ui->checkBoxUseVenv->isChecked());
 }

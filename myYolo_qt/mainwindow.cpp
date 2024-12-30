@@ -15,7 +15,6 @@
 #include "WidgetTrain/widgettrain.h"
 #include "include/funcdef.h"
 #include "include/keydef.h"
-#include "util/mydir.h"
 
 MY_GLOBAL GLOBAL;
 

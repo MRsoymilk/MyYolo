@@ -5,7 +5,7 @@
 #include <QWidget>
 
 #include "../common/confighandler.h"
-#include "onnxcheck.h"
+#include "check_cv_onnx.h"
 
 namespace Ui
 {
@@ -69,7 +69,7 @@ class WidgetTest : public QWidget, public ConfigHandler
    private:
     Ui::WidgetTest *ui;
     ini_test m_data;
-    OnnxCheck m_onnxCheck;
+    Check_CV_Onnx m_onnxCheck;
 };
 
 #endif  // WIDGETTEST_H

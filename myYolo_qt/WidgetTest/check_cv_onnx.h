@@ -1,14 +1,14 @@
-#ifndef ONNXCHECK_H
-#define ONNXCHECK_H
+#ifndef CHECK_CV_ONNX_H
+#define CHECK_CV_ONNX_H
 #include <QString>
 #include <opencv2/dnn.hpp>
 #include <opencv2/opencv.hpp>
 #include <unordered_map>
-class OnnxCheck
+class Check_CV_Onnx
 {
    public:
-    OnnxCheck();
-    ~OnnxCheck();
+    Check_CV_Onnx();
+    ~Check_CV_Onnx();
     bool loadModel(const QString &path, const bool &is_cpu = true);
     bool checkOnePicture(const QString &inputPath, const QString &outputPath);
     void setModelImgSize(const int &width, const int &height);
@@ -62,4 +62,4 @@ class OnnxCheck
     cv::dnn::Net m_net;
 };
 
-#endif  // ONNXCHECK_H
+#endif  // CHECK_CV_ONNX_H

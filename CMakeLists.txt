@@ -60,8 +60,10 @@ add_executable(myYolo
     myYolo_qt/WidgetTest/widgettest.h
     myYolo_qt/WidgetTest/widgettest.cpp
     myYolo_qt/WidgetTest/widgettest.ui
-    myYolo_qt/WidgetTest/onnxcheck.h
-    myYolo_qt/WidgetTest/onnxcheck.cpp
+    myYolo_qt/WidgetTest/check_cv_onnx.h
+    myYolo_qt/WidgetTest/check_cv_onnx.cpp
+    myYolo_qt/WidgetTest/check_onnxruntime.h
+    myYolo_qt/WidgetTest/check_onnxruntime.cpp
     myYolo_qt/myYolo.qrc
 )
 

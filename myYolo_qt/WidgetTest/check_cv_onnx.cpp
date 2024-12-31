@@ -1,15 +1,15 @@
-#include "onnxcheck.h"
+#include "check_cv_onnx.h"
 
 #include <QImage>
 
 #include "../util/mydir.h"
 #include "../util/mylog.h"
 
-OnnxCheck::OnnxCheck() { init(); }
+Check_CV_Onnx::Check_CV_Onnx() { init(); }
 
-OnnxCheck::~OnnxCheck() {}
+Check_CV_Onnx::~Check_CV_Onnx() {}
 
-void OnnxCheck::init()
+void Check_CV_Onnx::init()
 {
     m_info.class_names = {""};
     m_info.nc = m_info.class_names.size();
@@ -19,7 +19,7 @@ void OnnxCheck::init()
     m_info.nms_threshold = 0.4;
 }
 
-bool OnnxCheck::loadModel(const QString &path, const bool &is_cpu)
+bool Check_CV_Onnx::loadModel(const QString &path, const bool &is_cpu)
 {
     m_net = cv::dnn::readNetFromONNX(MyDir::Path2Path(path));
     if (m_net.empty())
@@ -39,7 +39,7 @@ bool OnnxCheck::loadModel(const QString &path, const bool &is_cpu)
     return true;
 }
 
-bool OnnxCheck::checkOnePicture(const QString &inputPath, const QString &outputPath)
+bool Check_CV_Onnx::checkOnePicture(const QString &inputPath, const QString &outputPath)
 {
     cv::Mat img = cv::imread(MyDir::Path2Path(inputPath));
     if (img.empty())
@@ -83,7 +83,7 @@ bool OnnxCheck::checkOnePicture(const QString &inputPath, const QString &outputP
     return true;
 }
 
-void OnnxCheck::setModelImgSize(const int &width, const int &height)
+void Check_CV_Onnx::setModelImgSize(const int &width, const int &height)
 {
     if (width)
     {
@@ -95,11 +95,11 @@ void OnnxCheck::setModelImgSize(const int &width, const int &height)
     }
 }
 
-void OnnxCheck::setConfidence(const float &threshold) { m_info.confidence_threshold = threshold; }
+void Check_CV_Onnx::setConfidence(const float &threshold) { m_info.confidence_threshold = threshold; }
 
-void OnnxCheck::setNMS(const float &threshold) { m_info.nms_threshold = threshold; }
+void Check_CV_Onnx::setNMS(const float &threshold) { m_info.nms_threshold = threshold; }
 
-void OnnxCheck::setClasses(QStringList names)
+void Check_CV_Onnx::setClasses(QStringList names)
 {
     m_info.nc = names.size();
     for (int i = 0; i < m_info.nc; ++i)
@@ -108,7 +108,7 @@ void OnnxCheck::setClasses(QStringList names)
     }
 }
 
-cv::Rect2d OnnxCheck::CoordinateTrans(const int &org_width, const int &org_height, const float &center_x,
+cv::Rect2d Check_CV_Onnx::CoordinateTrans(const int &org_width, const int &org_height, const float &center_x,
                                       const float &center_y, const float &width, float &height)
 {
     double x_factor = 1.0 * org_width / m_info.model_width;
@@ -120,7 +120,7 @@ cv::Rect2d OnnxCheck::CoordinateTrans(const int &org_width, const int &org_heigh
     return cv::Rect2d{x, y, w, h};
 }
 
-void OnnxCheck::doDataCheckout(const float *data, const int &img_width, const int &img_height)
+void Check_CV_Onnx::doDataCheckout(const float *data, const int &img_width, const int &img_height)
 {
     float confidence = data[4];  // confidence
     if (confidence < m_info.confidence_threshold)
@@ -144,7 +144,7 @@ void OnnxCheck::doDataCheckout(const float *data, const int &img_width, const in
     m_info.class_ids.push_back(class_id);
 }
 
-bool OnnxCheck::doSaveImg(const cv::Mat &img, const QString &output_path)
+bool Check_CV_Onnx::doSaveImg(const cv::Mat &img, const QString &output_path)
 {
     cv::Mat img_rgb;
     cv::cvtColor(img, img_rgb, cv::COLOR_BGR2RGB);
@@ -152,7 +152,7 @@ bool OnnxCheck::doSaveImg(const cv::Mat &img, const QString &output_path)
     return qimg.save(output_path);
 }
 
-void OnnxCheck::doRelease()
+void Check_CV_Onnx::doRelease()
 {
     m_info.class_ids = {};
     m_info.confidences = {};
@@ -160,7 +160,7 @@ void OnnxCheck::doRelease()
     m_info.nms_indices = {};
 }
 
-cv::Mat OnnxCheck::doDrawBox(const cv::Mat &img)
+cv::Mat Check_CV_Onnx::doDrawBox(const cv::Mat &img)
 {
     cv::Mat img_copy = img;
     for (int idx : m_info.nms_indices)

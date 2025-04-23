@@ -56,6 +56,7 @@
 #define CFG_MAIN_LANGUAGE "language"
 #define CFG_MAIN_THEME "theme"
 #define CFG_MAIN_PROJECT_DIR "project_dir"
+#define CFG_MAIN_USE_VENV "use_venv"
 #define CFG_GROUP_EXPORT "EXPORT"
 #define CFG_EXPORT_TYPE "type"
 #define CFG_EXPORT_PT_MODEL "pt_model"

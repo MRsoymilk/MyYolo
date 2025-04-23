@@ -23,6 +23,7 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
         QString project_dir = "";
         QString cmd_python = "";
         QString cmd_pip = "";
+        int use_venv = 1;
     };
 
    private:

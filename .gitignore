@@ -1,7 +1,7 @@
 *.bkp
 *.dtmp
 # qt .user
-CMakeLists.txt.user
+CMakeLists.txt.*
 # cmake build
 myYolo
 build

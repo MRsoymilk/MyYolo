@@ -139,13 +139,29 @@ MSG_RE WidgetMainSetting::checkYolo5()
     return re;
 }
 
-void WidgetMainSetting::getCfgData() { m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR); }
+void WidgetMainSetting::getCfgData()
+{
+    m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR);
+    m_data.use_venv = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, "1").toInt();
+}
 
-void WidgetMainSetting::save2Cfg() { SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR, m_data.project_dir); }
+void WidgetMainSetting::save2Cfg()
+{
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR, m_data.project_dir);
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, QString::number(m_data.use_venv));
+}
 
-void WidgetMainSetting::show2Ui() { ui->lEditProjectRoot->setText(m_data.project_dir); }
+void WidgetMainSetting::show2Ui()
+{
+    ui->lEditProjectRoot->setText(m_data.project_dir);
+    ui->checkBoxUseVenv->setChecked(m_data.use_venv);
+}
 
-void WidgetMainSetting::getUiData() { m_data.project_dir = ui->lEditProjectRoot->text(); }
+void WidgetMainSetting::getUiData()
+{
+    m_data.project_dir = ui->lEditProjectRoot->text();
+    m_data.use_venv = ui->checkBoxUseVenv->isChecked();
+}
 
 MSG_RE WidgetMainSetting::checkPython()
 {

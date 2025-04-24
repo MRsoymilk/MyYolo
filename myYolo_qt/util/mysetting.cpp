@@ -27,5 +27,4 @@ QString MySetting::getValue(const QString &group, const QString &key, const QStr
 MySetting::MySetting()
 {
     m_settings = new QSettings("config/config.ini", QSettings::IniFormat);
-    ;
 }

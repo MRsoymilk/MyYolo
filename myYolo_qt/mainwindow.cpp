@@ -15,12 +15,14 @@
 #include "WidgetTrain/widgettrain.h"
 #include "include/funcdef.h"
 #include "include/keydef.h"
+#include "version.h"
 
 MY_GLOBAL GLOBAL;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->statusbar->showMessage(QString("version: %1").arg(APP_VERSION));
     initMain();
 }
 

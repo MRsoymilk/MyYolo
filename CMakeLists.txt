@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(myYolo VERSION 0.1 LANGUAGES CXX)
+project(myYolo VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -121,3 +121,8 @@ elseif(LINUX)
     find_package(OpenCV REQUIRED)
     target_link_libraries(myYolo PRIVATE ${OpenCV_LIBS})
 endif()
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/version.h.in
+  ${CMAKE_CURRENT_BINARY_DIR}/version.h
+)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})

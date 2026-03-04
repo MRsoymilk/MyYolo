@@ -15,7 +15,7 @@ class WidgetExport : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetExport(QWidget *parent = nullptr);
     ~WidgetExport();
     struct ini_export
@@ -28,19 +28,19 @@ class WidgetExport : public QWidget, public ConfigHandler
         int model_batch;
     };
 
-   private:
+private:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
 
-   private slots:
+private slots:
     void initExport();
     void on_btnStartExport_clicked();
     void on_btnAddType_clicked();
     void on_comboBoxType_currentTextChanged(const QString &type);
 
-   private:
+private:
     Ui::WidgetExport *ui;
     ini_export m_data;
 };

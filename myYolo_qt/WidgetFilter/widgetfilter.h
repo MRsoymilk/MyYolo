@@ -14,7 +14,7 @@ class WidgetFilter : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetFilter(QWidget *parent = nullptr);
     ~WidgetFilter();
     struct ini_filter
@@ -30,14 +30,14 @@ class WidgetFilter : public QWidget, public ConfigHandler
     void show2Ui() override;
     void getUiData() override;
 
-   private:
+private:
     void initFilter();
     void callMoveSimilarImgs();
 
-   private slots:
+private slots:
     void on_btnStartFilter_clicked();
 
-   private:
+private:
     Ui::WidgetFilter *ui;
     ini_filter m_data;
 };

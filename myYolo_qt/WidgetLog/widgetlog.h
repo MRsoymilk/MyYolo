@@ -12,7 +12,7 @@ class WidgetLog : public QWidget
 {
     Q_OBJECT
 
-   public:
+public:
     static WidgetLog &getInstance();
     ~WidgetLog();
     void setMaxLength(const int &length);
@@ -21,25 +21,25 @@ class WidgetLog : public QWidget
     void logInfo(const QString &log);
     void logWarn(const QString &log);
     void logError(const QString &log);
-   signals:
+signals:
     void signalHide();
     void windowClose();
-   private slots:
+private slots:
     void on_btnHide_clicked();
     void on_btnClear_clicked();
 
     void slotTextChanged();
 
-   private:
+private:
     explicit WidgetLog(QWidget *parent = nullptr);
 
-   private:
+private:
     Ui::WidgetLog *ui;
     void initLog();
     int m_maxLength;
 
     // QWidget interface
-   protected:
+protected:
     void closeEvent(QCloseEvent *event);
 };
 

@@ -16,7 +16,7 @@ class WidgetTest : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetTest(QWidget *parent = nullptr);
     ~WidgetTest();
     struct ini_test
@@ -45,7 +45,7 @@ class WidgetTest : public QWidget, public ConfigHandler
         OPENCV_ONNX
     };
 
-   private:
+private:
     void initTest();
     void testOnnx();
     void getUiData() override;
@@ -54,7 +54,7 @@ class WidgetTest : public QWidget, public ConfigHandler
     void show2Ui() override;
     void testPt();
 
-   private slots:
+private slots:
     void on_btnStartTest_clicked();
     void on_sBoxModelWidth_editingFinished();
     void on_sBoxModelHeight_editingFinished();
@@ -66,7 +66,7 @@ class WidgetTest : public QWidget, public ConfigHandler
 
     void on_toolBoxModel_currentChanged(int index);
 
-   private:
+private:
     Ui::WidgetTest *ui;
     ini_test m_data;
     Check_CV_Onnx m_onnxCheck;

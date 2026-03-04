@@ -10,14 +10,14 @@
 
 class MyLog
 {
-   public:
+public:
     static MyLog &getInstance();
     ~MyLog();
     void init(const std::string &file_name = "./log/myYolo.log", size_t max_size = 10 * 1024 * 1024,
               size_t max_files = 10);
     static std::shared_ptr<spdlog::logger> getLogger();
 
-   private:
+private:
     MyLog();
     static std::shared_ptr<spdlog::logger> s_logger;
 };

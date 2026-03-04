@@ -15,7 +15,7 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetMainSetting(QWidget *parent = nullptr);
     ~WidgetMainSetting();
     struct ini_main_setting
@@ -26,7 +26,7 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
         int use_venv = 1;
     };
 
-   private:
+private:
     MSG_RE checkPython();
     void initMainSetting();
     MSG_RE checkVenv(const bool &use);
@@ -38,12 +38,12 @@ class WidgetMainSetting : public QWidget, public ConfigHandler
     void show2Ui() override;
     void getUiData() override;
 
-   private slots:
+private slots:
     void on_btnBasicCheck_clicked();
 
     void on_checkBoxUseVenv_checkStateChanged(const Qt::CheckState &arg1);
 
-   private:
+private:
     Ui::WidgetMainSetting *ui;
     ini_main_setting m_data;
 };

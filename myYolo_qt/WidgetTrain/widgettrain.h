@@ -15,7 +15,7 @@ class WidgetTrain : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetTrain(QWidget *parent = nullptr);
     ~WidgetTrain();
     struct ini_train
@@ -32,7 +32,7 @@ class WidgetTrain : public QWidget, public ConfigHandler
         int img_size = 0;
     };
 
-   private:
+private:
     void getCfgData() override;
     void getUiData() override;
     void show2Ui() override;
@@ -40,12 +40,12 @@ class WidgetTrain : public QWidget, public ConfigHandler
     void initTrain();
     void callTrain();
 
-   private slots:
+private slots:
     void on_btnStartTrain_clicked();
     void on_btnCancel_clicked();
     void on_tBtnName_clicked();
 
-   private:
+private:
     Ui::WidgetTrain *ui;
     ini_train m_data;
 };

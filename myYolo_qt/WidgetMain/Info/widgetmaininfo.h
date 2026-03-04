@@ -12,11 +12,11 @@ class WidgetMainInfo : public QWidget
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetMainInfo(QWidget *parent = nullptr);
     ~WidgetMainInfo();
 
-   private:
+private:
     Ui::WidgetMainInfo *ui;
 };
 

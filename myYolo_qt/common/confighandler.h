@@ -3,7 +3,7 @@
 
 class ConfigHandler
 {
-   public:
+public:
     ConfigHandler() = default;
     ~ConfigHandler() = default;
     virtual void getCfgData() = 0;

@@ -6,16 +6,16 @@
 
 class MySetting
 {
-   public:
+public:
     static MySetting &getInstance();
     ~MySetting();
     void setValue(const QString &group, const QString &key, const QString &val);
     QString getValue(const QString &group, const QString &key, const QString &val_dft = "");
 
-   private:
+private:
     MySetting();
 
-   private:
+private:
     QSettings *m_settings;
 };
 

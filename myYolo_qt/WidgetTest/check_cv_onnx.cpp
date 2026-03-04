@@ -109,7 +109,7 @@ void Check_CV_Onnx::setClasses(QStringList names)
 }
 
 cv::Rect2d Check_CV_Onnx::CoordinateTrans(const int &org_width, const int &org_height, const float &center_x,
-                                      const float &center_y, const float &width, float &height)
+                                          const float &center_y, const float &width, float &height)
 {
     double x_factor = 1.0 * org_width / m_info.model_width;
     double y_factor = 1.0 * org_height / m_info.model_height;

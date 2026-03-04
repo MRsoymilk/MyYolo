@@ -15,7 +15,7 @@ class WidgetLabel : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetLabel(QWidget *parent = nullptr);
     ~WidgetLabel();
     struct ini_label
@@ -27,13 +27,13 @@ class WidgetLabel : public QWidget, public ConfigHandler
     void show2Ui() override;
     void getUiData() override;
 
-   private:
+private:
     void initLabel();
 
-   private slots:
+private slots:
     void on_btnStartLabel_clicked();
 
-   private:
+private:
     Ui::WidgetLabel *ui;
     ini_label m_data;
 };

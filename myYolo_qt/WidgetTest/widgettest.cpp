@@ -332,4 +332,3 @@ void WidgetTest::on_toolBoxModel_currentChanged(int index)
         ui->btnRemoveItem->setVisible(true);
     }
 }
-

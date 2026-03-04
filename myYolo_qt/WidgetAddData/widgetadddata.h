@@ -15,7 +15,7 @@ class WidgetAddData : public QWidget, public ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     explicit WidgetAddData(QWidget *parent = nullptr);
     ~WidgetAddData();
     struct ini_add_data
@@ -35,7 +35,7 @@ class WidgetAddData : public QWidget, public ConfigHandler
         QString re_notag_suffix;
     };
 
-   private:
+private:
     void initAddData();
     void getCfgData() override;
     void save2Cfg() override;
@@ -47,13 +47,13 @@ class WidgetAddData : public QWidget, public ConfigHandler
     void callSpliteDataset();
     void callReNoTag();
 
-   private slots:
+private slots:
     void on_btnStartAddData_clicked();
     void on_btnAddTag_clicked();
     void on_btnRemoveTag_clicked();
     void on_tableWidgetTag_cellDoubleClicked(int row, int column);
 
-   private:
+private:
     Ui::WidgetAddData *ui;
     ini_add_data m_data;
 };

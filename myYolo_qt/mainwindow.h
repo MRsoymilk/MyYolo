@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow, ConfigHandler
 {
     Q_OBJECT
 
-   public:
+public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     struct ini_main
@@ -26,11 +26,11 @@ class MainWindow : public QMainWindow, ConfigHandler
         QString language;
     };
 
-   private:
+private:
     void addBasicWidget();
     void initMain();
 
-   private:
+private:
     Ui::MainWindow *ui;
     ini_main m_data;
     void menuThemeSelect(QAction *selectedAction);
@@ -39,17 +39,17 @@ class MainWindow : public QMainWindow, ConfigHandler
     void setLanguage(const QString &language);
 
     // ConfigHandler interface
-   public:
+public:
     void getCfgData() override;
     void save2Cfg() override;
     void show2Ui() override;
     void getUiData() override;
-   private slots:
+private slots:
     void on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &arg1);
     void slotWidgetTestHide();
 
     // QWidget interface
-   protected:
+protected:
     void closeEvent(QCloseEvent *event) override;
 };
 #endif  // MAINWINDOW_H

@@ -6,7 +6,7 @@
 #include <unordered_map>
 class Check_CV_Onnx
 {
-   public:
+public:
     Check_CV_Onnx();
     ~Check_CV_Onnx();
     bool loadModel(const QString &path, const bool &is_cpu = true);
@@ -47,7 +47,7 @@ class Check_CV_Onnx
         cv::Scalar(255, 69, 0)      // class 15 - Orange Red
     };
 
-   private:
+private:
     void init();
     cv::Mat doDrawBox(const cv::Mat &img);
     bool doSaveImg(const cv::Mat &img, const QString &output_path);
@@ -57,7 +57,7 @@ class Check_CV_Onnx
     void doDataCheckout(const float *data, const int &img_width, const int &img_height);
     void doRelease();
 
-   private:
+private:
     detect_info m_info;
     cv::dnn::Net m_net;
 };

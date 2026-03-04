@@ -40,7 +40,8 @@ WidgetMainSetting::~WidgetMainSetting() { delete ui; }
 MSG_RE WidgetMainSetting::checkVenv(const bool &use)
 {
     MSG_RE re;
-    if(use) {
+    if (use)
+    {
         QString path = m_data.project_dir + "/venv";
         QProcess cmd;
         QDir venv(path);
@@ -82,7 +83,8 @@ MSG_RE WidgetMainSetting::checkVenv(const bool &use)
         re.status = true;
         re.msg = QString("venv %1 is done").arg(path);
     }
-    else {
+    else
+    {
         GLOBAL.PYTHON = m_data.cmd_python;
         GLOBAL.PIP = m_data.cmd_pip;
     }

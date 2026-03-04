@@ -23,6 +23,7 @@ class WidgetLog : public QWidget
     void logError(const QString &log);
    signals:
     void signalHide();
+    void windowClose();
    private slots:
     void on_btnHide_clicked();
     void on_btnClear_clicked();
@@ -36,6 +37,10 @@ class WidgetLog : public QWidget
     Ui::WidgetLog *ui;
     void initLog();
     int m_maxLength;
+
+    // QWidget interface
+   protected:
+    void closeEvent(QCloseEvent *event);
 };
 
 #define MY_WIDGET_LOG WidgetLog::getInstance()

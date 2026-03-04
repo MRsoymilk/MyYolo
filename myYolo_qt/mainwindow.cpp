@@ -62,6 +62,7 @@ void MainWindow::addBasicWidget()
     ui->gLayInfo->addWidget(widgetMainInfo);
     ui->gLaySetting->addWidget(widgetMainSetting);
     connect(&MY_WIDGET_LOG, &WidgetLog::signalHide, this, &MainWindow::slotWidgetTestHide);
+    connect(&MY_WIDGET_LOG, &WidgetLog::windowClose, this, [this]() { ui->checkBoxShowLog->setChecked(false); });
 }
 
 void MainWindow::menuThemeSelect(QAction *selectedAction)

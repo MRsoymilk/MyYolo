@@ -16,6 +16,8 @@ void WidgetLog::initLog()
     connect(ui->txtEditLog, &QTextEdit::textChanged, this, &WidgetLog::slotTextChanged);
 }
 
+void WidgetLog::closeEvent(QCloseEvent *event) { emit windowClose(); }
+
 void WidgetLog::slotTextChanged()
 {
     if (ui->txtEditLog->toPlainText().length() > m_maxLength)

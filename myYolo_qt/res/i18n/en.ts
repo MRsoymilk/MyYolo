@@ -114,7 +114,7 @@
         <location filename="../../include/funcdef.h" line="49"/>
         <location filename="../../include/funcdef.h" line="52"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Information</translation>
     </message>
     <message>
         <location filename="../../include/funcdef.h" line="50"/>

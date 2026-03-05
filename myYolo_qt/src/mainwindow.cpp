@@ -33,10 +33,12 @@ void MainWindow::initMain()
     addBasicWidget();
     for (QAction *action : ui->menuTheme->actions())
     {
+        action->setCheckable(true);
         connect(action, &QAction::triggered, this, [this, action]() { menuThemeSelect(action); });
     }
     for (QAction *action : ui->menulanguage->actions())
     {
+        action->setCheckable(true);
         connect(action, &QAction::triggered, this, [this, action]() { menuLanguageSelect(action); });
     }
     getCfgData();
@@ -69,15 +71,9 @@ void MainWindow::menuThemeSelect(QAction *selectedAction)
 {
     for (QAction *theme : ui->menuTheme->actions())
     {
-        if (theme == selectedAction && theme->isChecked())
-        {
-            return;
-        }
         theme->setChecked(false);
-        theme->setIcon(QIcon());
     }
     selectedAction->setChecked(true);
-    selectedAction->setIcon(QIcon(":res/icons/yes.svg"));
     setTheme(selectedAction->text());
 }
 
@@ -97,15 +93,9 @@ void MainWindow::menuLanguageSelect(QAction *selectedAction)
 {
     for (QAction *language : ui->menulanguage->actions())
     {
-        if (language == selectedAction && language->isChecked())
-        {
-            return;
-        }
         language->setChecked(false);
-        language->setIcon(QIcon());
     }
     selectedAction->setChecked(true);
-    selectedAction->setIcon(QIcon(":res/icons/yes.svg"));
     setLanguage(selectedAction->text());
 }
 
@@ -146,7 +136,8 @@ void MainWindow::show2Ui()
         {
             if (language->text() == m_data.language)
             {
-                language->trigger();
+                language->setChecked(true);
+                setLanguage(language->text());
                 WIDGET_LOG_INFO(QString("use default language: %1").arg(language->text()));
                 break;
             }
@@ -163,7 +154,8 @@ void MainWindow::show2Ui()
         {
             if (theme->text() == m_data.theme)
             {
-                theme->trigger();
+                theme->setChecked(true);
+                setTheme(theme->text());
                 WIDGET_LOG_INFO(QString("use default theme: %1").arg(theme->text()));
                 break;
             }

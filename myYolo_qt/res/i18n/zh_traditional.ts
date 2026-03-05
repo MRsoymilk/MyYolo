@@ -91,17 +91,17 @@
     <message>
         <location filename="../../mainwindow.ui" line="180"/>
         <source>en</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">en</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="185"/>
         <source>zh_simple</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zh_simple</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="190"/>
         <source>zh_traditional</source>
-        <translation type="unfinished"></translation>
+        <translation>zh_traditional</translation>
     </message>
 </context>
 <context>

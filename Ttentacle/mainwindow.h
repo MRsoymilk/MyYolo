@@ -24,6 +24,9 @@ private slots:
     void on_btnFormat_clicked();
 
 private:
+    void init();
+
+private:
     Ui::MainWindow *ui;
 };
 #endif  // MAINWINDOW_H

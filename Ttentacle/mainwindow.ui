@@ -21,12 +21,38 @@
        <string>Code</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <widget class="QPushButton" name="btnFormat">
-         <property name="text">
-          <string>format</string>
-         </property>
-        </widget>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="hLayCode">
+         <item>
+          <widget class="QLabel" name="labelCode">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>code</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditCode"/>
+         </item>
+         <item>
+          <widget class="QToolButton" name="tBtnCodeLoad">
+           <property name="text">
+            <string>load</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="hLayClangFormat">
@@ -61,38 +87,15 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="hLayCode">
-         <item>
-          <widget class="QLabel" name="labelCode">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>code</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEditCode"/>
-         </item>
-         <item>
-          <widget class="QToolButton" name="tBtnCodeLoad">
-           <property name="text">
-            <string>load</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="btnFormat">
+         <property name="text">
+          <string>format</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QTextBrowser" name="textBrowserCodeLog"/>
        </item>
       </layout>
      </widget>

@@ -8,10 +8,7 @@ MySetting &MySetting::getInstance()
 
 MySetting::~MySetting() {}
 
-void MySetting::init(const QString &path)
-{
-    m_settings = new QSettings(path, QSettings::IniFormat);
-}
+void MySetting::init(const QString &path) { m_settings = new QSettings(path, QSettings::IniFormat); }
 
 void MySetting::setValue(const QString &group, const QString &key, const QString &val)
 {
@@ -29,4 +26,4 @@ QString MySetting::getValue(const QString &group, const QString &key, const QStr
     return val;
 }
 
-MySetting::MySetting() { }
+MySetting::MySetting() {}

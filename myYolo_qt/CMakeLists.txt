@@ -91,13 +91,8 @@ set(INCLUDE
     src/include/funcdef.h
 )
 
-set(COMMON
-    src/common/confighandler.h
-)
-
 add_executable(myYolo
     ${INCLUDE}
-    ${COMMON}
     ${UTIL}
     ${WIDGET_MAINWINDOW}
     ${WIDGET_LOG}

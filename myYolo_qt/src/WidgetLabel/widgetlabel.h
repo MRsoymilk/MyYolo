@@ -4,14 +4,12 @@
 #include <QProcess>
 #include <QWidget>
 
-#include "../common/confighandler.h"
-
 namespace Ui
 {
 class WidgetLabel;
 }
 
-class WidgetLabel : public QWidget, public ConfigHandler
+class WidgetLabel : public QWidget
 {
     Q_OBJECT
 
@@ -22,10 +20,6 @@ public:
     {
         QString path_labelimg;
     };
-    void getCfgData() override;
-    void save2Cfg() override;
-    void show2Ui() override;
-    void getUiData() override;
 
 private:
     void initLabel();

@@ -4,14 +4,12 @@
 #include <QProcess>
 #include <QWidget>
 
-#include "../common/confighandler.h"
-
 namespace Ui
 {
 class WidgetExport;
 }
 
-class WidgetExport : public QWidget, public ConfigHandler
+class WidgetExport : public QWidget
 {
     Q_OBJECT
 
@@ -27,12 +25,6 @@ public:
         int model_w;
         int model_batch;
     };
-
-private:
-    void getCfgData() override;
-    void save2Cfg() override;
-    void show2Ui() override;
-    void getUiData() override;
 
 private slots:
     void initExport();

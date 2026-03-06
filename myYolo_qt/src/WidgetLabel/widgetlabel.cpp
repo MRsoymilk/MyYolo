@@ -13,26 +13,17 @@ WidgetLabel::WidgetLabel(QWidget *parent) : QWidget(parent), ui(new Ui::WidgetLa
 
 void WidgetLabel::initLabel()
 {
-    getCfgData();
-    show2Ui();
-    OPEN_FILE_BTN(ui->tBtnLabelImg, ui->lEditLabelImg);
+    m_data.path_labelimg = SETTING_GET(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, GLOBAL.EXE_LABELIMG);
+    ui->lEditLabelImg->setText(m_data.path_labelimg);
+    REGISTER_FILE_BTN(ui->tBtnLabelImg, ui->lEditLabelImg);
 }
 
 WidgetLabel::~WidgetLabel() { delete ui; }
 
-void WidgetLabel::getCfgData()
-{
-    m_data.path_labelimg = SETTING_GET(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, GLOBAL.EXE_LABELIMG);
-}
-
-void WidgetLabel::save2Cfg() { SETTING_SET(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, m_data.path_labelimg); }
-
-void WidgetLabel::show2Ui() { ui->lEditLabelImg->setText(m_data.path_labelimg); }
-
-void WidgetLabel::getUiData() { m_data.path_labelimg = ui->lEditLabelImg->text(); }
-
 void WidgetLabel::on_btnStartLabel_clicked()
 {
+    m_data.path_labelimg = ui->lEditLabelImg->text();
+    SETTING_SET(CFG_GROUP_LABEL, CFG_LABEL_PATH_LABELIMG, m_data.path_labelimg);
     bool success;
 #ifdef Q_OS_WIN
     success = PROCESS_START_DETACH(GLOBAL.EXE_LABELIMG, {});

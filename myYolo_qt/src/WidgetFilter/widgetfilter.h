@@ -3,14 +3,13 @@
 
 #include <QWidget>
 
-#include "../common/confighandler.h"
 
 namespace Ui
 {
 class WidgetFilter;
 }
 
-class WidgetFilter : public QWidget, public ConfigHandler
+class WidgetFilter : public QWidget
 {
     Q_OBJECT
 
@@ -25,10 +24,6 @@ public:
         double threshold_ssim = 0.9;
         int batch_ssim = 10;
     };
-    void getCfgData() override;
-    void save2Cfg() override;
-    void show2Ui() override;
-    void getUiData() override;
 
 private:
     void initFilter();

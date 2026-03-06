@@ -44,7 +44,7 @@ void setTagsList(QTableWidget *widget, const QStringList &classList)
     }
 }
 
-void WidgetAddData::getCfgData()
+void WidgetAddData::initAddData()
 {
     m_data.dir_img = SETTING_GET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT);
     QStringList tags = SETTING_GET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_LIST_TAG).split(',');
@@ -61,27 +61,6 @@ void WidgetAddData::getCfgData()
     m_data.is_rename_no_tag = SETTING_GET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_RENAME_NOTAG).toInt();
     m_data.re_notag_prefix = SETTING_GET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_PREFIX);
     m_data.re_notag_suffix = SETTING_GET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_SUFFIX);
-}
-
-void WidgetAddData::getUiData()
-{
-    m_data.dir_img = ui->lEditDirInput->text();
-    m_data.list_tag = getTagsList(ui->tableWidgetTag);
-    m_data.train = ui->doubleSpinBoxTrain->value();
-    m_data.valid = ui->doubleSpinBoxValid->value();
-    m_data.test = ui->doubleSpinBoxTest->value();
-    m_data.dir_output_divide = ui->lEditDirOutputDivide->text();
-    m_data.is_shuffle = ui->checkBoxShuffle->isChecked();
-    m_data.is_rename = ui->checkBoxRename->isChecked();
-    m_data.rename_prefix = ui->lEditRenamePrefix->text();
-    m_data.rename_suffix = ui->lEditRenameSuffix->text();
-    m_data.is_rename_no_tag = ui->checkBoxReNoTag->isChecked();
-    m_data.re_notag_prefix = ui->lEditReNoTagPrefix->text();
-    m_data.re_notag_suffix = ui->lEditReNoTagSuffix->text();
-}
-
-void WidgetAddData::show2Ui()
-{
     ui->lEditDirInput->setText(m_data.dir_img);
     setTagsList(ui->tableWidgetTag, m_data.list_tag);
     ui->doubleSpinBoxTrain->setValue(m_data.train);
@@ -95,46 +74,8 @@ void WidgetAddData::show2Ui()
     ui->checkBoxReNoTag->setCheckState(m_data.is_rename_no_tag ? Qt::Checked : Qt::Unchecked);
     ui->lEditReNoTagPrefix->setText(m_data.re_notag_prefix);
     ui->lEditReNoTagSuffix->setText(m_data.re_notag_suffix);
-}
-
-void WidgetAddData::save2Cfg()
-{
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_LIST_TAG, m_data.list_tag.join(','));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TRAIN, QString::number(m_data.train));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_VALID, QString::number(m_data.valid));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TEST, QString::number(m_data.test));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_OUTPUT_DIVIDE, m_data.dir_output_divide);
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_SHUFFLE, QString::number(m_data.is_shuffle));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_RENAME, QString::number(m_data.is_rename));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RENAME_PREFIX, m_data.rename_prefix);
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RENAME_SUFFIX, m_data.rename_suffix);
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_RENAME_NOTAG, QString::number(m_data.is_rename_no_tag));
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_PREFIX, m_data.re_notag_prefix);
-    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_SUFFIX, m_data.re_notag_suffix);
-
-    LOG_INFO("config save: Group[{}]", CFG_GROUP_ADD_DATA);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_LIST_TAG, m_data.list_tag);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_TRAIN, m_data.train);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_VALID, m_data.valid);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_TEST, m_data.test);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_OUTPUT_DIVIDE, m_data.dir_output_divide);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_IS_SHUFFLE, m_data.is_shuffle);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_IS_RENAME, m_data.is_rename);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_RENAME_PREFIX, m_data.rename_prefix);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_RENAME_SUFFIX, m_data.rename_suffix);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_IS_RENAME_NOTAG, m_data.is_rename_no_tag);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_RE_NOTAG_PREFIX, m_data.re_notag_prefix);
-    LOG_INFO("{}: {}", CFG_ADD_DATA_RE_NOTAG_SUFFIX, m_data.re_notag_suffix);
-}
-
-void WidgetAddData::initAddData()
-{
-    getCfgData();
-    show2Ui();
-    OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
-    OPEN_FOLDER_BTN(ui->tBtnDirOutputDivide, ui->lEditDirOutputDivide);
+    REGISTER_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
+    REGISTER_FOLDER_BTN(ui->tBtnDirOutputDivide, ui->lEditDirOutputDivide);
 }
 
 void WidgetAddData::callXml2Txt()
@@ -209,8 +150,47 @@ void WidgetAddData::callSpliteDataset()
 
 void WidgetAddData::on_btnStartAddData_clicked()
 {
-    getUiData();
-    save2Cfg();
+    m_data.dir_img = ui->lEditDirInput->text();
+    m_data.list_tag = getTagsList(ui->tableWidgetTag);
+    m_data.train = ui->doubleSpinBoxTrain->value();
+    m_data.valid = ui->doubleSpinBoxValid->value();
+    m_data.test = ui->doubleSpinBoxTest->value();
+    m_data.dir_output_divide = ui->lEditDirOutputDivide->text();
+    m_data.is_shuffle = ui->checkBoxShuffle->isChecked();
+    m_data.is_rename = ui->checkBoxRename->isChecked();
+    m_data.rename_prefix = ui->lEditRenamePrefix->text();
+    m_data.rename_suffix = ui->lEditRenameSuffix->text();
+    m_data.is_rename_no_tag = ui->checkBoxReNoTag->isChecked();
+    m_data.re_notag_prefix = ui->lEditReNoTagPrefix->text();
+    m_data.re_notag_suffix = ui->lEditReNoTagSuffix->text();
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_LIST_TAG, m_data.list_tag.join(','));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TRAIN, QString::number(m_data.train));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_VALID, QString::number(m_data.valid));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_TEST, QString::number(m_data.test));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_DIR_OUTPUT_DIVIDE, m_data.dir_output_divide);
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_SHUFFLE, QString::number(m_data.is_shuffle));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_RENAME, QString::number(m_data.is_rename));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RENAME_PREFIX, m_data.rename_prefix);
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RENAME_SUFFIX, m_data.rename_suffix);
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_IS_RENAME_NOTAG, QString::number(m_data.is_rename_no_tag));
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_PREFIX, m_data.re_notag_prefix);
+    SETTING_SET(CFG_GROUP_ADD_DATA, CFG_ADD_DATA_RE_NOTAG_SUFFIX, m_data.re_notag_suffix);
+
+    LOG_INFO("config save: Group[{}]", CFG_GROUP_ADD_DATA);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_INPUT, m_data.dir_img);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_LIST_TAG, m_data.list_tag);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_TRAIN, m_data.train);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_VALID, m_data.valid);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_TEST, m_data.test);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_DIR_OUTPUT_DIVIDE, m_data.dir_output_divide);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_IS_SHUFFLE, m_data.is_shuffle);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_IS_RENAME, m_data.is_rename);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_RENAME_PREFIX, m_data.rename_prefix);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_RENAME_SUFFIX, m_data.rename_suffix);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_IS_RENAME_NOTAG, m_data.is_rename_no_tag);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_RE_NOTAG_PREFIX, m_data.re_notag_prefix);
+    LOG_INFO("{}: {}", CFG_ADD_DATA_RE_NOTAG_SUFFIX, m_data.re_notag_suffix);
     WIDGET_LOG_INFO("dir input: " + m_data.dir_img);
     WIDGET_LOG_INFO("dir output: " + m_data.dir_output_divide);
     WIDGET_LOG_INFO(QString("train: %1").arg(m_data.train));

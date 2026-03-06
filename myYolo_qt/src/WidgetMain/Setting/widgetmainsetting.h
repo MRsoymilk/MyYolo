@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "../../common/confighandler.h"
+
 #include "../../include/datadef.h"
 
 namespace Ui
@@ -11,7 +11,7 @@ namespace Ui
 class WidgetMainSetting;
 }
 
-class WidgetMainSetting : public QWidget, public ConfigHandler
+class WidgetMainSetting : public QWidget
 {
     Q_OBJECT
 
@@ -33,10 +33,6 @@ private:
     MSG_RE checkScript();
     MSG_RE checkTools();
     MSG_RE checkYolo5();
-    void getCfgData() override;
-    void save2Cfg() override;
-    void show2Ui() override;
-    void getUiData() override;
 
 private slots:
     void on_btnBasicCheck_clicked();

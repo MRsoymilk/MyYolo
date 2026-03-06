@@ -4,7 +4,6 @@
 #include <QLineEdit>
 #include <QWidget>
 
-#include "../common/confighandler.h"
 #include "check_cv_onnx.h"
 
 namespace Ui
@@ -12,7 +11,7 @@ namespace Ui
 class WidgetTest;
 }
 
-class WidgetTest : public QWidget, public ConfigHandler
+class WidgetTest : public QWidget
 {
     Q_OBJECT
 
@@ -48,10 +47,6 @@ public:
 private:
     void initTest();
     void testOnnx();
-    void getUiData() override;
-    void getCfgData() override;
-    void save2Cfg() override;
-    void show2Ui() override;
     void testPt();
 
 private slots:

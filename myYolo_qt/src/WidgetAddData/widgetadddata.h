@@ -4,14 +4,12 @@
 #include <QLineEdit>
 #include <QWidget>
 
-#include "../common/confighandler.h"
-
 namespace Ui
 {
 class WidgetAddData;
 }
 
-class WidgetAddData : public QWidget, public ConfigHandler
+class WidgetAddData : public QWidget
 {
     Q_OBJECT
 
@@ -37,10 +35,6 @@ public:
 
 private:
     void initAddData();
-    void getCfgData() override;
-    void save2Cfg() override;
-    void getUiData() override;
-    void show2Ui() override;
     void callXml2Txt();
     void callNoXml2Txt();
     void callRename();

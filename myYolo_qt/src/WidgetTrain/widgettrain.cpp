@@ -19,13 +19,30 @@ WidgetTrain::~WidgetTrain() { delete ui; }
 
 void WidgetTrain::initTrain()
 {
-    getCfgData();
-    show2Ui();
-    OPEN_FILE_BTN(ui->tBtnWeights, ui->lEditWeights);
-    OPEN_FILE_BTN(ui->tBtnCfg, ui->lEditCfg);
-    OPEN_FILE_BTN(ui->tBtnHyp, ui->lEditHyp);
-    OPEN_FILE_BTN(ui->tBtnData, ui->lEditData);
-    OPEN_FOLDER_BTN(ui->tBtnProject, ui->lEditProject);
+    m_data.list_model = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_MODEL).split(',');
+    m_data.weights = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS);
+    m_data.cfg = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_CFG);
+    m_data.hyp = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_HYP);
+    m_data.data = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_DATA);
+    m_data.project = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT);
+    m_data.name = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_NAME);
+    m_data.epochs = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS).toInt();
+    m_data.batch_size = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE).toInt();
+    m_data.img_size = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE).toInt();
+    ui->lEditWeights->setText(m_data.weights);
+    ui->lEditCfg->setText(m_data.cfg);
+    ui->lEditHyp->setText(m_data.hyp);
+    ui->lEditData->setText(m_data.data);
+    ui->lEditProject->setText(m_data.project);
+    ui->lEditName->setText(m_data.name);
+    ui->sBoxEpoch->setValue(m_data.epochs);
+    ui->sBoxBatchSize->setValue(m_data.batch_size);
+    ui->sBoxImgSize->setValue(m_data.img_size);
+    REGISTER_FILE_BTN(ui->tBtnWeights, ui->lEditWeights);
+    REGISTER_FILE_BTN(ui->tBtnCfg, ui->lEditCfg);
+    REGISTER_FILE_BTN(ui->tBtnHyp, ui->lEditHyp);
+    REGISTER_FILE_BTN(ui->tBtnData, ui->lEditData);
+    REGISTER_FOLDER_BTN(ui->tBtnProject, ui->lEditProject);
     // TODO: add train scheme
     ui->labelModelScheme->setVisible(false);
     ui->comboBoxModelScheme->setVisible(false);
@@ -59,8 +76,24 @@ void WidgetTrain::callTrain()
 
 void WidgetTrain::on_btnStartTrain_clicked()
 {
-    getUiData();
-    save2Cfg();
+    m_data.weights = ui->lEditWeights->text();
+    m_data.cfg = ui->lEditCfg->text();
+    m_data.hyp = ui->lEditHyp->text();
+    m_data.data = ui->lEditData->text();
+    m_data.project = ui->lEditProject->text();
+    m_data.name = ui->lEditName->text();
+    m_data.epochs = ui->sBoxEpoch->value();
+    m_data.batch_size = ui->sBoxBatchSize->value();
+    m_data.img_size = ui->sBoxImgSize->value();
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS, m_data.weights);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_CFG, m_data.cfg);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_HYP, m_data.hyp);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_DATA, m_data.data);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT, m_data.project);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_NAME, m_data.name);
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS, QString::number(m_data.epochs));
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
+    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
     LOG_INFO("config save: Group[{}]", CFG_GROUP_TRAIN);
     LOG_INFO("{}: {}", CFG_TRAIN_WEIGHTS, m_data.weights);
     LOG_INFO("{}: {}", CFG_TRAIN_CFG, m_data.cfg);
@@ -72,59 +105,6 @@ void WidgetTrain::on_btnStartTrain_clicked()
     LOG_INFO("{}: {}", CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
     LOG_INFO("{}: {}", CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
     callTrain();
-}
-
-void WidgetTrain::getCfgData()
-{
-    m_data.list_model = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_MODEL).split(',');
-    m_data.weights = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS);
-    m_data.cfg = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_CFG);
-    m_data.hyp = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_HYP);
-    m_data.data = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_DATA);
-    m_data.project = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT);
-    m_data.name = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_NAME);
-    m_data.epochs = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS).toInt();
-    m_data.batch_size = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE).toInt();
-    m_data.img_size = SETTING_GET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE).toInt();
-}
-
-void WidgetTrain::getUiData()
-{
-    m_data.weights = ui->lEditWeights->text();
-    m_data.cfg = ui->lEditCfg->text();
-    m_data.hyp = ui->lEditHyp->text();
-    m_data.data = ui->lEditData->text();
-    m_data.project = ui->lEditProject->text();
-    m_data.name = ui->lEditName->text();
-    m_data.epochs = ui->sBoxEpoch->value();
-    m_data.batch_size = ui->sBoxBatchSize->value();
-    m_data.img_size = ui->sBoxImgSize->value();
-}
-
-void WidgetTrain::show2Ui()
-{
-    ui->lEditWeights->setText(m_data.weights);
-    ui->lEditCfg->setText(m_data.cfg);
-    ui->lEditHyp->setText(m_data.hyp);
-    ui->lEditData->setText(m_data.data);
-    ui->lEditProject->setText(m_data.project);
-    ui->lEditName->setText(m_data.name);
-    ui->sBoxEpoch->setValue(m_data.epochs);
-    ui->sBoxBatchSize->setValue(m_data.batch_size);
-    ui->sBoxImgSize->setValue(m_data.img_size);
-}
-
-void WidgetTrain::save2Cfg()
-{
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_WEIGHTS, m_data.weights);
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_CFG, m_data.cfg);
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_HYP, m_data.hyp);
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_DATA, m_data.data);
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_PROJECT, m_data.project);
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_NAME, m_data.name);
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_EPOCHS, QString::number(m_data.epochs));
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_BATCH_SIZE, QString::number(m_data.batch_size));
-    SETTING_SET(CFG_GROUP_TRAIN, CFG_TRAIN_IMG_SIZE, QString::number(m_data.img_size));
 }
 
 void WidgetTrain::on_btnCancel_clicked()

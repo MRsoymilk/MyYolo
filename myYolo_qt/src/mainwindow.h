@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 
-#include "common/confighandler.h"
-
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -12,7 +10,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow, ConfigHandler
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -38,12 +36,6 @@ private:
     void menuLanguageSelect(QAction *selectedAction);
     void setLanguage(const QString &language);
 
-    // ConfigHandler interface
-public:
-    void getCfgData() override;
-    void save2Cfg() override;
-    void show2Ui() override;
-    void getUiData() override;
 private slots:
     void on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &arg1);
     void slotWidgetTestHide();

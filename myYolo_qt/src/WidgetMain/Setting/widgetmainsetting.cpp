@@ -29,9 +29,11 @@ WidgetMainSetting::WidgetMainSetting(QWidget *parent) : QWidget(parent), ui(new 
 
 void WidgetMainSetting::initMainSetting()
 {
-    getCfgData();
-    show2Ui();
-    OPEN_FOLDER_BTN(ui->tBtnProjectRoot, ui->lEditProjectRoot);
+    m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR);
+    m_data.use_venv = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, "1").toInt();
+    ui->lEditProjectRoot->setText(m_data.project_dir);
+    ui->checkBoxUseVenv->setChecked(m_data.use_venv);
+    REGISTER_FOLDER_BTN(ui->tBtnProjectRoot, ui->lEditProjectRoot);
     on_btnBasicCheck_clicked();
 }
 
@@ -141,30 +143,6 @@ MSG_RE WidgetMainSetting::checkYolo5()
     return re;
 }
 
-void WidgetMainSetting::getCfgData()
-{
-    m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR);
-    m_data.use_venv = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, "1").toInt();
-}
-
-void WidgetMainSetting::save2Cfg()
-{
-    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR, m_data.project_dir);
-    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, QString::number(m_data.use_venv));
-}
-
-void WidgetMainSetting::show2Ui()
-{
-    ui->lEditProjectRoot->setText(m_data.project_dir);
-    ui->checkBoxUseVenv->setChecked(m_data.use_venv);
-}
-
-void WidgetMainSetting::getUiData()
-{
-    m_data.project_dir = ui->lEditProjectRoot->text();
-    m_data.use_venv = ui->checkBoxUseVenv->isChecked();
-}
-
 MSG_RE WidgetMainSetting::checkPython()
 {
     MSG_RE re;
@@ -209,10 +187,11 @@ MSG_RE WidgetMainSetting::checkPython()
 
 void WidgetMainSetting::on_btnBasicCheck_clicked()
 {
-    getUiData();
-    save2Cfg();
+    m_data.project_dir = ui->lEditProjectRoot->text();
+    m_data.use_venv = ui->checkBoxUseVenv->isChecked();
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR, m_data.project_dir);
+    SETTING_SET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, QString::number(m_data.use_venv));
     MSG_RE re;
-    getUiData();
     re = checkPython();
     if (!re.status)
     {

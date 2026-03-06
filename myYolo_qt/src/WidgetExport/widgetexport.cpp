@@ -15,13 +15,6 @@ WidgetExport::~WidgetExport() { delete ui; }
 
 void WidgetExport::initExport()
 {
-    getCfgData();
-    show2Ui();
-    OPEN_FILE_BTN(ui->tBtnPtModel, ui->lEditPtModel);
-}
-
-void WidgetExport::getCfgData()
-{
     QStringList types = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE).split(',');
     types.removeAll("");
     m_data.list_type = types;
@@ -29,6 +22,13 @@ void WidgetExport::getCfgData()
     m_data.model_h = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_H).toInt();
     m_data.model_w = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_W).toInt();
     m_data.model_batch = SETTING_GET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_BATCH).toInt();
+    ui->comboBoxType->clear();
+    ui->comboBoxType->addItems(m_data.list_type);
+    ui->lEditPtModel->setText(m_data.pt_model);
+    ui->sBoxModelH->setValue(m_data.model_h);
+    ui->sBoxModelW->setValue(m_data.model_w);
+    ui->sBoxModelBatch->setValue(m_data.model_batch);
+    REGISTER_FILE_BTN(ui->tBtnPtModel, ui->lEditPtModel);
 }
 
 QStringList getTypeList(QComboBox *box)
@@ -41,8 +41,14 @@ QStringList getTypeList(QComboBox *box)
     return list;
 }
 
-void WidgetExport::save2Cfg()
+void WidgetExport::on_btnStartExport_clicked()
 {
+    m_data.list_type = getTypeList(ui->comboBoxType);
+    m_data.type = ui->comboBoxType->currentText();
+    m_data.pt_model = ui->lEditPtModel->text();
+    m_data.model_h = ui->sBoxModelH->value();
+    m_data.model_w = ui->sBoxModelW->value();
+    m_data.model_batch = ui->sBoxModelBatch->value();
     SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_TYPE, m_data.list_type.join(','));
     SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_PT_MODEL, m_data.pt_model);
     SETTING_SET(CFG_GROUP_EXPORT, CFG_EXPORT_MODEL_H, QString::number(m_data.model_h));
@@ -54,32 +60,6 @@ void WidgetExport::save2Cfg()
     LOG_INFO("{}: {}", CFG_EXPORT_MODEL_H, m_data.model_h);
     LOG_INFO("{}: {}", CFG_EXPORT_MODEL_W, m_data.model_w);
     LOG_INFO("{}: {}", CFG_EXPORT_MODEL_BATCH, m_data.model_batch);
-}
-
-void WidgetExport::show2Ui()
-{
-    ui->comboBoxType->clear();
-    ui->comboBoxType->addItems(m_data.list_type);
-    ui->lEditPtModel->setText(m_data.pt_model);
-    ui->sBoxModelH->setValue(m_data.model_h);
-    ui->sBoxModelW->setValue(m_data.model_w);
-    ui->sBoxModelBatch->setValue(m_data.model_batch);
-}
-
-void WidgetExport::getUiData()
-{
-    m_data.list_type = getTypeList(ui->comboBoxType);
-    m_data.type = ui->comboBoxType->currentText();
-    m_data.pt_model = ui->lEditPtModel->text();
-    m_data.model_h = ui->sBoxModelH->value();
-    m_data.model_w = ui->sBoxModelW->value();
-    m_data.model_batch = ui->sBoxModelBatch->value();
-}
-
-void WidgetExport::on_btnStartExport_clicked()
-{
-    getUiData();
-    save2Cfg();
     QStringList arguments_export{GLOBAL.SCRIPT_YOLO_EXPORT,
                                  "--weights",
                                  m_data.pt_model,

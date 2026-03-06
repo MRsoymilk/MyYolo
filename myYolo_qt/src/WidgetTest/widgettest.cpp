@@ -16,29 +16,6 @@ WidgetTest::WidgetTest(QWidget *parent) : QWidget(parent), ui(new Ui::WidgetTest
 
 WidgetTest::~WidgetTest() { delete ui; }
 
-void WidgetTest::initTest()
-{
-    getCfgData();
-    show2Ui();
-    OPEN_FILE_BTN(ui->tBtnModelOnnx, ui->lEditModelOnnx);
-    OPEN_FILE_BTN(ui->tBtnModelPt, ui->lEditModelPt);
-    OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
-    OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
-    on_toolBoxModel_currentChanged(TEST_SWITCH::YOLOV5_DETECT);
-}
-
-QStringList getClassList(QTableWidget *widget)
-{
-    QStringList list{};
-    int rowCount = widget->rowCount();
-    for (int i = 0; i < rowCount; ++i)
-    {
-        QString cellValue = widget->item(i, 1)->text();
-        list.append(cellValue);
-    }
-    return list;
-}
-
 void setClassList(QTableWidget *widget, const QStringList &classList)
 {
     widget->setRowCount(classList.size());
@@ -53,27 +30,7 @@ void setClassList(QTableWidget *widget, const QStringList &classList)
     }
 }
 
-void WidgetTest::getUiData()
-{
-    m_data.model_height = ui->sBoxModelHeight->value();
-    m_data.model_width = ui->sBoxModelWidth->value();
-    m_data.model_onnx = ui->lEditModelOnnx->text();
-    m_data.model_pt = ui->lEditModelPt->text();
-    m_data.threshold_cfd = ui->doubleSpinBoxThresholdCfd->value();
-    m_data.threshold_nms = ui->doubleSpinBoxThresholdNMS->value();
-    m_data.dir_input = ui->lEditDirInput->text();
-    m_data.dir_output = ui->lEditDirOutput->text();
-    m_data.name = ui->lEditName->text();
-    m_data.save_txt = ui->checkBoxSaveTxt->isChecked() ? 1 : 0;
-    m_data.save_csv = ui->checkBoxSaveCsv->isChecked() ? 1 : 0;
-    m_data.save_conf = ui->checkBoxSaveConf->isChecked() ? 1 : 0;
-    m_data.save_crop = ui->checkBoxSaveCrop->isChecked() ? 1 : 0;
-    m_data.line_thickness = ui->spinBoxLineThickness->value();
-    m_data.view_img = ui->checkBoxViewImg->isChecked() ? 1 : 0;
-    m_data.classes = getClassList(ui->tableWidgetClassEdit);
-}
-
-void WidgetTest::getCfgData()
+void WidgetTest::initTest()
 {
     m_data.model_height = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT).toInt();
     m_data.model_width = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH).toInt();
@@ -93,39 +50,6 @@ void WidgetTest::getCfgData()
     QStringList classes = SETTING_GET(CFG_GROUP_TEST, CFG_TEST_CLASSES).split(',');
     classes.removeAll("");
     m_data.classes = classes;
-}
-
-void WidgetTest::save2Cfg()
-{
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT, QString::number(m_data.model_height));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH, QString::number(m_data.model_width));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_ONNX, m_data.model_onnx);
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_PT, m_data.model_pt);
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_CFD, QString::number(m_data.threshold_cfd));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_NMS, QString::number(m_data.threshold_nms));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT, m_data.dir_input);
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_DIR_OUTPUT, m_data.dir_output);
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_NAME, m_data.name);
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_TXT, QString::number(m_data.save_txt));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CSV, QString::number(m_data.save_csv));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CONF, QString::number(m_data.save_conf));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CROP, QString::number(m_data.save_crop));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_LINE_THICKNESS, QString::number(m_data.line_thickness));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_VIEW_IMG, QString::number(m_data.view_img));
-    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_CLASSES, m_data.classes.join(','));
-    LOG_INFO("config save: Group[{}]", CFG_GROUP_TEST);
-    LOG_INFO("{}: {}", CFG_TEST_MODEL_HEIGHT, m_data.model_height);
-    LOG_INFO("{}: {}", CFG_TEST_MODEL_WIDTH, m_data.model_width);
-    LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_CFD, m_data.threshold_cfd);
-    LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_NMS, m_data.threshold_nms);
-    LOG_INFO("{}: {}", CFG_TEST_MODEL_ONNX, m_data.model_onnx);
-    LOG_INFO("{}: {}", CFG_TEST_MODEL_PT, m_data.model_pt);
-    LOG_INFO("{}: {}", CFG_TEST_DIR_INPUT, m_data.dir_input);
-    LOG_INFO("{}: {}", CFG_TEST_DIR_OUTPUT, m_data.dir_output);
-}
-
-void WidgetTest::show2Ui()
-{
     ui->sBoxModelHeight->setValue(m_data.model_height);
     ui->sBoxModelWidth->setValue(m_data.model_width);
     ui->doubleSpinBoxThresholdCfd->setValue(m_data.threshold_cfd);
@@ -142,6 +66,23 @@ void WidgetTest::show2Ui()
     ui->spinBoxLineThickness->setValue(m_data.line_thickness);
     ui->checkBoxViewImg->setCheckState(m_data.view_img ? Qt::Checked : Qt::Unchecked);
     setClassList(ui->tableWidgetClassEdit, m_data.classes);
+    REGISTER_FILE_BTN(ui->tBtnModelOnnx, ui->lEditModelOnnx);
+    REGISTER_FILE_BTN(ui->tBtnModelPt, ui->lEditModelPt);
+    REGISTER_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
+    REGISTER_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
+    on_toolBoxModel_currentChanged(TEST_SWITCH::YOLOV5_DETECT);
+}
+
+QStringList getClassList(QTableWidget *widget)
+{
+    QStringList list{};
+    int rowCount = widget->rowCount();
+    for (int i = 0; i < rowCount; ++i)
+    {
+        QString cellValue = widget->item(i, 1)->text();
+        list.append(cellValue);
+    }
+    return list;
 }
 
 void WidgetTest::testPt()
@@ -243,8 +184,47 @@ void WidgetTest::testOnnx()
 
 void WidgetTest::on_btnStartTest_clicked()
 {
-    getUiData();
-    save2Cfg();
+    m_data.model_height = ui->sBoxModelHeight->value();
+    m_data.model_width = ui->sBoxModelWidth->value();
+    m_data.model_onnx = ui->lEditModelOnnx->text();
+    m_data.model_pt = ui->lEditModelPt->text();
+    m_data.threshold_cfd = ui->doubleSpinBoxThresholdCfd->value();
+    m_data.threshold_nms = ui->doubleSpinBoxThresholdNMS->value();
+    m_data.dir_input = ui->lEditDirInput->text();
+    m_data.dir_output = ui->lEditDirOutput->text();
+    m_data.name = ui->lEditName->text();
+    m_data.save_txt = ui->checkBoxSaveTxt->isChecked() ? 1 : 0;
+    m_data.save_csv = ui->checkBoxSaveCsv->isChecked() ? 1 : 0;
+    m_data.save_conf = ui->checkBoxSaveConf->isChecked() ? 1 : 0;
+    m_data.save_crop = ui->checkBoxSaveCrop->isChecked() ? 1 : 0;
+    m_data.line_thickness = ui->spinBoxLineThickness->value();
+    m_data.view_img = ui->checkBoxViewImg->isChecked() ? 1 : 0;
+    m_data.classes = getClassList(ui->tableWidgetClassEdit);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_HEIGHT, QString::number(m_data.model_height));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_WIDTH, QString::number(m_data.model_width));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_ONNX, m_data.model_onnx);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_MODEL_PT, m_data.model_pt);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_CFD, QString::number(m_data.threshold_cfd));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_THRESHOLD_NMS, QString::number(m_data.threshold_nms));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_DIR_INPUT, m_data.dir_input);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_DIR_OUTPUT, m_data.dir_output);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_NAME, m_data.name);
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_TXT, QString::number(m_data.save_txt));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CSV, QString::number(m_data.save_csv));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CONF, QString::number(m_data.save_conf));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_SAVE_CROP, QString::number(m_data.save_crop));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_LINE_THICKNESS, QString::number(m_data.line_thickness));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_VIEW_IMG, QString::number(m_data.view_img));
+    SETTING_SET(CFG_GROUP_TEST, CFG_TEST_CLASSES, m_data.classes.join(','));
+    LOG_INFO("config save: Group[{}]", CFG_GROUP_TEST);
+    LOG_INFO("{}: {}", CFG_TEST_MODEL_HEIGHT, m_data.model_height);
+    LOG_INFO("{}: {}", CFG_TEST_MODEL_WIDTH, m_data.model_width);
+    LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_CFD, m_data.threshold_cfd);
+    LOG_INFO("{}: {}", CFG_TEST_THRESHOLD_NMS, m_data.threshold_nms);
+    LOG_INFO("{}: {}", CFG_TEST_MODEL_ONNX, m_data.model_onnx);
+    LOG_INFO("{}: {}", CFG_TEST_MODEL_PT, m_data.model_pt);
+    LOG_INFO("{}: {}", CFG_TEST_DIR_INPUT, m_data.dir_input);
+    LOG_INFO("{}: {}", CFG_TEST_DIR_OUTPUT, m_data.dir_output);
     if (ui->toolBoxModel->currentWidget() == ui->pageModelOnnx)
     {
         testOnnx();

@@ -15,32 +15,11 @@ WidgetFilter::~WidgetFilter() { delete ui; }
 
 void WidgetFilter::initFilter()
 {
-    getCfgData();
-    show2Ui();
-    OPEN_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
-    OPEN_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
-}
-
-void WidgetFilter::getCfgData()
-{
     m_data.dir_input = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_DIR_INPUT);
     m_data.dir_output = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT);
     m_data.is_ssim = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_SSIM).toInt();
     m_data.threshold_ssim = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM).toDouble();
     m_data.batch_ssim = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM).toInt();
-}
-
-void WidgetFilter::save2Cfg()
-{
-    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_DIR_INPUT, m_data.dir_input);
-    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT, m_data.dir_output);
-    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_SSIM, QString::number(m_data.is_ssim));
-    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM, QString::number(m_data.threshold_ssim));
-    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM, QString::number(m_data.batch_ssim));
-}
-
-void WidgetFilter::show2Ui()
-{
     ui->lEditDirInput->setText(m_data.dir_input);
     ui->lEditDirOutput->setText(m_data.dir_output);
     if (m_data.is_ssim)
@@ -53,22 +32,8 @@ void WidgetFilter::show2Ui()
     }
     ui->doubleSpinBoxThresholdSSIM->setValue(m_data.threshold_ssim);
     ui->sBoxBatchSize->setValue(m_data.batch_ssim);
-}
-
-void WidgetFilter::getUiData()
-{
-    m_data.dir_input = ui->lEditDirInput->text();
-    m_data.dir_output = ui->lEditDirOutput->text();
-    if (ui->checkBoxSSIM->isChecked())
-    {
-        m_data.is_ssim = 1;
-    }
-    else
-    {
-        m_data.is_ssim = 0;
-    }
-    m_data.threshold_ssim = ui->doubleSpinBoxThresholdSSIM->value();
-    m_data.batch_ssim = ui->sBoxBatchSize->value();
+    REGISTER_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
+    REGISTER_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
 }
 
 void WidgetFilter::callMoveSimilarImgs()
@@ -89,8 +54,23 @@ void WidgetFilter::callMoveSimilarImgs()
 
 void WidgetFilter::on_btnStartFilter_clicked()
 {
-    getUiData();
-    save2Cfg();
+    m_data.dir_input = ui->lEditDirInput->text();
+    m_data.dir_output = ui->lEditDirOutput->text();
+    if (ui->checkBoxSSIM->isChecked())
+    {
+        m_data.is_ssim = 1;
+    }
+    else
+    {
+        m_data.is_ssim = 0;
+    }
+    m_data.threshold_ssim = ui->doubleSpinBoxThresholdSSIM->value();
+    m_data.batch_ssim = ui->sBoxBatchSize->value();
+    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_DIR_INPUT, m_data.dir_input);
+    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT, m_data.dir_output);
+    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_SSIM, QString::number(m_data.is_ssim));
+    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM, QString::number(m_data.threshold_ssim));
+    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM, QString::number(m_data.batch_ssim));
     if (m_data.dir_input.isEmpty())
     {
         SHOW_MSGBOX_CRITICAL("dir input cannot be empty!");

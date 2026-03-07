@@ -68,6 +68,9 @@
 #define CFG_LABEL_PATH_LABELIMG "path_labelimg"
 #define CFG_GROUP_LOG "LOG"
 #define CFG_LOG_LENGTH "length"
+#define CFG_GROUP_DEPLOY "DEPLOY"
+#define CFG_DEPLOY_IP "ip"
+#define CFG_DEPLOY_PORT "port"
 // dir
 #define DIR_TEST "test"
 #define DIR_MODEL "model"

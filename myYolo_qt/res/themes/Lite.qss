@@ -1085,4 +1085,9 @@ TalkingUI > QFrame {
   border-radius: 2px;
 }
 
+QPushButton#btnDeploy:checked {
+  background-color: green;
+  color: white;
+}
+
 /*# sourceMappingURL=Lite.qss.map */

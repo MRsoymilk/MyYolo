@@ -83,6 +83,9 @@
 
 // btn open file
 #define REGISTER_FILE_BTN(btn, edit) QObject::connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FILE(edit); })
-// FUNCTION ===================================================================
 
+#define TO_STR(obj) QString::fromUtf8(QJsonDocument(obj).toJson(QJsonDocument::Compact))
+#define TO_STR_INDENTED(obj) QString::fromUtf8(QJsonDocument(obj).toJson(QJsonDocument::Indented))
+
+// FUNCTION ===================================================================
 #endif

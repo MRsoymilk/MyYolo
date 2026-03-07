@@ -13,6 +13,7 @@
 #include "WidgetMain/Setting/widgetmainsetting.h"
 #include "WidgetTest/widgettest.h"
 #include "WidgetTrain/widgettrain.h"
+#include "WidgetDeploy/widgetdeploy.h"
 #include "include/funcdef.h"
 #include "include/keydef.h"
 #include "version.h"
@@ -91,6 +92,7 @@ void MainWindow::addBasicWidget()
     WidgetTest *widgetTest = new WidgetTest();
     WidgetExport *widgetExport = new WidgetExport();
     WidgetLabel *widgetLabel = new WidgetLabel();
+    WidgetDeploy *widgetDeploy = new WidgetDeploy();
     ui->gLayLabel->addWidget(widgetLabel);
     ui->gLayAddData->addWidget(widgetAddData);
     ui->gLayFilter->addWidget(widgetFilter);
@@ -98,6 +100,7 @@ void MainWindow::addBasicWidget()
     ui->gLayTest->addWidget(widgetTest);
     ui->gLayExport->addWidget(widgetExport);
     ui->gLayInfo->addWidget(widgetMainInfo);
+    ui->gLayDeploy->addWidget(widgetDeploy);
     ui->gLaySetting->addWidget(widgetMainSetting);
     connect(&MY_WIDGET_LOG, &WidgetLog::signalHide, this, &MainWindow::slotWidgetTestHide);
     connect(&MY_WIDGET_LOG, &WidgetLog::windowClose, this, [this]() { ui->checkBoxShowLog->setChecked(false); });

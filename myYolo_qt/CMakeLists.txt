@@ -84,6 +84,12 @@ set(WIDGET_TEST
     src/WidgetTest/check_onnxruntime.cpp
 )
 
+set(WIDGET_DEPLOY
+    src/WidgetDeploy/widgetdeploy.h
+    src/WidgetDeploy/widgetdeploy.cpp
+    src/WidgetDeploy/widgetdeploy.ui
+)
+
 set(INCLUDE
     src/include/global.h
     src/include/keydef.h
@@ -103,6 +109,7 @@ add_executable(myYolo
     ${WIDGET_TRAIN}
     ${WIDGET_EXPORT}
     ${WIDGET_TEST}
+    ${WIDGET_DEPLOY}
     myYolo.qrc
 )
 
@@ -149,6 +156,11 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 target_link_libraries(myYolo PRIVATE spdlog::spdlog)
+
+target_link_libraries(myYolo
+    PRIVATE
+    httplib
+)
 
 if(WIN32)
     set(OpenCV_DIR "${PROJECT_SOURCE_DIR}/vendor/opencv/build/x64/vc16/lib")

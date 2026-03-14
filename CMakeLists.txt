@@ -6,6 +6,8 @@ add_subdirectory(Ttentacle)
 
 add_subdirectory(vendor/spdlog-1.15.0)
 
+add_subdirectory(vendor/MyYoloInference-0.1.0)
+
 add_library(httplib INTERFACE)
 
 target_include_directories(httplib INTERFACE

@@ -162,6 +162,8 @@ target_link_libraries(myYolo
     httplib
 )
 
+target_link_libraries(myYolo PRIVATE MyYoloInference)
+
 if(WIN32)
     set(OpenCV_DIR "${PROJECT_SOURCE_DIR}/vendor/opencv/build/x64/vc16/lib")
     find_package(OpenCV REQUIRED)

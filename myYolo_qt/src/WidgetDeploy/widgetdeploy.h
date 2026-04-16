@@ -20,6 +20,7 @@ public:
 
 private slots:
     void on_btnDeploy_clicked();
+
 private:
     void init();
     void startServer();
@@ -34,8 +35,8 @@ private:
     QThread *m_listenThread = nullptr;
     std::atomic_bool m_running{false};
     bool m_enableServer = false;
-
     QStandardItemModel *m_modelApiTable = nullptr;
+
 };
 
 #endif  // WIDGETDEPLOY_H

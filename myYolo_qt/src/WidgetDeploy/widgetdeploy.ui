@@ -36,6 +36,27 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="lineEditPort"/>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelModel">
+       <property name="text">
+        <string>model</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="lineEditModel"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tBtnLoadModel">
+         <property name="text">
+          <string>Load</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item row="1" column="0">

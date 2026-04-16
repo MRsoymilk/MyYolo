@@ -6,6 +6,9 @@
 
 #include <QThread>
 
+#include "my-yolo-inference.h"
+
+
 WidgetDeploy::WidgetDeploy(QWidget *parent) : QWidget(parent), ui(new Ui::WidgetDeploy) { ui->setupUi(this);
     init();
 }
@@ -28,8 +31,10 @@ void WidgetDeploy::init()
 {
     QString ip = SETTING_GET(CFG_GROUP_DEPLOY, CFG_DEPLOY_IP, "0.0.0.0");
     QString port = SETTING_GET(CFG_GROUP_DEPLOY, CFG_DEPLOY_PORT, "18000");
+    QString model = SETTING_GET(CFG_GROUP_DEPLOY, CFG_DEPLOY_MODEL);
     ui->lineEditIP->setText(ip);
     ui->lineEditPort->setText(port);
+    ui->lineEditModel->setText(model);
 
     m_modelApiTable = new QStandardItemModel(this);
 
@@ -45,6 +50,9 @@ void WidgetDeploy::init()
     ui->tableViewAPI->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     addAPI2Table("/info", "GET", "");
+    addAPI2Table("/inference", "POST", "");
+
+    REGISTER_FILE_BTN(ui->tBtnLoadModel, ui->lineEditModel);
 }
 
 void WidgetDeploy::addAPI2Table(QString name, QString method, QString param)
@@ -60,6 +68,10 @@ void WidgetDeploy::addAPI2Table(QString name, QString method, QString param)
 
 void WidgetDeploy::startServer()
 {
+    SETTING_SET(CFG_GROUP_DEPLOY, CFG_DEPLOY_IP, ui->lineEditIP->text());
+    SETTING_SET(CFG_GROUP_DEPLOY, CFG_DEPLOY_PORT, ui->lineEditPort->text());
+    SETTING_SET(CFG_GROUP_DEPLOY, CFG_DEPLOY_MODEL, ui->lineEditModel->text());
+
     if (!m_server) {
         m_server = new httplib::Server();
         m_server->new_task_queue = [] { return new httplib::ThreadPool(4); };
@@ -71,11 +83,16 @@ void WidgetDeploy::startServer()
 
     m_running.store(true);
 
+    QString ip = ui->lineEditIP->text();
     int port = ui->lineEditPort->text().toInt();
-    LOG_INFO("start http server on port {}", port);
+    LOG_INFO("start http server on {}:{}", ip, port);
 
-    m_listenThread = QThread::create([this, port]() {
-        m_server->listen("0.0.0.0", port);
+    QString model = ui->lineEditModel->text();
+    bool status = MY_YOLO.loadModel(model.toStdString().c_str());
+    LOG_INFO("load model: {}, status: {}", model, status);
+
+    m_listenThread = QThread::create([this, ip, port]() {
+        m_server->listen(ip.toStdString(), port);
         LOG_INFO("http listen thread exited");
     });
 
@@ -107,15 +124,110 @@ void WidgetDeploy::stopServer()
 
 void WidgetDeploy::addRouter()
 {
+    // registerInfo();
+    // registerInference();
     m_server->Get("/info", [this](const httplib::Request &, httplib::Response &res) {
         if (!m_running.load()) {
             res.status = 503;
             return;
         }
+
         QJsonObject objInfo;
         objInfo["status"] = "ok";
         objInfo["interface_name"] = "my yolo";
         objInfo["timestamp"] = TIMESTAMP();
-        res.set_content(TO_STR(objInfo).toStdString(), "application/json");
+
+        char json_buffer[10480] = {0};
+        unsigned int json_buffer_len = 0;
+
+        MY_YOLO.getModelInfo(json_buffer, &json_buffer_len);
+
+        if (json_buffer_len > 0) {
+            QByteArray arr(json_buffer, json_buffer_len);
+
+            QJsonParseError err;
+            QJsonDocument doc = QJsonDocument::fromJson(arr, &err);
+
+            if (err.error == QJsonParseError::NoError && doc.isObject()) {
+                objInfo["model_info"] = doc.object();
+            } else {
+                objInfo["model_info"] = QString::fromUtf8(arr);
+            }
+        }
+
+        QJsonDocument doc(objInfo);
+        res.set_content(doc.toJson(QJsonDocument::Compact).toStdString(), "application/json");
     });
+
+    m_server->Post("/inference", [this](const httplib::Request &req, httplib::Response &res) {
+
+                       if (!m_running.load()) {
+                           res.status = 503;
+                           return;
+                       }
+
+                       QJsonObject result;
+
+                       QJsonParseError err;
+                       QJsonDocument doc = QJsonDocument::fromJson(
+                           QByteArray::fromStdString(req.body), &err);
+
+                       if (err.error != QJsonParseError::NoError) {
+                           res.status = 400;
+                           result["status"] = "json error";
+                           res.set_content(TO_STR(result).toStdString(), "application/json");
+                           return;
+                       }
+
+                       QJsonObject obj = doc.object();
+
+                       QString name = obj["name"].toString();
+                       QString type = obj["type"].toString();
+                       QString data = obj["data"].toString();
+
+                    // Base64 -> 图片bytes
+                       QByteArray imgBytes = QByteArray::fromBase64(data.toUtf8());
+
+                       if (imgBytes.isEmpty()) {
+                           res.status = 400;
+                           result["status"] = "image decode error";
+                           res.set_content(TO_STR(result).toStdString(), "application/json");
+                           return;
+                       }
+
+                               // 推理
+                       char json_buffer[20480] = {0};
+                       unsigned int json_buffer_len = 0;
+
+                       bool ok = MY_YOLO.inference(
+                           imgBytes.data(),
+                           imgBytes.size(),
+                           json_buffer,
+                           &json_buffer_len
+                           );
+                       qDebug() << json_buffer;
+
+                       if (!ok) {
+                           res.status = 500;
+                           result["status"] = "inference failed";
+                           res.set_content(TO_STR(result).toStdString(), "application/json");
+                           return;
+                       }
+
+                    // 解析推理结果
+                       QJsonDocument inferDoc = QJsonDocument::fromJson(
+                           QByteArray(json_buffer, json_buffer_len));
+
+                       result["status"] = "ok";
+                       result["recv_name"] = name;
+                       result["type"] = type;
+                       result["timestamp"] = TIMESTAMP();
+                       result["result"] = inferDoc.object();
+
+                       res.set_content(
+                           TO_STR(result).toStdString(),
+                           "application/json");
+                   });
 }
+
+

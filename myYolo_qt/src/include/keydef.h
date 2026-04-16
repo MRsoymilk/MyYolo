@@ -71,6 +71,7 @@
 #define CFG_GROUP_DEPLOY "DEPLOY"
 #define CFG_DEPLOY_IP "ip"
 #define CFG_DEPLOY_PORT "port"
+#define CFG_DEPLOY_MODEL "model"
 // dir
 #define DIR_TEST "test"
 #define DIR_MODEL "model"

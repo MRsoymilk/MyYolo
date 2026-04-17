@@ -3,7 +3,6 @@
 
 #include <QWidget>
 
-
 #include "../../include/datadef.h"
 
 namespace Ui

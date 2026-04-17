@@ -79,7 +79,8 @@
 
 #include <QPushButton>
 // btn open folder
-#define REGISTER_FOLDER_BTN(btn, edit) QObject::connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FOLDER(edit); })
+#define REGISTER_FOLDER_BTN(btn, edit) \
+    QObject::connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FOLDER(edit); })
 
 // btn open file
 #define REGISTER_FILE_BTN(btn, edit) QObject::connect(btn, &QPushButton::clicked, this, [this]() { OPEN_FILE(edit); })

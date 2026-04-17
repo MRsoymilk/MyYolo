@@ -5,6 +5,7 @@
 
 #include "./ui_mainwindow.h"
 #include "WidgetAddData/widgetadddata.h"
+#include "WidgetDeploy/widgetdeploy.h"
 #include "WidgetExport/widgetexport.h"
 #include "WidgetFilter/widgetfilter.h"
 #include "WidgetLabel/widgetlabel.h"
@@ -13,7 +14,6 @@
 #include "WidgetMain/Setting/widgetmainsetting.h"
 #include "WidgetTest/widgettest.h"
 #include "WidgetTrain/widgettrain.h"
-#include "WidgetDeploy/widgetdeploy.h"
 #include "include/funcdef.h"
 #include "include/keydef.h"
 #include "version.h"

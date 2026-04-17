@@ -3,6 +3,7 @@
 
 #include <QStandardItem>
 #include <QWidget>
+
 #include "httplib.h"
 
 namespace Ui
@@ -27,16 +28,18 @@ private:
     void stopServer();
     void addRouter();
     void addAPI2Table(QString name, QString method, QString param);
+    void registerInference();
+    void registerInfo();
 
 private:
     Ui::WidgetDeploy *ui;
+
 private:
     httplib::Server *m_server = nullptr;
     QThread *m_listenThread = nullptr;
     std::atomic_bool m_running{false};
     bool m_enableServer = false;
     QStandardItemModel *m_modelApiTable = nullptr;
-
 };
 
 #endif  // WIDGETDEPLOY_H

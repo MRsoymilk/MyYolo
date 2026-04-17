@@ -27,7 +27,7 @@ private:
     void startServer();
     void stopServer();
     void addRouter();
-    void addAPI2Table(QString name, QString method, QString param);
+    void addAPI2Table(QString name, QString method, QString params);
     void registerInference();
     void registerInfo();
 

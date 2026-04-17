@@ -39,7 +39,6 @@ void WidgetDeploy::init()
     ui->lineEditModel->setText(model);
 
     m_modelApiTable = new QStandardItemModel(this);
-
     m_modelApiTable->setHorizontalHeaderLabels({"name", "type", "params"});
 
     ui->tableViewAPI->setModel(m_modelApiTable);
@@ -47,20 +46,63 @@ void WidgetDeploy::init()
     ui->tableViewAPI->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableViewAPI->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    addAPI2Table("/info", "GET", "");
-    addAPI2Table("/inference", "POST", "");
+    addAPI2Table("/info", "GET", R"(
+Response:
+{
+    "status": "ok",
+    "interface_name": "my yolo",
+    "timestamp": 1710000000,
+    "model_info": {
+        "input_size": [640, 640],
+        "num_classes": 1,
+        "labels": ["object"]
+    }
+}
+)");
+
+    addAPI2Table("/inference", "POST", R"(
+Request:
+{
+    "name": "test.jpg",
+    "type": "image",
+    "data": "<base64 image data>"
+}
+
+Response:
+{
+    "status": "ok",
+    "recv_name": "test.jpg",
+    "type": "image",
+    "timestamp": 1710000000,
+    "result": {
+        "boxes": [
+            {
+                "x": 100,
+                "y": 120,
+                "w": 50,
+                "h": 60,
+                "score": 0.98,
+                "class_id": 0
+            }
+        ]
+    }
+}
+)");
 
     REGISTER_FILE_BTN(ui->tBtnLoadModel, ui->lineEditModel);
 }
 
-void WidgetDeploy::addAPI2Table(QString name, QString method, QString param)
+void WidgetDeploy::addAPI2Table(QString name, QString method, QString params)
 {
     QList<QStandardItem *> row;
 
-    row << new QStandardItem(name);
-    row << new QStandardItem(method);
-    row << new QStandardItem(param);
+    auto itemName = new QStandardItem(name);
+    auto itemMethod = new QStandardItem(method);
+    auto itemParams = new QStandardItem(params);
 
+    itemParams->setToolTip(params);
+
+    row << itemName << itemMethod << itemParams;
     m_modelApiTable->appendRow(row);
 }
 
@@ -190,6 +232,13 @@ void WidgetDeploy::registerInference()
                        QString name = obj["name"].toString();
                        QString type = obj["type"].toString();
                        QString data = obj["data"].toString();
+
+                       if (data.startsWith("data:"))
+                       {
+                           int idx = data.indexOf("base64,");
+                           if (idx != -1)
+                               data = data.mid(idx + 7);
+                       }
 
                        // Base64 -> 图片bytes
                        QByteArray imgBytes = QByteArray::fromBase64(data.toUtf8());

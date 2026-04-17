@@ -37,10 +37,10 @@ private:
     void setLanguage(const QString &language);
 
 private slots:
-    void on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &arg1);
-    void slotWidgetTestHide();
-
     // QWidget interface
+    void on_actionsetting_triggered();
+    void on_actionlog_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 };

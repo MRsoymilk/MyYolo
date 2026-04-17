@@ -196,3 +196,8 @@ if (WIN32)
 
     target_sources(${PROJECT_NAME} PRIVATE ${APP_ICON_RC})
 endif()
+
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(myYolo PRIVATE -fsanitize=address -fno-omit-frame-pointer)
+    target_link_options(myYolo PRIVATE -fsanitize=address)
+endif()

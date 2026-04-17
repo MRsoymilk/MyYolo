@@ -29,7 +29,10 @@ WidgetMainSetting::WidgetMainSetting(QWidget *parent) : QWidget(parent), ui(new 
 
 void WidgetMainSetting::initMainSetting()
 {
-    m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_PROJECT_DIR);
+    m_data.project_dir = SETTING_GET(CFG_GROUP_MAIN,
+                                     CFG_MAIN_PROJECT_DIR,
+                                     QCoreApplication::applicationDirPath() + "/project"
+                                     );
     m_data.use_venv = SETTING_GET(CFG_GROUP_MAIN, CFG_MAIN_USE_VENV, "1").toInt();
     ui->lEditProjectRoot->setText(m_data.project_dir);
     ui->checkBoxUseVenv->setChecked(m_data.use_venv);
@@ -97,7 +100,6 @@ MSG_RE WidgetMainSetting::checkScript()
 {
     MSG_RE re;
 
-    CHECK_FILE_EXISTS(GLOBAL.SCRIPT_MOVE_SIMILAR_IMG, "/script/move_similar_images.py");
     CHECK_FILE_EXISTS(GLOBAL.SCRIPT_XML2TXT, "/script/xml2txt.py");
     CHECK_FILE_EXISTS(GLOBAL.SCRIPT_NO_XML2TXT, "/script/no_xml2txt.py");
     CHECK_FILE_EXISTS(GLOBAL.SCRIPT_SPLIT_DATASET, "/script/split_dataset.py");
@@ -106,7 +108,7 @@ MSG_RE WidgetMainSetting::checkScript()
 
     re.status = true;
     re.msg =
-        "move_similar_images.py, xml2txt.py, no_xml2txt.py, split_dataset.py, "
+        "xml2txt.py, no_xml2txt.py, split_dataset.py, "
         "rename.py, re_notag.py";
     return re;
 }

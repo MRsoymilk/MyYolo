@@ -35,7 +35,6 @@ private:
 
 private slots:
     void on_btnBasicCheck_clicked();
-
     void on_checkBoxUseVenv_checkStateChanged(const Qt::CheckState &arg1);
 
 private:

@@ -102,8 +102,12 @@ void MainWindow::addBasicWidget()
     ui->gLayInfo->addWidget(widgetMainInfo);
     ui->gLayDeploy->addWidget(widgetDeploy);
     ui->gLaySetting->addWidget(widgetMainSetting);
-    connect(&MY_WIDGET_LOG, &WidgetLog::signalHide, this, &MainWindow::slotWidgetTestHide);
-    connect(&MY_WIDGET_LOG, &WidgetLog::windowClose, this, [this]() { ui->checkBoxShowLog->setChecked(false); });
+    ui->gLayLog->addWidget(MY_WIDGET_LOG);
+    connect(MY_WIDGET_LOG, &WidgetLog::signalHide, this, [this]() {
+        ui->actionlog->setChecked(false);
+        ui->dockWidgetLog->setVisible(false);
+    });
+    ui->actionlog->setChecked(true);
 }
 
 void MainWindow::menuThemeSelect(QAction *selectedAction)
@@ -150,25 +154,25 @@ void MainWindow::setLanguage(const QString &language)
     }
 }
 
-void MainWindow::on_checkBoxShowLog_checkStateChanged(const Qt::CheckState &state)
-{
-    WIDGET_LOG_INFO("show log click");
-    if (state == Qt::Checked)
-    {
-        MY_WIDGET_LOG.show();
-        WIDGET_LOG_INFO("show log view");
-    }
-    else if (state == Qt::Unchecked)
-    {
-        MY_WIDGET_LOG.hide();
-        WIDGET_LOG_INFO("hide log view");
-    }
-}
-
-void MainWindow::slotWidgetTestHide() { ui->checkBoxShowLog->setChecked(false); }
-
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     WIDGET_LOG_CLOSE();
     QMainWindow::closeEvent(event);
+}
+
+void MainWindow::on_actionsetting_triggered()
+{
+
+}
+
+void MainWindow::on_actionlog_triggered()
+{
+    if(ui->actionlog->isChecked()) {
+        ui->dockWidgetLog->setVisible(true);
+        WIDGET_LOG_INFO("show log view");
+    }
+    else {
+        ui->dockWidgetLog->setVisible(false);
+        WIDGET_LOG_INFO("close log view");
+    }
 }

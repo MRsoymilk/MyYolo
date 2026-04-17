@@ -27,9 +27,9 @@ void WidgetLog::slotTextChanged()
     }
 }
 
-WidgetLog &WidgetLog::getInstance()
+WidgetLog *WidgetLog::getInstance()
 {
-    static WidgetLog instance;
+    static WidgetLog* instance = new WidgetLog();
     return instance;
 }
 
@@ -97,7 +97,6 @@ void WidgetLog::logError(const QString &log)
 
 void WidgetLog::on_btnHide_clicked()
 {
-    this->hide();
     emit signalHide();
 }
 

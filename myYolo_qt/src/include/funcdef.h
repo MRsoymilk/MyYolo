@@ -18,11 +18,11 @@
 #define SETTING_SET(group, key, value) MY_SETTING.setValue(group, key, value)
 
 #include "../WidgetLog/widgetlog.h"
-#define WIDGET_LOG_TRACE(msg) MY_WIDGET_LOG.logTrace(msg)
-#define WIDGET_LOG_INFO(msg) MY_WIDGET_LOG.logInfo(msg)
-#define WIDGET_LOG_WARN(msg) MY_WIDGET_LOG.logWarn(msg)
-#define WIDGET_LOG_ERROR(msg) MY_WIDGET_LOG.logError(msg)
-#define WIDGET_LOG_CLOSE() MY_WIDGET_LOG.close()
+#define WIDGET_LOG_TRACE(msg) MY_WIDGET_LOG->logTrace(msg)
+#define WIDGET_LOG_INFO(msg) MY_WIDGET_LOG->logInfo(msg)
+#define WIDGET_LOG_WARN(msg) MY_WIDGET_LOG->logWarn(msg)
+#define WIDGET_LOG_ERROR(msg) MY_WIDGET_LOG->logError(msg)
+#define WIDGET_LOG_CLOSE() MY_WIDGET_LOG->close()
 
 #include "../util/mydir.h"
 #define GET_ABSOLUTE_PATH(path) MyDir::GetAbsolutePath(path)

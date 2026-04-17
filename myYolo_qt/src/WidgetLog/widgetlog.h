@@ -13,7 +13,7 @@ class WidgetLog : public QWidget
     Q_OBJECT
 
 public:
-    static WidgetLog &getInstance();
+    static WidgetLog *getInstance();
     ~WidgetLog();
     void setMaxLength(const int &length);
     void log(const QString &log);

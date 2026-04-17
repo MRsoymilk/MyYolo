@@ -5,7 +5,6 @@
 #define CFG_GROUP_FILTER "FILTER"
 #define CFG_FILTER_DIR_INPUT "dir_input"
 #define CFG_FILTER_DIR_OUTPUT "dir_output"
-#define CFG_FILTER_SSIM "ssim"
 #define CFG_FILTER_THRESHOLD_SSIM "threshold_ssim"
 #define CFG_FILTER_BATCH_SSIM "batch_ssim"
 #define CFG_GROUP_ADD_DATA "ADD_DATA"

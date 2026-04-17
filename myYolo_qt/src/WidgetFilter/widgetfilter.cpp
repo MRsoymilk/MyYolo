@@ -17,58 +17,20 @@ void WidgetFilter::initFilter()
 {
     m_data.dir_input = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_DIR_INPUT);
     m_data.dir_output = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT);
-    m_data.is_ssim = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_SSIM).toInt();
     m_data.threshold_ssim = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM).toDouble();
     m_data.batch_ssim = SETTING_GET(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM).toInt();
     ui->lEditDirInput->setText(m_data.dir_input);
     ui->lEditDirOutput->setText(m_data.dir_output);
-    if (m_data.is_ssim)
-    {
-        ui->checkBoxSSIM->setCheckState(Qt::Checked);
-    }
-    else
-    {
-        ui->checkBoxSSIM->setCheckState(Qt::Unchecked);
-    }
-    ui->doubleSpinBoxThresholdSSIM->setValue(m_data.threshold_ssim);
-    ui->sBoxBatchSize->setValue(m_data.batch_ssim);
     REGISTER_FOLDER_BTN(ui->tBtnDirInput, ui->lEditDirInput);
     REGISTER_FOLDER_BTN(ui->tBtnDirOutput, ui->lEditDirOutput);
-}
-
-void WidgetFilter::callMoveSimilarImgs()
-{
-    QStringList arguments_move_similar{GLOBAL.SCRIPT_MOVE_SIMILAR_IMG,
-                                       "--input_dir",
-                                       m_data.dir_input,
-                                       "--output_dir",
-                                       m_data.dir_output,
-                                       "--threshold_ssim",
-                                       QString::number(m_data.threshold_ssim),
-                                       "--batch_size",
-                                       QString::number(m_data.batch_ssim)};
-    WIDGET_LOG_TRACE(QString("Script: %1").arg(arguments_move_similar.join(' ')));
-    LOG_INFO("Filter of move similar: {}", arguments_move_similar);
-    PROCESS_START_ATTACH(GLOBAL.PYTHON, arguments_move_similar);
 }
 
 void WidgetFilter::on_btnStartFilter_clicked()
 {
     m_data.dir_input = ui->lEditDirInput->text();
     m_data.dir_output = ui->lEditDirOutput->text();
-    if (ui->checkBoxSSIM->isChecked())
-    {
-        m_data.is_ssim = 1;
-    }
-    else
-    {
-        m_data.is_ssim = 0;
-    }
-    m_data.threshold_ssim = ui->doubleSpinBoxThresholdSSIM->value();
-    m_data.batch_ssim = ui->sBoxBatchSize->value();
     SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_DIR_INPUT, m_data.dir_input);
     SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_DIR_OUTPUT, m_data.dir_output);
-    SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_SSIM, QString::number(m_data.is_ssim));
     SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_THRESHOLD_SSIM, QString::number(m_data.threshold_ssim));
     SETTING_SET(CFG_GROUP_FILTER, CFG_FILTER_BATCH_SSIM, QString::number(m_data.batch_ssim));
     if (m_data.dir_input.isEmpty())
@@ -80,9 +42,5 @@ void WidgetFilter::on_btnStartFilter_clicked()
     {
         SHOW_MSGBOX_CRITICAL("dir output cannot be empty!");
         return;
-    }
-    if (m_data.is_ssim)
-    {
-        callMoveSimilarImgs();
     }
 }

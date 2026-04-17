@@ -29,7 +29,7 @@ void WidgetLog::slotTextChanged()
 
 WidgetLog *WidgetLog::getInstance()
 {
-    static WidgetLog* instance = new WidgetLog();
+    static WidgetLog *instance = new WidgetLog();
     return instance;
 }
 
@@ -95,9 +95,6 @@ void WidgetLog::logError(const QString &log)
     ui->txtEditLog->moveCursor(QTextCursor::End);
 }
 
-void WidgetLog::on_btnHide_clicked()
-{
-    emit signalHide();
-}
+void WidgetLog::on_btnHide_clicked() { emit signalHide(); }
 
 void WidgetLog::on_btnClear_clicked() { ui->txtEditLog->clear(); }

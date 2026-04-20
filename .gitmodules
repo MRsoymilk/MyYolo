@@ -1,0 +1,3 @@
+[submodule "vendor/MyYoloInference"]
+	path = vendor/MyYoloInference
+	url = https://github.com/MRsoymilk/MyYoloInference.git
